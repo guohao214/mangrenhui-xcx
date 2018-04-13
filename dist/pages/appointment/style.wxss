@@ -1,0 +1,45 @@
+Page {
+  width: 100%;
+  overflow-x: hidden;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-column {
+  flex-direction: column;
+}
+.align-start {
+  align-items: flex-start;
+}
+
+.header {
+  height: 80rpx;
+  border-bottom: 1rpx solid rgb(228,228,228);
+  padding: 0 15rpx;
+  justify-content: flex-start;
+}
+.cell {
+  display: block;
+  width: 100%;
+  font-size: 27rpx;
+  margin-bottom: 15rpx;
+  background-color: white;
+}
+.footer {
+  padding: 30rpx;
+}
+
+.active {
+  color: #ffb400;
+  /*border: 1px solid red;*/
+}
+
+.primary-color {
+  color: #ffb400;
+}
+
+.primary-btn {
+  background-color: #ffb400 !important;
+}

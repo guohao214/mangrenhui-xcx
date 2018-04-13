@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/order/index",
+    "pages/appointment/index",
+    "pages/article/index",
+    "pages/center/index",
+    "pages/home/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#efefef",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "盲人荟",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#ffb400",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/order/index",
+        "iconPath": "common/assets/center-0.png",
+        "selectedIconPath": "common/assets/center-1.png",
+        "text": "我的"
+      },
+      {
+        "pagePath": "pages/appointment/index",
+        "iconPath": "common/assets/appointment-0.png",
+        "selectedIconPath": "common/assets/appointment-1.png",
+        "text": "预约"
+      },
+      {
+        "pagePath": "pages/article/index",
+        "iconPath": "common/assets/article-0.png",
+        "selectedIconPath": "common/assets/article-1.png",
+        "text": "品牌"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000
+  }
+}

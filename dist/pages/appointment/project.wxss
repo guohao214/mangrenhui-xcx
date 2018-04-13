@@ -1,0 +1,23 @@
+.project-list {
+  height: 300rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 30rpx;
+}
+
+.project {
+  width: 200rpx;
+  height: 200rpx;
+  padding: 15rpx 0;
+  margin-top: 20rpx;
+  display: inline-block;
+  text-align: center;
+}
+
+.project .avatar {
+  display: block;
+  width: 75%;
+  height: 75%;
+  margin-left: 12.5%;
+}

@@ -1,0 +1,44 @@
+.day-list {
+  display: block;
+  height: 110rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+.day {
+  width:100rpx;
+  height:80rpx;
+  display:inline-block;
+  text-align:center;
+  margin-top:20rpx;
+
+}
+.day .date {
+  font-size: 27rpx;
+}
+.day .week {
+  font-size: 24rpx;
+  /*transform:scale(.9);*/
+
+}
+
+.time-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rpx 1rpx 20rpx 1rpx;
+  border-top: 2rpx solid #EDEDED;
+}
+
+.time-list .time {
+  display: inline-block;
+  flex-basis: 20%;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.time-list .time.invalid {
+  color: gray;
+  text-decoration: line-through;
+}

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "layout-head": "../../common/layout/head"
+  }
+}

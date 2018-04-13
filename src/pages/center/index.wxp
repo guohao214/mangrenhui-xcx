@@ -1,0 +1,43 @@
+<template>
+  <view class="header-cell">
+    <wxc-avatar class="avatar" mold="square"
+                src="http://www.mlxiaowu.com/upload/2018-03-17/f23dd3259fcccf1793ea972adc1267eb_200x200.jpg">
+    </wxc-avatar>
+    <text>郭浩</text>
+  </view>
+
+  <view class="cell">
+      <view class="order">
+        <text>我的订单</text>
+      </view>
+      <view class="go">
+        <wxc-icon size="30" type="arrow-right"></wxc-icon>
+      </view>
+  </view>
+
+  <view class="cell last-cell">
+    <view class="phone">
+      <text>联系我们:189-6678-6655</text>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: '我的',
+    usingComponents: {
+      'wxc-icon' : '@minui/wxc-icon',
+      'wxc-avatar': '@minui/wxc-avatar',
+    }
+  },
+  data: {}
+}
+</script>
+
+<style>
+  Page {
+    background-color: white;
+  }
+  @import "style.wxss";
+</style>

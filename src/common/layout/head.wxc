@@ -1,0 +1,19 @@
+<template>
+  <view class="head">
+  </view>
+</template>
+
+<script>
+export default {
+}
+</script>
+
+<style>
+.head {
+  height: 10rpx;
+  background-color:#ffb400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

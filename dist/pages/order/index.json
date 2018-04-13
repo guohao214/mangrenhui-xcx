@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "layout-head": "../../common/layout/head",
+    "wxc-dialog": "../../packages/@minui/wxc-dialog/dist/index"
+  },
+  "navigationBarTitleText": "我的订单"
+}

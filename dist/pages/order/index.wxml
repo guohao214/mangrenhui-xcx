@@ -1,0 +1,61 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <wxc-dialog class="wxc-dialog wxc-cash" title="输入技师工号" confirm-text="确定" _pid="{{_pid}}">
+        <input class="input" placeholder="技师工号"></input>
+    </wxc-dialog>
+
+    <wxc-dialog class="wxc-dialog wxc-scan" title="扫码支付" content="确定已扫码支付" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
+
+    <wxc-dialog class="wxc-dialog wxc-group" title="团购" content="请输入点评、美团或者口碑券号" confirm-text="确定" _pid="{{_pid}}">
+        <input class="input" placeholder="请输入点评、美团或者口碑券号"></input>
+    </wxc-dialog>
+
+    <wxc-dialog class="wxc-dialog wxc-pay" title="在线支付" content="支付金额 $112" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
+
+    <view class="order-list" wx:for="{{orderList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="order">
+        <view class="cell amount">
+            <view class="label">订单号</view>
+            <view>{{ order.order_no}}</view>
+        </view>
+        <view class="cell amount">
+            <view class="label">付款金额</view>
+            <view>¥{{ order.total_fee}}</view>
+        </view>
+        <view class="project">
+            <view class="cell">
+                <view class="label">项目</view>
+                <view>{{ order.project_name}}({{order.use_time}}分钟)</view>
+            </view>
+            <view class="cell">
+                <view class="label">技师</view>
+                <view>{{ order.beautician_name}}</view>
+            </view>
+            <view class="cell">
+                <view class="label">预约日期</view>
+                <view>{{order.appointment_day}} {{order.appointment_start_time}}~{{order.appointment_end_time}}
+                </view>
+            </view>
+        </view>
+        <view class="control">
+            <view wx:if="{{order.order_status  == 1}}">
+                <view class="pay-type">支付方式</view>
+                <view class="buttons">
+                    <button size="mini" type="default" bindtap="cash">店内现金</button>
+                    <button size="mini" type="default" bindtap="scan">店内扫码</button>
+                    <button size="mini" type="default" bindtap="groupBy">团购</button>
+                    <button size="mini" type="primary" bindtap="pay">线上支付</button>
+                </view>
+            </view>
+            <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
+            <view class="handled" wx:else="">订单已取消</view>
+        </view>
+
+        <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
+            <button size="default" type="warn" data-id="{{order.order_id}}" data-index="{{idx}}" class="btn" bindtap="cancelOrder">取消订单</button>
+        </view>
+    </view>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

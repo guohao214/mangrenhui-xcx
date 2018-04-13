@@ -1,0 +1,334 @@
+<template>
+  <wxc-toast is-show="{{showToast}}" text="{{toastText}}"></wxc-toast>
+  <wxc-popup class="J_Popup" animation-mode="left" align="right" status="{{showShopListPop}}">
+    <view class="content popup__content">
+      <view class="search-cell">
+        <input placeholder="搜索店铺" auto-focus class="search"/>
+      </view>
+
+      <scroll-view scroll-y class="search-shop-list" catchtap="return false">
+        <view class="shop" wx:for="{{shopList}}"
+              data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseShop">
+          <view class="shop-name">{{ item.shop_name}}</view>
+          <view class="address">{{ item.address}}({{item.distance}})</view>
+        </view>
+
+      </scroll-view>
+
+    </view>
+  </wxc-popup>
+
+  <view class="cell">
+    <view class="header flex">
+      选择店铺
+    </view>
+    <wxc-flex class="shop-list">
+      <view class="shop-pic flex">
+        <wxc-avatar class="avatar" mold="square"
+                    src="{{currentShop.shop_logo}}">
+        </wxc-avatar>
+      </view>
+      <view class="shop flex flex-column align-start">
+        <text class="shop-name">{{currentShop.shop_name}}</text>
+        <text class="shop-address">{{currentShop.address}}</text>
+      </view>
+      <view class="shop-choose flex">
+        <wxc-icon size="30" type="arrow-right" bindtap="showShopList"></wxc-icon>
+      </view>
+    </wxc-flex>
+  </view>
+  <view class="cell">
+    <view class="header flex">
+      选择项目
+    </view>
+    <scroll-view class="project-list" scroll-x>
+      <view class="project flex flex-column {{ item.project_id === currentProject.project_id ? 'active' : ''}}"
+            data-index="{{idx}}" wx:for="{{projectList}}"
+            wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
+        <wxc-avatar class="avatar" mold="circle"
+                    src="http://www.mlxiaowu.com/upload/2018-03-17/f23dd3259fcccf1793ea972adc1267eb_200x200.jpg">
+        </wxc-avatar>
+        <wxc-elip line="2">{{item.project_name}}</wxc-elip>
+
+      </view>
+    </scroll-view>
+  </view>
+  <view class="cell">
+    <view class="header flex">
+      选择技师
+    </view>
+    <scroll-view class="beautician-list" scroll-x>
+      <view
+        class="beautician flex flex-column {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}"
+        wx:for="{{beauticianList}}" data-index="{{idx}}"
+        wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
+        <wxc-avatar class="avatar" mold="circle"
+                    src="http://www.mlxiaowu.com/upload/2018-03-17/f23dd3259fcccf1793ea972adc1267eb_200x200.jpg">
+        </wxc-avatar>
+        <wxc-elip line="2">{{item.name}}</wxc-elip>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="cell">
+    <view class="header flex">
+      预约时间
+    </view>
+    <scroll-view class="day-list" scroll-x>
+      <view class="day {{ item.date === currentAppointmentDay.date ? 'active' : ''}}"
+            wx:for="{{appointmentDayList}}" data-index="{{idx}}"
+            wx:for-index="idx" wx:for-item="item" bindtap="chooseDay">
+        <view class="date">{{ item.date }}</view>
+        <view class="week">{{ item.week }}</view>
+      </view>
+    </scroll-view>
+    <view class="time-list">
+      <view class="time {{!item.valid ? 'invalid': '' }} {{ item.checked ? 'active' : ''}}"
+            wx:for="{{appointmentTimeList}}" data-index="{{idx}}"
+            wx:for-index="idx" wx:for-item="item" bindtap="chooseTime"> {{ item.time }}
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button type="primary" class="primary-btn" bindtap="appointment">发送预约</button>
+  </view>
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '预约',
+      usingComponents: {
+        'wxc-flex': '@minui/wxc-flex',
+        'wxc-icon': '@minui/wxc-icon',
+        'wxc-avatar': '@minui/wxc-avatar',
+        'wxc-mask': '@minui/wxc-mask',
+        'wxc-popup': '@minui/wxc-popup',
+        'wxc-elip': '@minui/wxc-elip',
+        'wxc-toast': '@minui/wxc-toast'
+      }
+    },
+    data: {
+      toastText: '',
+      showToast: false,
+      shopList: [],
+      showShopListPop: 'hide',
+      currentShop: {},
+      beauticianList: [],
+      currentBeautician: {},
+      projectList: [],
+      currentProject: {},
+      appointmentDayList: [],
+      currentAppointmentDay: '',
+      appointmentTimeList: [],
+      currentAppointmentTimes: [], // 预约的时间
+    },
+    showShopList: function () {
+      this.setData({
+        showShopListPop: 'show'
+      })
+    },
+    chooseShop: function (event) {
+      let index = event.currentTarget.dataset.index
+      let currentShop = this.data.shopList[index]
+      this.setData({
+        currentShop: currentShop,
+        showShopListPop: 'hide'
+      })
+
+      this.getBeauticianAndProject(currentShop.shop_id)
+    },
+    chooseProject: function (event) {
+      let index = event.currentTarget.dataset.index
+      let currentProject = this.data.projectList[index]
+      this.setData({
+        currentProject: currentProject,
+      })
+
+      let timeList = this.data.appointmentTimeList
+      timeList.forEach(item => item.checked = false)
+      this.setData({
+        currentAppointmentTimes: [],
+        appointmentTimeList: timeList
+      })
+    },
+    chooseBeautician: function (event) {
+      let index = event.currentTarget.dataset.index
+      let currentBeautician = this.data.beauticianList[index]
+      this.setData({
+        currentBeautician: currentBeautician,
+      })
+
+      let beauticianId = currentBeautician.beautician_id
+      let day = this.data.currentAppointmentDay.day
+      this.getAppointmentTimes(beauticianId, day)
+    },
+    chooseDay: function (event) {
+      let index = event.currentTarget.dataset.index
+      let currentAppointmentDay = this.data.appointmentDayList[index]
+      this.setData({
+        currentAppointmentDay: currentAppointmentDay,
+      })
+
+      let beauticianId = this.data.currentBeautician.beautician_id
+      let day = currentAppointmentDay.day
+      this.getAppointmentTimes(beauticianId, day)
+    },
+    _toast(text) {
+      this.setData({
+        showToast: true,
+        toastText: text
+      })
+
+      setTimeout(() => {
+        this.setData({
+          showToast: false
+        })
+      }, 2000)
+    },
+    chooseTime: function (event) {
+      let everyTime = 30
+      let index = event.currentTarget.dataset.index
+      let time = this.data.appointmentTimeList[index]
+      if (!time.valid)
+        return false
+
+      let timeList = this.data.appointmentTimeList
+      timeList.forEach(item => item.checked = false)
+
+      let projectUseTime = this.data.currentProject.use_time
+      let useTimeNum = Math.ceil(projectUseTime / everyTime)
+      let timeListLength = this.data.appointmentTimeList.length
+      if (index + useTimeNum > timeListLength) {
+        this.setData({
+          currentAppointmentTimes: [],
+          appointmentTimeList: timeList,
+        })
+
+        this._toast('预约时间不足')
+
+        return
+      }
+      let start = 0
+      let useTime = []
+      while (start < useTimeNum) {
+        let item = timeList[index + start++]
+        if(!item.valid) {
+          timeList.forEach(item => item.checked = false)
+          useTime = []
+          this.setData({
+            currentAppointmentTimes: useTime,
+            appointmentTimeList: timeList,
+          })
+          this._toast('预约时间不足')
+          break;
+        }
+        item.checked = true
+        useTime.push(item.time)
+      }
+
+      this.setData({
+        currentAppointmentTimes: useTime,
+        appointmentTimeList: timeList
+      })
+
+    },
+    getBeauticianAndProject: function (shopId) {
+      let app = getApp()
+      let self = this
+      app.get(`appointment/getBeauticianAndProject/${shopId}`).then(data => {
+        let content = (data.data && data.data.content) || {}
+
+        content.days = content.days.map(item => {
+          let day = item.split('#')
+          return {
+            date: day[0],
+            week: day[1],
+            day: day[2]
+          }
+        })
+
+        let currentProject = content.projects[0] || {}
+        let currentBeautician = content.beauticians[0] || {}
+        let currentAppointmentDay = content.days[0] || {}
+
+        self.setData({
+          beauticianList: content.beauticians,
+          projectList: content.projects,
+          appointmentDayList: content.days,
+          currentProject,
+          currentBeautician,
+          currentAppointmentDay,
+        })
+
+        self.getAppointmentTimes(currentBeautician.beautician_id, currentAppointmentDay.day)
+      })
+
+    },
+    getAppointmentTimes: function (beauticianId, day) {
+      let app = getApp()
+      let self = this
+      this.setData({
+        currentAppointmentTimes: []
+      })
+
+      app.get('appointment/getAppointmentTime/' + beauticianId + '/' + day)
+        .then((data) => {
+          let content = (data.data && data.data.content) || []
+          // for (var i in [0, 0, 0, 0])
+          //   content.push({})
+
+          self.setData({
+            appointmentTimeList: content
+          })
+        })
+    },
+    appointment: function () {
+      let app = getApp()
+      // 预约
+      let data = {
+        shop_id: this.data.currentShop.shop_id,
+        beautician_id: this.data.currentBeautician.beautician_id,
+        project_id: this.data.currentProject.project_id,
+        appointment_day: this.data.currentAppointmentDay.day,
+        appointment_time: this.data.currentAppointmentTimes.join(','),
+        from: 'xcx'
+      }
+      app.post('cart/appointment', data)
+        .then(() =>  this._toast('预约成功!'))
+        .catch(error => {
+          this._toast(error.detail || '预约失败!')
+        })
+    },
+    onShow: function () {
+      let app = getApp()
+      let self = this
+      wx.getLocation({
+        success: function (data) {
+          app.get('shop/getList', {latitude: data.latitude, longitude: data.longitude}).then(data => {
+            let result = data.data
+            let currentShop = result.content[0] || {}
+            self.setData({
+              shopList: result.content,
+              currentShop: result.content[0] || []
+            })
+
+            if (currentShop)
+              self.getBeauticianAndProject(currentShop.shop_id)
+          })
+        }
+      })
+    }
+  }
+</script>
+
+<style>
+  @import "style.wxss";
+  @import "mask.wxss";
+  @import "shop.wxss";
+  @import "project.wxss";
+  @import "beautician.wxss";
+  @import "time.wxss";
+
+
+</style>

@@ -1,0 +1,6 @@
+@import './style.wxss';
+  @import './mask.wxss';
+  @import './shop.wxss';
+  @import './project.wxss';
+  @import './beautician.wxss';
+  @import './time.wxss';

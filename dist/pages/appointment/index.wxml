@@ -1,0 +1,87 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <wxc-toast is-show="{{showToast}}" text="{{toastText}}" _pid="{{_pid}}"></wxc-toast>
+    <wxc-popup class="J_Popup" animation-mode="left" align="right" status="{{showShopListPop}}" _pid="{{_pid}}">
+        <view class="content popup__content">
+            <view class="search-cell">
+                <input placeholder="搜索店铺" auto-focus class="search"></input>
+            </view>
+
+            <scroll-view scroll-y class="search-shop-list" catchtap="return false">
+                <view class="shop" wx:for="{{shopList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseShop">
+                    <view class="shop-name">{{ item.shop_name}}</view>
+                    <view class="address">{{ item.address}}({{item.distance}})</view>
+                </view>
+
+            </scroll-view>
+
+        </view>
+    </wxc-popup>
+
+    <view class="cell">
+        <view class="header flex">
+            选择店铺
+        </view>
+        <wxc-flex class="shop-list" _pid="{{_pid}}">
+            <view class="shop-pic flex">
+                <wxc-avatar class="avatar" mold="square" src="{{currentShop.shop_logo}}" _pid="{{_pid}}">
+                </wxc-avatar>
+            </view>
+            <view class="shop flex flex-column align-start">
+                <text class="shop-name">{{currentShop.shop_name}}</text>
+                <text class="shop-address">{{currentShop.address}}</text>
+            </view>
+            <view class="shop-choose flex">
+                <wxc-icon size="30" type="arrow-right" bindtap="showShopList" _pid="{{_pid}}"></wxc-icon>
+            </view>
+        </wxc-flex>
+    </view>
+    <view class="cell">
+        <view class="header flex">
+            选择项目
+        </view>
+        <scroll-view class="project-list" scroll-x>
+            <view class="project flex flex-column {{ item.project_id === currentProject.project_id ? 'active' : ''}}" data-index="{{idx}}" wx:for="{{projectList}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
+                <wxc-avatar class="avatar" mold="circle" src="http://www.mlxiaowu.com/upload/2018-03-17/f23dd3259fcccf1793ea972adc1267eb_200x200.jpg" _pid="{{_pid}}">
+                </wxc-avatar>
+                <wxc-elip line="2" _pid="{{_pid}}">{{item.project_name}}</wxc-elip>
+
+            </view>
+        </scroll-view>
+    </view>
+    <view class="cell">
+        <view class="header flex">
+            选择技师
+        </view>
+        <scroll-view class="beautician-list" scroll-x>
+            <view class="beautician flex flex-column {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
+                <wxc-avatar class="avatar" mold="circle" src="http://www.mlxiaowu.com/upload/2018-03-17/f23dd3259fcccf1793ea972adc1267eb_200x200.jpg" _pid="{{_pid}}">
+                </wxc-avatar>
+                <wxc-elip line="2" _pid="{{_pid}}">{{item.name}}</wxc-elip>
+            </view>
+        </scroll-view>
+    </view>
+    <view class="cell">
+        <view class="header flex">
+            预约时间
+        </view>
+        <scroll-view class="day-list" scroll-x>
+            <view class="day {{ item.date === currentAppointmentDay.date ? 'active' : ''}}" wx:for="{{appointmentDayList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseDay">
+                <view class="date">{{ item.date }}</view>
+                <view class="week">{{ item.week }}</view>
+            </view>
+        </scroll-view>
+        <view class="time-list">
+            <view class="time {{!item.valid ? 'invalid': '' }} {{ item.checked ? 'active' : ''}}" wx:for="{{appointmentTimeList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseTime"> {{ item.time }}
+            </view>
+        </view>
+    </view>
+
+    <view class="footer">
+        <button type="primary" class="primary-btn" bindtap="appointment">发送预约</button>
+    </view>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

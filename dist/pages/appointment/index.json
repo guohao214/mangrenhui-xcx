@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "layout-head": "../../common/layout/head",
+    "wxc-flex": "../../packages/@minui/wxc-flex/dist/index",
+    "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
+    "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index",
+    "wxc-mask": "../../packages/@minui/wxc-mask/dist/index",
+    "wxc-popup": "../../packages/@minui/wxc-popup/dist/index",
+    "wxc-elip": "../../packages/@minui/wxc-elip/dist/index",
+    "wxc-toast": "../../packages/@minui/wxc-toast/dist/index"
+  },
+  "navigationBarTitleText": "预约"
+}
