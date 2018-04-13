@@ -29,6 +29,10 @@
     </view>
     <view class="project">
       <view class="cell">
+        <view class="label">门店</view>
+        <view>{{ order.shop_name}}</view>
+      </view>
+      <view class="cell">
         <view class="label">项目</view>
         <view>{{ order.project_name}}({{order.use_time}}分钟)</view>
       </view>
@@ -81,6 +85,7 @@ export default {
     let app = getApp()
     app.get('center/order').then(data => {
       let result = data.data
+      result.content.forEach(item => item.appointment_end_time = this._realDay(item.appointment_day, item.appointment_end_time))
       this.setData({
         orderList: result.content
       })
@@ -115,7 +120,21 @@ export default {
         })
       })
       .catch(error => {})
+  },
+  _realDay: function (value, day) {
+  try {
+    var _day = day + ' ' + value
+    _day = _day.replace(/-/g, '/')
+    var date = (new Date(_day)).getTime() + 30 * 60 * 1000
+    var date = (new Date(date))
+    var minute = date.getMinutes()
+    if (minute.toString().length == 1)
+      minute += '0'
+    return date.getHours() + ':' + minute + ':00'
+  } catch (e) {
+    return value
   }
+}
 
 }
 </script>

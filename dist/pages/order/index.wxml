@@ -25,6 +25,10 @@
         </view>
         <view class="project">
             <view class="cell">
+                <view class="label">门店</view>
+                <view>{{ order.shop_name}}</view>
+            </view>
+            <view class="cell">
                 <view class="label">项目</view>
                 <view>{{ order.project_name}}({{order.use_time}}分钟)</view>
             </view>
