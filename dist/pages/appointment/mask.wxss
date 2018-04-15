@@ -20,9 +20,10 @@
   background-color: white;
   width: 100%;
   border-radius: 5rpx;
-  padding: 0 5rpx;
-  height: 30rpx;
-  line-height: 30rpx;
+  padding: 8rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 27rpx;
 }
 
 .J_Popup .content .search-shop-list {

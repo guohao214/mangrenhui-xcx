@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "layout-head": "../../common/layout/head",
+    "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index"
+  },
+  "navigationBarTitleText": "绑定手机号"
+}

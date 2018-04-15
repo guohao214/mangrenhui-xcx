@@ -1,0 +1,65 @@
+Page {
+  background-color: white;
+  font-size: 26rpx;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  height: 350 rpx;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100rpx;
+  margin-top: 20rpx;
+}
+
+.logo {
+  width: 150rpx;
+  height: 150rpx;
+  display: block;
+  padding: 10rpx;
+}
+
+.footer {
+  padding: 30rpx;
+}
+
+.active {
+  color: #ffb400;
+  /*border: 1px solid red;*/
+}
+
+.primary-color {
+  color: #ffb400;
+}
+
+.primary-btn {
+  background-color: #ffb400 !important;
+  font-size: 35rpx;
+}
+
+
+.cell {
+  border-bottom: 1rpx solid rgb(228,228,228);
+  padding: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20rpx;
+}
+.cell .label {
+}
+.cell .input {
+  padding-right: 10rpx;
+  flex-flow: 1;
+}
+
+.cell .sms-btn {
+  flex-basis: 300rpx;
+  color: white;
+}
+
+.disabled {
+  background-color: #EDEDED !important;
+}

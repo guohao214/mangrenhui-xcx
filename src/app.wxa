@@ -31,21 +31,27 @@
         backgroundColor: '#ffffff',
         list: [
           {
-            pagePath: 'pages/order/index',
-            iconPath: 'common/assets/center-0.png',
-            selectedIconPath: 'common/assets/center-1.png',
-            text: '我的'
-          },
-          {
             pagePath: 'pages/appointment/index',
-            iconPath: 'common/assets/appointment-0.png',
-            selectedIconPath: 'common/assets/appointment-1.png',
+            iconPath: 'common/assets/tab/03.png',
+            selectedIconPath: 'common/assets/tab/031.png',
             text: '预约'
           },
           {
+            pagePath: 'pages/order/index',
+            iconPath: 'common/assets/tab/01.png',
+            selectedIconPath: 'common/assets/tab/011.png',
+            text: '买单'
+          },
+          {
+            pagePath: 'pages/center/index',
+            iconPath: 'common/assets/tab/04.png',
+            selectedIconPath: 'common/assets/tab/041.png',
+            text: '我的'
+          },
+          {
             pagePath: 'pages/article/index',
-            iconPath: 'common/assets/article-0.png',
-            selectedIconPath: 'common/assets/article-1.png',
+            iconPath: 'common/assets/tab/02.png',
+            selectedIconPath: 'common/assets/tab/021.png',
             text: '品牌'
           }
         ]
@@ -55,19 +61,20 @@
       }
     },
     globalData: {
-      baseUrl : 'https://www.mlxiaowu.com/',
-      baseUrl : 'http://localhost/',
+      baseUrl: 'https://www.mlxiaowu.com/',
+      //baseUrl : 'http://localhost/',
     },
     onLaunch() {
       return
       let self = this
       wx.login({
         success: function (data) {
-          self.get('xcxLogin/authorize', { code: data.code }).then(data => {
+          self.get('xcxLogin/authorize', {code: data.code}).then(data => {
             wx.setStorageSync('session_id', data.data)
           })
         }
       })
+
     },
     onShow() {
     },
@@ -75,11 +82,14 @@
     },
     request: function (method, url, data) {
       return new Promise((res, rej) => {
+        wx.showLoading({
+          title: '加载中...'
+        })
         wx.request({
           method: method,
           header: {
             'x-requested-with': 'xmlhttprequest',
-            "Content-Type":"application/x-www-form-urlencoded",
+            "Content-Type": "application/x-www-form-urlencoded",
             'x-xcx': 'xcx',
             'token': wx.getStorageSync('session_id')
           },
@@ -89,10 +99,19 @@
             let data = result.data
             if (data.status == 1)
               res(result.data)
-            else
+            else if (data.status == -999) {
+              // 跳转到绑定页
+              wx.navigateTo({
+                url: '/pages/bind/index'
+              })
+            } else {
               rej(data)
+            }
           },
           fail: (error) => rej(error),
+          complete: () => {
+            setTimeout(() => wx.hideLoading(), 500)
+          }
         })
       })
     },
@@ -108,7 +127,7 @@
 <style>
   page {
     height: 100%;
-    background-color: rgb(241,241,241);
-    font-size: 27rpx;
+    background-color: rgb(241, 241, 241);
+    font-size: 27 rpx;
   }
 </style>

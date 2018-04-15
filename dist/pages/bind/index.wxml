@@ -1,0 +1,27 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <view class="header">
+        <wxc-avatar class="logo" mold="circle" src="https://www.mlxiaowu.com/static/frontend/images/WechatIMG177.jpeg" _pid="{{_pid}}">
+        </wxc-avatar>
+        <view>请用手机号登录</view>
+    </view>
+
+    <view class="cell">
+        <label class="label">手机号:</label>
+        <input type="number" class="input" placeholder="请输入手机号" bindinput="handlerPhone" maxlength="11"></input>
+    </view>
+
+    <view class="cell">
+        <label class="label">验证码:</label>
+        <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"></input>
+        <button size="mini" class="sms-btn primary-btn" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
+    </view>
+
+    <view class="footer">
+        <button type="primary" class="primary-btn" bindtap="login">登录</button>
+    </view>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

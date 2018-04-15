@@ -1,5 +1,5 @@
 .beautician-list {
-  height: 300rpx;
+  height: 270rpx;
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
@@ -20,4 +20,5 @@
   width: 75%;
   height: 75%;
   margin-left: 12.5%;
+  margin-bottom: 20rpx;
 }

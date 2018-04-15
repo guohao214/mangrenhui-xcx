@@ -42,4 +42,5 @@ Page {
 
 .primary-btn {
   background-color: #ffb400 !important;
+  font-size: 35rpx;
 }

@@ -1,28 +1,7 @@
-.title {
-  text-align: center;
-  width: 100%;
-  font-size: 30rpx;
-  padding: 30rpx;
-}
 .cell {
-  padding: 20rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   min-height: 300rpx;
-}
-
-.cell.flex-start {
-  align-items: flex-start;
-}
-
-.cell .image {
-  display: block;
-
-}
-.cell .text {
-  display: block;
-  padding: 10rpx;
-  letter-spacing: 1rpx;
 }

@@ -2,17 +2,17 @@
     <layout-head _pid="{{_pid}}"></layout-head>
 
     <!-- page页面占位符 -->
-    <wxc-dialog class="wxc-dialog wxc-cash" title="输入技师工号" confirm-text="确定" _pid="{{_pid}}">
-        <input class="input" placeholder="技师工号"></input>
+    <wxc-dialog class="wxc-dialog wxc-cash" title="店内现金" content="输入技师工号" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}">
+        <input class="input" placeholder="技师工号" bindinput="handlerBeautician"></input>
     </wxc-dialog>
 
-    <wxc-dialog class="wxc-dialog wxc-scan" title="扫码支付" content="确定已扫码支付" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
+    <wxc-dialog class="wxc-dialog wxc-scan" title="店里扫码" content="请确认您已经店里扫码完成买单" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
 
-    <wxc-dialog class="wxc-dialog wxc-group" title="团购" content="请输入点评、美团或者口碑券号" confirm-text="确定" _pid="{{_pid}}">
-        <input class="input" placeholder="请输入点评、美团或者口碑券号"></input>
+    <wxc-dialog class="wxc-dialog wxc-group" title="团购" content="请输入点评、美团或者口碑券号" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}">
+        <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode"></input>
     </wxc-dialog>
 
-    <wxc-dialog class="wxc-dialog wxc-pay" title="在线支付" content="支付金额 $112" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
+    <wxc-dialog class="wxc-dialog wxc-online" title="在线支付" content="支付金额 $112" cancel-text="取消" bindcancel="cancel" bindconfirm="payOnline" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
 
     <view class="order-list" wx:for="{{orderList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="order">
         <view class="cell amount">
@@ -46,10 +46,10 @@
             <view wx:if="{{order.order_status  == 1}}">
                 <view class="pay-type">支付方式</view>
                 <view class="buttons">
-                    <button size="mini" type="default" bindtap="cash">店内现金</button>
-                    <button size="mini" type="default" bindtap="scan">店内扫码</button>
-                    <button size="mini" type="default" bindtap="groupBy">团购</button>
-                    <button size="mini" type="primary" bindtap="pay">线上支付</button>
+                    <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
+                    <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
+                    <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
+                    <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}">线上支付</button>
                 </view>
             </view>
             <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
@@ -57,7 +57,8 @@
         </view>
 
         <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
-            <button size="default" type="warn" data-id="{{order.order_id}}" data-index="{{idx}}" class="btn" bindtap="cancelOrder">取消订单</button>
+            <button size="default" type="warn" data-id="{{order.order_id}}" data-index="{{idx}}" class="btn" bindtap="cancelOrder">取消订单
+            </button>
         </view>
     </view>
 

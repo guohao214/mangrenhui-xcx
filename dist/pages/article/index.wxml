@@ -2,31 +2,10 @@
     <layout-head _pid="{{_pid}}"></layout-head>
 
     <!-- page页面占位符 -->
-    <view class="title">困扰现代人的三大问题</view>
     <view class="cell">
-        <text class="text">肩颈僵硬</text>
-        <image model="aspectFit" class="image" src="https://mmbiz.qpic.cn/mmbiz_jpg/HmibchIGiasOEJfPjY1RplZvvOM0ibk8437FGj0FlcQlsDfsQRn363sVs5KsIqxJL10YJaCm7Jgc1WjUKoMjGk2icg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"></image>
-    </view>
-
-    <view class="cell">
-        <text class="text">腰肌劳损</text>
-        <image model="aspectFit" class="image" src="https://mmbiz.qpic.cn/mmbiz_png/HmibchIGiasOEJfPjY1RplZvvOM0ibk8437CkLeOib68LNRTsQiaslicW0R2BjgAbYKhiaySAF45LyowjdFAMLCwf9dqQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"></image>
-    </view>
-
-    <view class="cell">
-        <text class="text">局部酸痛（落枕等）</text>
-        <image model="aspectFit" class="image" src="https://mmbiz.qpic.cn/mmbiz_jpg/HmibchIGiasOFia8EfmeR7ibbJmZ2DPn0Qiay9taMuDoGbvVbo25uwVmlMr3je74QVsHNfibOR9xYB7fxnoPqbN1RWZQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"></image>
-    </view>
-
-    <view class="cell flex-start text">
-        <view>为什么按摩可以缓解以上问题：</view>
-        技师运用按摩手法，在人体的适当部位进行操作所产生的刺激信息通过反射方式对人体的神经体液调整功能施以影响， 从而达到消除疲劳，调节体内内环境的变化，增强体质，健美防衰，延年益寿的目的。
-    </view>
-
-    <view class="cell text">
-        <view>【盲人荟项目】</view>
-        <view>全身按摩 60分钟 108元</view>
-        技师运用按摩手法，在人体的适当部位进行操作所产生的刺激信息通过反射方式对人体的神经体液调整功能施以影响， 从而达到消除疲劳，调节体内内环境的变化，增强体质，健美防衰，延年益寿的目的。
+        <image mode="widthFix" class="" src="https://mlxiaowu.com/article/01.jpeg"></image>
+        <image mode="widthFix" class="" src="https://mlxiaowu.com/article/02.jpeg"></image>
+        <image mode="widthFix" class="" src="https://mlxiaowu.com/article/03.jpeg"></image>
     </view>
 
     <!--<layout-foot></layout-foot>-->

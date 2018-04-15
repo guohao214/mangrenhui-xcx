@@ -1,23 +1,25 @@
 <template>
   <view class="header-cell">
-    <wxc-avatar class="avatar" mold="square"
-                src="http://www.mlxiaowu.com/upload/2018-03-17/f23dd3259fcccf1793ea972adc1267eb_200x200.jpg">
+    <wxc-avatar class="avatar" mold="circle"
+                src="{{ avatarUrl }}">
     </wxc-avatar>
-    <text>郭浩</text>
+    <text>{{ nickName }}</text>
   </view>
 
   <view class="cell">
       <view class="order">
-        <text>我的订单</text>
+        我的订单
       </view>
       <view class="go">
-        <wxc-icon size="30" type="arrow-right"></wxc-icon>
+        <navigator url="/pages/order/index?type=all" open-type="switchTab">
+          <wxc-icon size="30" type="arrow-right"></wxc-icon>
+        </navigator>
       </view>
   </view>
 
   <view class="cell last-cell">
     <view class="phone">
-      <text>联系我们:189-6678-6655</text>
+      <text class="call-phone" bindtap="callPhone">联系我们：189-6678-6655</text>
     </view>
   </view>
 </template>
@@ -31,7 +33,40 @@ export default {
       'wxc-avatar': '@minui/wxc-avatar',
     }
   },
-  data: {}
+  onLoad: function () {
+    let self = this
+    wx.getUserInfo({
+      success: function(res) {
+        let user = res.userInfo
+        let { nickName, avatarUrl } = user
+        self.setData({
+          nickName: nickName,
+          avatarUrl: avatarUrl
+        })
+      },
+      fail: function () {
+        wx.openSetting({
+          success: function (res) {
+            let authSetting = res.authSetting
+            if (authSetting && authSetting['scope.userInfo'] && authSetting['scope.userInfo'] === true) {
+              wx.reLaunch({
+                url: '/pages/center/index'
+              })
+            }
+          }
+        })
+      }
+    })
+  },
+  data: {
+    nickName: '',
+    avatarUrl: '',
+  },
+  callPhone: function () {
+    wx.makePhoneCall({
+      phoneNumber: '18966786655'
+    })
+  }
 }
 </script>
 

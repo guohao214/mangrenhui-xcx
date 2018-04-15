@@ -1,6 +1,7 @@
 .order-list {
   margin: 20rpx 0;
   background-color: white;
+  font-size: 26rpx;
 }
 .cell {
   display: flex;
@@ -31,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80%;
+  height: 80rpx;
 }
 
 .control .pay-type {
@@ -46,7 +47,7 @@
   font-size: 30rpx;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
 }
 
 .cancel-order {
@@ -62,5 +63,14 @@
 }
 
 button[size=mini] {
-  font-size: 10rpx;
+  font-size: 25rpx;
+}
+
+.input {
+  border:1rpx solid #ccc;
+  margin:0 0 40rpx 0;
+  padding:10rpx;
+  width:100%;
+  font-size:27rpx;
+
 }

@@ -1,20 +1,35 @@
 <template>
-  <wxc-dialog class="wxc-dialog wxc-cash" title="输入技师工号" confirm-text="确定">
-    <input class="input" placeholder="技师工号" />
+  <wxc-dialog class="wxc-dialog wxc-cash"
+              title="店内现金"
+              content="输入技师工号"
+              cancel-text="取消"
+              bindconfirm="payOffline"
+              bindcancel="cancel"
+              confirm-text="确定">
+    <input class="input" placeholder="技师工号" bindinput="handlerBeautician"/>
   </wxc-dialog>
 
-  <wxc-dialog class="wxc-dialog wxc-scan" title="扫码支付"
-              content="确定已扫码支付"
+  <wxc-dialog class="wxc-dialog wxc-scan" title="店里扫码"
+              content="请确认您已经店里扫码完成买单"
+              cancel-text="取消"
+              bindconfirm="payOffline"
+              bindcancel="cancel"
               confirm-text="确定"></wxc-dialog>
 
   <wxc-dialog class="wxc-dialog wxc-group" title="团购"
               content="请输入点评、美团或者口碑券号"
+              cancel-text="取消"
+              bindconfirm="payOffline"
+              bindcancel="cancel"
               confirm-text="确定">
-    <input class="input" placeholder="请输入点评、美团或者口碑券号" />
+    <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode"/>
   </wxc-dialog>
 
-  <wxc-dialog class="wxc-dialog wxc-pay" title="在线支付"
+  <wxc-dialog class="wxc-dialog wxc-online" title="在线支付"
               content="支付金额 $112"
+              cancel-text="取消"
+              bindcancel="cancel"
+              bindconfirm="payOnline"
               confirm-text="确定"></wxc-dialog>
 
   <view class="order-list" wx:for="{{orderList}}" data-index="{{idx}}"
@@ -43,17 +58,18 @@
       <view class="cell">
         <view class="label">预约日期</view>
         <view>{{order.appointment_day}}
-          {{order.appointment_start_time}}~{{order.appointment_end_time}}</view>
+          {{order.appointment_start_time}}~{{order.appointment_end_time}}
+        </view>
       </view>
     </view>
     <view class="control">
       <view wx:if="{{order.order_status  == 1}}">
         <view class="pay-type">支付方式</view>
         <view class="buttons">
-          <button size="mini" type="default" bindtap="cash">店内现金</button>
-          <button size="mini" type="default" bindtap="scan">店内扫码</button>
-          <button size="mini" type="default" bindtap="groupBy">团购</button>
-          <button size="mini" type="primary" bindtap="pay">线上支付</button>
+          <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
+          <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
+          <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
+          <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}">线上支付</button>
         </view>
       </view>
       <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
@@ -64,79 +80,214 @@
       <button size="default" type="warn"
               data-id="{{order.order_id}}"
               data-index="{{idx}}"
-              class="btn" bindtap="cancelOrder">取消订单</button>
+              class="btn" bindtap="cancelOrder">取消订单
+      </button>
     </view>
   </view>
 
 </template>
 
 <script>
-export default {
-  config: {
-    navigationBarTitleText: '我的订单',
-    usingComponents: {
-      'wxc-dialog': '@minui/wxc-dialog'
-    }
-  },
-  data: {
-    orderList: []
-  },
-  onShow: function () {
-    let app = getApp()
-    app.get('center/order').then(data => {
-      let result = data.data
-      result.content.forEach(item => item.appointment_end_time = this._realDay(item.appointment_day, item.appointment_end_time))
-      this.setData({
-        orderList: result.content
-      })
-    })
-  },
-  cash: function () {
-    let dialogComponent = this.selectComponent('.wxc-cash')
-    dialogComponent && dialogComponent.show();
-  },
-  scan: function () {
-    let dialogComponent = this.selectComponent('.wxc-scan')
-    dialogComponent && dialogComponent.show();
-  },
-  groupBy: function () {
-    let dialogComponent = this.selectComponent('.wxc-group')
-    dialogComponent && dialogComponent.show();
-  },
-  pay: function () {
-    let dialogComponent = this.selectComponent('.wxc-pay')
-    dialogComponent && dialogComponent.show();
-  },
-  cancelOrder: function (event) {
-    let app = getApp()
-    let orderId = event.currentTarget.dataset.id
-    let index = event.currentTarget.dataset.index
-    app.get('center/cancelOrder/' + orderId)
-      .then(() => {
-        let orderList = this.data.orderList
-        orderList[index].order_status = 2
+  export default {
+    config: {
+      navigationBarTitleText: '我的订单',
+      usingComponents: {
+        'wxc-dialog': '@minui/wxc-dialog'
+      }
+    },
+    data: {
+      orderType: '',
+      orderId: '',
+      lastComponent: '',
+      orderList: [],
+      payType: '',
+      beauticianCode: '',  // 技师工号
+      couponCode: ''       // 优惠券
+    },
+    onLoad: function (options) {
+      console.log(options)
+    },
+    onShow: function () {
+      this.getOrderList()
+    },
+    getOrderList: function () {
+      let app = getApp()
+      app.get('center/order').then(data => {
+        let result = data.data
+        result.content.forEach(item => item.appointment_end_time = this._realDay(item.appointment_day, item.appointment_end_time))
         this.setData({
-          orderList: orderList
+          orderList: result.content
         })
       })
-      .catch(error => {})
-  },
-  _realDay: function (value, day) {
-  try {
-    var _day = day + ' ' + value
-    _day = _day.replace(/-/g, '/')
-    var date = (new Date(_day)).getTime() + 30 * 60 * 1000
-    var date = (new Date(date))
-    var minute = date.getMinutes()
-    if (minute.toString().length == 1)
-      minute += '0'
-    return date.getHours() + ':' + minute + ':00'
-  } catch (e) {
-    return value
-  }
-}
+    },
+    payOffline: function () {
+      let app = getApp()
+      if (this.data.payType === 'cash') {
+        if (this.data.beauticianCode.trim().length === 0) {
+          wx.showToast({
+            title: '技师工号不能为空',
+            icon: 'none'
+          })
 
-}
+          return
+        }
+      }
+
+      // 团购
+      if (this.data.payType === 'group') {
+        if (!this.data.couponCode.match(/^\d{6,}$/)) {
+          wx.showToast({
+            title: '券号输入错误',
+            icon: 'none'
+          })
+
+          return
+        }
+      }
+
+
+      app.post(`center/completeOrder/${this.data.orderId}`, {
+        type: this.data.payType,
+        beautician_code: this.data.beauticianCode, coupon_code: this.data.couponCode
+      }).then(() => {
+        this.getOrderList()
+        this.data.lastComponent.hide()
+        this.setData({
+          orderId: '',
+          orderNo: '',
+          lastComponent: '',
+          payType: '',
+          beauticianCode: '',  // 技师工号
+          couponCode: ''       // 优惠券
+        })
+      })
+        .catch(error => {
+          wx.showToast({
+            title: error.detail || '支付失败，请重试',
+            duration: 2000,
+            icon: 'none'
+          })
+        })
+    },
+    payOnline: function () {
+      let app = getApp()
+      app.get(`order/pay/${this.data.orderNo}`)
+        .then(data => {
+          let result = data.data
+          let payParams = {
+            'success': function (res) {
+
+              wx.showToast({
+                title: '支付成功,等待数据确认，请稍等...',
+                duration: 3000,
+                icon: 'none'
+              })
+
+              setTimeout(x => this.getOrderList(), 2000)
+            },
+            'fail': function (res) {
+              wx.showToast({
+                title: '支付失败, 请重试...',
+                duration: 2000,
+                icon: 'none'
+              })
+            }
+          }
+
+          Object.assign(payParams, result.content)
+
+          wx.requestPayment(payParams)
+        })
+        .catch(error => {
+          wx.showToast({
+            title: error.detail || '支付失败，请重试',
+            duration: 2000,
+            icon: 'none'
+          })
+        })
+    },
+    cash: function (event) {
+      let id = event.currentTarget.dataset.id
+      this.setData({
+        payType: 'cash',
+        orderId: id,
+      })
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-cash')
+      dialogComponent && dialogComponent.show();
+    },
+    handlerBeautician: function (event) {
+      let value = event.detail.value
+      this.setData({
+        beauticianCode: value
+      })
+    },
+    handlerCouponCode: function (event) {
+      let value = event.detail.value
+      this.setData({
+        couponCode: value
+      })
+    },
+    scan: function (event) {
+      let id = event.currentTarget.dataset.id
+      this.setData({
+        payType: 'scan',
+        orderId: id
+      })
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-scan')
+      dialogComponent && dialogComponent.show();
+    },
+    groupBy: function (event) {
+      let id = event.currentTarget.dataset.id
+      this.setData({
+        payType: 'group',
+        orderId: id
+      })
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-group')
+      dialogComponent && dialogComponent.show();
+    },
+    online: function (event) {
+      let orderNo = event.currentTarget.dataset.id
+      this.setData({
+        payType: 'online',
+        orderNo: orderNo
+      })
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-online')
+      dialogComponent && dialogComponent.show();
+    },
+    cancel: function () {
+      this.data.lastComponent.hide();
+    },
+    cancelOrder: function (event) {
+      let app = getApp()
+      let orderId = event.currentTarget.dataset.id
+      let index = event.currentTarget.dataset.index
+      app.get('center/cancelOrder/' + orderId)
+        .then(() => {
+          let orderList = this.data.orderList
+          orderList[index].order_status = 2
+          this.setData({
+            orderList: orderList
+          })
+        })
+        .catch(error => {
+        })
+    },
+    _realDay: function (value, day) {
+      try {
+        var _day = day + ' ' + value
+        _day = _day.replace(/-/g, '/')
+        var date = (new Date(_day)).getTime() + 30 * 60 * 1000
+        var date = (new Date(date))
+        var minute = date.getMinutes()
+        if (minute.toString().length == 1)
+          minute += '0'
+        return date.getHours() + ':' + minute + ':00'
+      } catch (e) {
+        return value
+      }
+    }
+
+  }
 </script>
 
 <style>
