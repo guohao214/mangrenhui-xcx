@@ -89,7 +89,11 @@
   </view>
 
   <view class="footer">
-    <button type="primary" class="primary-btn" bindtap="appointment">发送预约</button>
+    <form bindsubmit="appointment" report-submit="{{ true }}">
+      <button type="primary"
+              class="primary-btn"
+              formType="submit">发送预约</button>
+    </form>
   </view>
 </template>
 
@@ -111,7 +115,7 @@
       showToast: false,
       shopList: [],
       cpShopList: [],
-      showShopListPop: 'show',
+      showShopListPop: 'hide',
       currentShop: {},
       beauticianList: [],
       currentBeautician: {},
@@ -288,8 +292,10 @@
           })
         })
     },
-    appointment: function () {
+    appointment: function (event) {
       let app = getApp()
+      let formId = event.detail.formId
+
       // 预约
       let data = {
         shop_id: this.data.currentShop.shop_id,
@@ -297,10 +303,16 @@
         project_id: this.data.currentProject.project_id,
         appointment_day: this.data.currentAppointmentDay.day,
         appointment_time: this.data.currentAppointmentTimes.join(','),
-        from: 'xcx'
+        from: 'xcx',
+        formId: formId,
       }
       app.post('cart/appointment', data)
-        .then(() =>  this._toast('预约成功!'))
+        .then(() =>   {
+          this._toast('预约成功!')
+          wx.switchTab({
+            url: '/pages/order/index'
+          })
+        })
         .catch(error => {
           this._toast(error.detail || '预约失败!')
         })

@@ -12,7 +12,7 @@
         <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode"></input>
     </wxc-dialog>
 
-    <wxc-dialog class="wxc-dialog wxc-online" title="在线支付" content="支付金额 $112" cancel-text="取消" bindcancel="cancel" bindconfirm="payOnline" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
+    <wxc-dialog class="wxc-dialog wxc-online" title="线上支付" content="支付金额 ¥ {{ amount }}" cancel-text="取消" bindcancel="cancel" bindconfirm="payOnline" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
 
     <view class="order-list" wx:for="{{orderList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="order">
         <view class="cell amount">
@@ -49,17 +49,19 @@
                     <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
                     <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
                     <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
-                    <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}">线上支付</button>
+                    <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}">线上支付</button>
                 </view>
             </view>
             <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
             <view class="handled" wx:else="">订单已取消</view>
         </view>
 
-        <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
-            <button size="default" type="warn" data-id="{{order.order_id}}" data-index="{{idx}}" class="btn" bindtap="cancelOrder">取消订单
-            </button>
-        </view>
+        <form bindsubmit="cancelOrder" report-submit="{{ true }}">
+            <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
+                <button size="default" type="warn" formType="submit" data-id="{{order.order_id}}" data-index="{{idx}}" class="btn">取消订单
+                </button>
+            </view>
+        </form>
     </view>
 
     <!--<layout-foot></layout-foot>-->

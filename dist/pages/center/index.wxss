@@ -1,4 +1,5 @@
 Page {
     background-color: white;
   }
+
   @import './style.wxss';

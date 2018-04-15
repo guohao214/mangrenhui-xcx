@@ -25,8 +25,8 @@
     <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode"/>
   </wxc-dialog>
 
-  <wxc-dialog class="wxc-dialog wxc-online" title="在线支付"
-              content="支付金额 $112"
+  <wxc-dialog class="wxc-dialog wxc-online" title="线上支付"
+              content="支付金额 ¥ {{ amount }}"
               cancel-text="取消"
               bindcancel="cancel"
               bindconfirm="payOnline"
@@ -69,20 +69,26 @@
           <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
           <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
           <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
-          <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}">线上支付</button>
+          <button size="mini" type="primary" bindtap="online"
+                  data-id="{{order.order_no}}"
+                  data-amount="{{ order.total_fee}}">线上支付</button>
         </view>
       </view>
       <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
       <view class="handled" wx:else>订单已取消</view>
     </view>
 
-    <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
-      <button size="default" type="warn"
-              data-id="{{order.order_id}}"
-              data-index="{{idx}}"
-              class="btn" bindtap="cancelOrder">取消订单
-      </button>
-    </view>
+    <form bindsubmit="cancelOrder" report-submit="{{ true }}">
+      <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
+        <button size="default"
+                type="warn"
+                formType="submit"
+                data-id="{{order.order_id}}"
+                data-index="{{idx}}"
+                class="btn">取消订单
+        </button>
+      </view>
+    </form>
   </view>
 
 </template>
@@ -96,6 +102,7 @@
       }
     },
     data: {
+      amount: 0,
       orderType: '',
       orderId: '',
       lastComponent: '',
@@ -247,9 +254,11 @@
     },
     online: function (event) {
       let orderNo = event.currentTarget.dataset.id
+      let amount = event.currentTarget.dataset.amount
       this.setData({
         payType: 'online',
-        orderNo: orderNo
+        orderNo: orderNo,
+        amount: amount,
       })
       let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-online')
       dialogComponent && dialogComponent.show();
@@ -257,12 +266,17 @@
     cancel: function () {
       this.data.lastComponent.hide();
     },
+
     cancelOrder: function (event) {
       let app = getApp()
-      let orderId = event.currentTarget.dataset.id
-      let index = event.currentTarget.dataset.index
-      app.get('center/cancelOrder/' + orderId)
-        .then(() => {
+      let formId = event.detail.formId
+      let orderId = event.detail.target.dataset.id
+      let index = event.detail.target.dataset.index
+
+      //console.log(event)
+
+      app.get('center/cancelOrder/' + orderId, { formId: formId})
+        .then(data => {
           let orderList = this.data.orderList
           orderList[index].order_status = 2
           this.setData({
@@ -270,17 +284,23 @@
           })
         })
         .catch(error => {
+          wx.showToast({
+            title: error.detail
+          })
         })
     },
-    _realDay: function (value, day) {
+    _realDay: function (day, value) {
       try {
         var _day = day + ' ' + value
         _day = _day.replace(/-/g, '/')
-        var date = (new Date(_day)).getTime() + 30 * 60 * 1000
-        var date = (new Date(date))
-        var minute = date.getMinutes()
+        let date = (new Date(_day)).getTime() + 30 * 60 * 1000
+        date = (new Date(date))
+        let minute = date.getMinutes()
         if (minute.toString().length == 1)
           minute += '0'
+
+        // console.log(value)
+        // console.log(day)
         return date.getHours() + ':' + minute + ':00'
       } catch (e) {
         return value

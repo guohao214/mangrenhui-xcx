@@ -6,15 +6,15 @@
     <text>{{ nickName }}</text>
   </view>
 
-  <view class="cell">
+  <view>
+    <navigator url="/pages/order/index?type=all" open-type="switchTab"  class="cell">
       <view class="order">
         我的订单
       </view>
       <view class="go">
-        <navigator url="/pages/order/index?type=all" open-type="switchTab">
-          <wxc-icon size="30" type="arrow-right"></wxc-icon>
-        </navigator>
+        <wxc-icon size="30" type="arrow-right"></wxc-icon>
       </view>
+    </navigator>
   </view>
 
   <view class="cell last-cell">
@@ -25,54 +25,55 @@
 </template>
 
 <script>
-export default {
-  config: {
-    navigationBarTitleText: '我的',
-    usingComponents: {
-      'wxc-icon' : '@minui/wxc-icon',
-      'wxc-avatar': '@minui/wxc-avatar',
-    }
-  },
-  onLoad: function () {
-    let self = this
-    wx.getUserInfo({
-      success: function(res) {
-        let user = res.userInfo
-        let { nickName, avatarUrl } = user
-        self.setData({
-          nickName: nickName,
-          avatarUrl: avatarUrl
-        })
-      },
-      fail: function () {
-        wx.openSetting({
-          success: function (res) {
-            let authSetting = res.authSetting
-            if (authSetting && authSetting['scope.userInfo'] && authSetting['scope.userInfo'] === true) {
-              wx.reLaunch({
-                url: '/pages/center/index'
-              })
-            }
-          }
-        })
+  export default {
+    config: {
+      navigationBarTitleText: '我的',
+      usingComponents: {
+        'wxc-icon': '@minui/wxc-icon',
+        'wxc-avatar': '@minui/wxc-avatar',
       }
-    })
-  },
-  data: {
-    nickName: '',
-    avatarUrl: '',
-  },
-  callPhone: function () {
-    wx.makePhoneCall({
-      phoneNumber: '18966786655'
-    })
+    },
+    onLoad: function () {
+      let self = this
+      wx.getUserInfo({
+        success: function (res) {
+          let user = res.userInfo
+          let {nickName, avatarUrl} = user
+          self.setData({
+            nickName: nickName,
+            avatarUrl: avatarUrl
+          })
+        },
+        fail: function () {
+          wx.openSetting({
+            success: function (res) {
+              let authSetting = res.authSetting
+              if (authSetting && authSetting['scope.userInfo'] && authSetting['scope.userInfo'] === true) {
+                wx.reLaunch({
+                  url: '/pages/center/index'
+                })
+              }
+            }
+          })
+        }
+      })
+    },
+    data: {
+      nickName: '',
+      avatarUrl: '',
+    },
+    callPhone: function () {
+      wx.makePhoneCall({
+        phoneNumber: '18966786655'
+      })
+    }
   }
-}
 </script>
 
 <style>
   Page {
     background-color: white;
   }
+
   @import "style.wxss";
 </style>

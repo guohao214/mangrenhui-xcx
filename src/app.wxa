@@ -62,19 +62,20 @@
     },
     globalData: {
       baseUrl: 'https://www.mlxiaowu.com/',
-      //baseUrl : 'http://localhost/',
+      // baseUrl : 'http://localhost/',
     },
-    onLaunch() {
-      return
+    login: function () {
       let self = this
       wx.login({
         success: function (data) {
           self.get('xcxLogin/authorize', {code: data.code}).then(data => {
             wx.setStorageSync('session_id', data.data)
           })
-        }
+        },
       })
-
+    },
+    onLaunch() {
+      this.login()
     },
     onShow() {
     },

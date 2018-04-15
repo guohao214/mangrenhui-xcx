@@ -1,5 +1,5 @@
 Page {
-  width: 100%;
+  /*width: 100%;*/
   overflow-x: hidden;
 }
 .flex {

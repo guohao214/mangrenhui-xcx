@@ -34,7 +34,31 @@
       phone: '',
       smsCode: '',
       start: false,
-      startText: '获取验证码'
+      startText: '获取验证码',
+      userInfo: '',
+    },
+    onLoad: function () {
+      let self = this
+      wx.getUserInfo({
+        success: function (res) {
+          let user = res.userInfo
+          self.setData({
+            userInfo: user
+          })
+        },
+        fail: function () {
+          wx.openSetting({
+            success: function (res) {
+              let authSetting = res.authSetting
+              if (authSetting && authSetting['scope.userInfo'] && authSetting['scope.userInfo'] === true) {
+                wx.reLaunch({
+                  url: '/pages/bind/index'
+                })
+              }
+            }
+          })
+        }
+      })
     },
     handlerPhone: function (event) {
       let value = event.detail.value
@@ -58,7 +82,7 @@
         return
       }
 
-      app.get('bind/bindMe', {code: this.data.smsCode, phone: this.data.phone})
+      app.get('bind/bindMe', {code: this.data.smsCode, phone: this.data.phone, user_info: this.data.userInfo})
         .then(data => setTimeout(() =>
             wx.switchTab({
               url: '/pages/appointment/index'
