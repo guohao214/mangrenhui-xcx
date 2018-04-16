@@ -31,7 +31,7 @@
         backgroundColor: '#ffffff',
         list: [
           {
-            pagePath: 'pages/appointment/index',
+            pagePath: 'pages/bind/index',
             iconPath: 'common/assets/tab/03.png',
             selectedIconPath: 'common/assets/tab/031.png',
             text: '预约'

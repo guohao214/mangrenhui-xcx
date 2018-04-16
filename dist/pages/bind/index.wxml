@@ -16,7 +16,7 @@
     <view class="cell">
         <label class="label">验证码:</label>
         <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"></input>
-        <button size="mini" class="sms-btn primary-btn" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
+        <button size="mini" class="sms-btn primary-btn {{ start ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
     </view>
 
     <view class="footer">

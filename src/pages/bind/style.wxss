@@ -51,15 +51,16 @@ Page {
 .cell .label {
 }
 .cell .input {
-  padding-right: 10rpx;
+  padding-left: 20rpx;
   flex-flow: 1;
 }
 
 .cell .sms-btn {
-  flex-basis: 300rpx;
+  flex-basis: 250rpx;
   color: white;
 }
 
 .disabled {
   background-color: #EDEDED !important;
+  color: #ffb400 !important;
 }

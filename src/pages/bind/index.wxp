@@ -14,7 +14,7 @@
   <view class="cell">
     <label class="label">验证码:</label>
     <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"/>
-    <button size="mini" class="sms-btn primary-btn" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
+    <button size="mini" class="sms-btn primary-btn {{ start ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
   </view>
 
   <view class="footer">
@@ -109,7 +109,11 @@
         start: true
       })
 
-      let intervalCounts = 5
+      let intervalCounts = 60
+
+      this.setData({
+        startText: `${intervalCounts--}s`
+      })
 
       let interval = setInterval(x => {
         this.setData({
