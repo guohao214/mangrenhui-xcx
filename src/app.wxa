@@ -65,7 +65,7 @@
       // baseUrl : 'http://localhost/',
     },
     login: function () {
-      return;
+      // return;
       let self = this
       wx.login({
         success: function (data) {
