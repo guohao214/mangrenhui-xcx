@@ -309,9 +309,7 @@
       app.post('cart/appointment', data)
         .then(() =>   {
           this._toast('预约成功!')
-          wx.switchTab({
-            url: '/pages/order/index'
-          })
+          setTimeout(x => this.getAppointmentTimes(data.beautician_id, data.appointment_day), 1000)
         })
         .catch(error => {
           this._toast(error.detail || '预约失败!')

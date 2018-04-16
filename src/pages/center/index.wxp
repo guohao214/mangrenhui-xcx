@@ -7,7 +7,7 @@
   </view>
 
   <view>
-    <navigator url="/pages/order/index?type=all" open-type="switchTab"  class="cell">
+    <navigator url="/pages/order/index?type=all" open-type="navigate" class="cell">
       <view class="order">
         我的订单
       </view>
@@ -19,7 +19,7 @@
 
   <view class="cell last-cell">
     <view class="phone">
-      <text class="call-phone" bindtap="callPhone">联系我们：189-6678-6655</text>
+      <text class="call-phone" bindtap="callPhone">联系我们：{{phone}}</text>
     </view>
   </view>
 </template>
@@ -57,14 +57,24 @@
           })
         }
       })
+
+      let app = getApp()
+      app.get('center/getPhone').then(data => {
+        let result = data.data
+        this.setData({
+          phone: result.content.phone
+        })
+      })
     },
     data: {
       nickName: '',
       avatarUrl: '',
+      phone: ''
     },
     callPhone: function () {
+      let self = this
       wx.makePhoneCall({
-        phoneNumber: '18966786655'
+        phoneNumber: self.data.phone
       })
     }
   }

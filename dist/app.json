@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/appointment/index",
     "pages/article/index",
+    "pages/appointment/index",
     "pages/bind/index",
     "pages/center/index",
     "pages/home/index",
-    "pages/order/index"
+    "pages/order/index",
+    "pages/pay/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -21,13 +22,19 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
+        "pagePath": "pages/article/index",
+        "iconPath": "common/assets/tab/02.png",
+        "selectedIconPath": "common/assets/tab/021.png",
+        "text": "品牌"
+      },
+      {
         "pagePath": "pages/appointment/index",
         "iconPath": "common/assets/tab/03.png",
         "selectedIconPath": "common/assets/tab/031.png",
         "text": "预约"
       },
       {
-        "pagePath": "pages/order/index",
+        "pagePath": "pages/pay/index",
         "iconPath": "common/assets/tab/01.png",
         "selectedIconPath": "common/assets/tab/011.png",
         "text": "买单"
@@ -37,12 +44,6 @@
         "iconPath": "common/assets/tab/04.png",
         "selectedIconPath": "common/assets/tab/041.png",
         "text": "我的"
-      },
-      {
-        "pagePath": "pages/article/index",
-        "iconPath": "common/assets/tab/02.png",
-        "selectedIconPath": "common/assets/tab/021.png",
-        "text": "品牌"
       }
     ]
   },

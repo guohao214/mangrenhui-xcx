@@ -5,6 +5,7 @@
   "author": "guohao",
   "license": "MIT",
   "dependencies": {
+    "@minui/wxc-abnor": "^1.0.7",
     "@minui/wxc-avatar": "^1.0.4",
     "@minui/wxc-dialog": "^1.0.8",
     "@minui/wxc-elip": "^1.0.5",
