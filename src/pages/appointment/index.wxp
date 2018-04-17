@@ -169,6 +169,9 @@
     chooseBeautician: function (event) {
       let index = event.currentTarget.dataset.index
       let currentBeautician = this.data.beauticianList[index]
+      if (currentBeautician.beautician_id === this.data.currentBeautician.beautician_id)
+        return
+
       this.setData({
         currentBeautician: currentBeautician,
       })
@@ -180,6 +183,10 @@
     chooseDay: function (event) {
       let index = event.currentTarget.dataset.index
       let currentAppointmentDay = this.data.appointmentDayList[index]
+
+      if (currentAppointmentDay.day === this.data.currentAppointmentDay.day)
+        return
+
       this.setData({
         currentAppointmentDay: currentAppointmentDay,
       })

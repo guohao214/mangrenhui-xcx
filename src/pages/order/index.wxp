@@ -1,4 +1,13 @@
 <template>
+  <wxc-dialog class="wxc-dialog wxc-cancel-order"
+              title="确定取消此订单"
+              cancel-text="取消"
+              bindconfirm="cancelOrderConfirm"
+              bindcancel="cancel"
+              confirm-text="确定">
+  </wxc-dialog>
+
+
   <wxc-dialog class="wxc-dialog wxc-cash"
               title="店内现金"
               content="输入技师工号"
@@ -67,22 +76,23 @@
       </view>
     </view>
     <view class="control">
-      <view class="handled" wx:if="{{ order.order_status == 1 }}">待支付</view>
+      <view class="handled" wx:if="{{ order.order_status == 1 }}">
+        <form bindsubmit="cancelOrder" report-submit="{{ true }}">
+          <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
+            <button size="default"
+                    type="warn"
+                    formType="submit"
+                    data-id="{{order.order_id}}"
+                    data-index="{{idx}}"
+                    class="btn">取消订单
+            </button>
+          </view>
+        </form>
+      </view>
       <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
       <view class="handled" wx:else>订单已取消</view>
     </view>
 
-    <!--<form bindsubmit="cancelOrder" report-submit="{{ true }}">-->
-      <!--<view class="cancel-order" wx:if="{{order.order_status  == 1}}">-->
-        <!--<button size="default"-->
-                <!--type="warn"-->
-                <!--formType="submit"-->
-                <!--data-id="{{order.order_id}}"-->
-                <!--data-index="{{idx}}"-->
-                <!--class="btn">取消订单-->
-        <!--</button>-->
-      <!--</view>-->
-    <!--</form>-->
   </view>
 
 </template>
@@ -261,8 +271,50 @@
     cancel: function () {
       this.data.lastComponent.hide();
     },
+    cancelOrderConfirm: function () {
+      let app = getApp()
+      let formId = this.data.formId
+      let orderId = this.data.orderId
+      let index = this.data.lastIndex
 
+      app.get('center/cancelOrder/' + orderId, { formId: formId})
+        .then(data => {
+          this.data.lastComponent.hide()
+          let orderList = this.data.orderList
+          orderList[index].order_status = 2
+          this.setData({
+            orderList: orderList,
+            orderId: '',
+            orderNo: '',
+            lastComponent: '',
+            payType: '',
+            beauticianCode: '',  // 技师工号
+            couponCode: '' ,      // 优惠券,
+            formId: ''
+          })
+        })
+        .catch(error => {
+          wx.showToast({
+            title: error.detail
+          })
+        })
+    },
     cancelOrder: function (event) {
+
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-cancel-order')
+      dialogComponent && dialogComponent.show();
+
+      let formId = event.detail.formId
+      let orderId = event.detail.target.dataset.id
+      let index = event.detail.target.dataset.index
+      this.setData({
+        formId: formId,
+        orderId: orderId,
+        lastIndex: index
+      })
+    },
+
+    cancelOrder_1: function (event) {
       let app = getApp()
       let formId = event.detail.formId
       let orderId = event.detail.target.dataset.id

@@ -8,10 +8,10 @@
 }
 
 .beautician {
-  width: 200rpx;
-  height: 200rpx;
+  width: 175rpx;
+  height: 175rpx;
   padding: 15rpx 0;
-  margin-top: 20rpx;
+  margin-top: 30rpx;
   display: inline-block;
   text-align: center;
 }

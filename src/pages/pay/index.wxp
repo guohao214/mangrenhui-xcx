@@ -15,7 +15,7 @@
               bindconfirm="payOffline"
               bindcancel="cancel"
               confirm-text="确定">
-    <input class="input" placeholder="技师工号" bindinput="handlerBeautician"/>
+    <input class="input" placeholder="技师工号" bindinput="handlerBeautician" value="{{ beauticianCode }}"/>
   </wxc-dialog>
 
   <wxc-dialog class="wxc-dialog wxc-scan" title="店内扫码"
@@ -31,7 +31,7 @@
               bindconfirm="payOffline"
               bindcancel="cancel"
               confirm-text="确定">
-    <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode"/>
+    <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode" value="{{ couponCode }}"/>
   </wxc-dialog>
 
   <wxc-dialog class="wxc-dialog wxc-online" title="线上支付"
@@ -85,24 +85,14 @@
           <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
           <button size="mini" type="primary" bindtap="online"
                   data-id="{{order.order_no}}"
-                  data-amount="{{ order.total_fee}}">线上支付</button>
+                  data-amount="{{ order.total_fee}}">线上支付
+          </button>
         </view>
       </view>
       <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
       <view class="handled" wx:else>订单已取消</view>
     </view>
 
-    <form bindsubmit="cancelOrder" report-submit="{{ true }}">
-      <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
-        <button size="default"
-                type="warn"
-                formType="submit"
-                data-id="{{order.order_id}}"
-                data-index="{{idx}}"
-                class="btn">取消订单
-        </button>
-      </view>
-    </form>
   </view>
 
 </template>
@@ -110,7 +100,7 @@
 <script>
   export default {
     config: {
-      navigationBarTitleText: '我的订单',
+      navigationBarTitleText: '买单',
       usingComponents: {
         'wxc-dialog': '@minui/wxc-dialog',
         'wxc-abnor': '@minui/wxc-abnor'
@@ -125,8 +115,8 @@
       lastIndex: '',
       orderList: [],
       payType: '',
-      beauticianCode: '',  // 技师工号
-      couponCode: ''       // 优惠券
+      beauticianCode: '',
+      couponCode: ''
     },
     onLoad: function (options) {
       // console.log(options)
@@ -136,7 +126,7 @@
     },
     getOrderList: function () {
       let app = getApp()
-      app.get('center/order', { order_status: 1}).then(data => {
+      app.get('center/order', {order_status: 1}).then(data => {
         let result = data.data
         result.content.forEach(item => item.appointment_end_time = this._realDay(item.appointment_day, item.appointment_end_time))
         this.setData({
@@ -159,7 +149,7 @@
 
       // 团购
       if (this.data.payType === 'group') {
-        if (!this.data.couponCode.match(/^\d{10,12}$/)) {
+        if (!this.data.couponCode.match(/^\d{10}$/) && !this.data.couponCode.match(/^\d{12}$/)) {
           wx.showToast({
             title: '券号输入错误,券号位数为10位或者12位',
             icon: 'none'
@@ -175,17 +165,7 @@
         beautician_code: this.data.beauticianCode, coupon_code: this.data.couponCode
       }).then(() => {
         this.getOrderList()
-        this.data.lastComponent.hide()
-        this.setData({
-          orderId: '',
-          orderNo: '',
-          lastComponent: '',
-          payType: '',
-          beauticianCode: '',  // 技师工号
-          couponCode: '',       // 优惠券,
-          formId: '',
-          lastIndex: '',
-        })
+        this.cancel()
       })
         .catch(error => {
           wx.showToast({
@@ -209,18 +189,7 @@
                 icon: 'none'
               })
 
-              this.data.lastComponent.hide()
-
-              this.setData({
-                orderId: '',
-                orderNo: '',
-                lastComponent: '',
-                payType: '',
-                beauticianCode: '',  // 技师工号
-                couponCode: '',       // 优惠券,
-                formId: '',
-                lastIndex: '',
-              })
+              this.cancel()
 
               setTimeout(x => this.getOrderList(), 2000)
             },
@@ -297,6 +266,18 @@
     },
     cancel: function () {
       this.data.lastComponent.hide();
+
+      this.setData({
+        amount: 0,
+        orderType: '',
+        orderId: '',
+        lastComponent: '',
+        formId: '',
+        lastIndex: '',
+        payType: '',
+        beauticianCode: '',
+        couponCode: ''
+      })
     },
 
     cancelOrderConfirm: function () {
@@ -305,21 +286,11 @@
       let orderId = this.data.orderId
       let index = this.data.lastIndex
 
-      app.get('center/cancelOrder/' + orderId, { formId: formId})
+      app.get('center/cancelOrder/' + orderId, {formId: formId})
         .then(data => {
-          this.data.lastComponent.hide()
           let orderList = this.data.orderList
           orderList[index].order_status = 2
-          this.setData({
-            orderList: orderList,
-            orderId: '',
-            orderNo: '',
-            lastComponent: '',
-            payType: '',
-            beauticianCode: '',  // 技师工号
-            couponCode: '' ,      // 优惠券,
-            formId: ''
-          })
+          this.cancel()
         })
         .catch(error => {
           wx.showToast({

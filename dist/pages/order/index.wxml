@@ -2,6 +2,10 @@
     <layout-head _pid="{{_pid}}"></layout-head>
 
     <!-- page页面占位符 -->
+    <wxc-dialog class="wxc-dialog wxc-cancel-order" title="确定取消此订单" cancel-text="取消" bindconfirm="cancelOrderConfirm" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}">
+    </wxc-dialog>
+
+
     <wxc-dialog class="wxc-dialog wxc-cash" title="店内现金" content="输入技师工号" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}">
         <input class="input" placeholder="技师工号" bindinput="handlerBeautician"></input>
     </wxc-dialog>
@@ -47,22 +51,18 @@
             </view>
         </view>
         <view class="control">
-            <view class="handled" wx:if="{{ order.order_status == 1 }}">待支付</view>
+            <view class="handled" wx:if="{{ order.order_status == 1 }}">
+                <form bindsubmit="cancelOrder" report-submit="{{ true }}">
+                    <view class="cancel-order" wx:if="{{order.order_status  == 1}}">
+                        <button size="default" type="warn" formType="submit" data-id="{{order.order_id}}" data-index="{{idx}}" class="btn">取消订单
+                        </button>
+                    </view>
+                </form>
+            </view>
             <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
             <view class="handled" wx:else="">订单已取消</view>
         </view>
 
-        <!--<form bindsubmit="cancelOrder" report-submit="{{ true }}">-->
-        <!--<view class="cancel-order" wx:if="{{order.order_status  == 1}}">-->
-        <!--<button size="default"-->
-        <!--type="warn"-->
-        <!--formType="submit"-->
-        <!--data-id="{{order.order_id}}"-->
-        <!--data-index="{{idx}}"-->
-        <!--class="btn">取消订单-->
-        <!--</button>-->
-        <!--</view>-->
-        <!--</form>-->
     </view>
 
     <!--<layout-foot></layout-foot>-->

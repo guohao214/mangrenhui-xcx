@@ -61,8 +61,8 @@
       }
     },
     globalData: {
-      baseUrl: 'https://www.mlxiaowu.com/',
-      // baseUrl : 'http://localhost/',
+      // baseUrl: 'https://www.mlxiaowu.com/',
+      baseUrl : 'http://localhost/',
     },
     login: function () {
       // return;
