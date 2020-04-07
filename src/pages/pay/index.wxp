@@ -43,7 +43,7 @@
 
 
   <view wx:if="{{ orderList.length === 0}}">
-    <wxc-abnor type="ORDER"></wxc-abnor>
+    <wxc-abnor type="ORDER" title="您没有需买单的订单哦"></wxc-abnor>
   </view>
 
   <view class="order-list" wx:for="{{orderList}}" data-index="{{idx}}"
@@ -180,6 +180,7 @@
       app.get(`order/pay/${this.data.orderNo}`)
         .then(data => {
           let result = data.data
+          let self = this
           let payParams = {
             'success': function (res) {
 
@@ -189,9 +190,9 @@
                 icon: 'none'
               })
 
-              this.cancel()
+              self.cancel()
 
-              setTimeout(x => this.getOrderList(), 2000)
+              setTimeout(x => self.getOrderList(), 2000)
             },
             'fail': function (res) {
               wx.showToast({

@@ -1,5 +1,5 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
 	"packOptions": {
 		"ignore": []
 	},
@@ -7,18 +7,33 @@
 		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.90",
+	"libVersion": "2.10.2",
 	"appid": "wx29cb21f55ab15eef",
-	"projectname": "%E7%9B%B2%E4%BA%BA%E8%8D%9F",
-	"svr": "",
-	"client": "",
-	"qcloudRoot": "",
-	"miniprogramRoot": "",
-	"pluginRoot": "",
+	"projectname": "mangrenhui",
+	"cloudfunctionTemplateRoot": "",
+	"watchOptions": {
+		"ignore": []
+	},
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
 	"scripts": {},
 	"condition": {
 		"search": {
@@ -36,9 +51,32 @@
 		"game": {
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/bind/index",
+					"pathName": "pages/bind/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/bind/index",
+					"pathName": "pages/bind/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "手机号",
+					"pathName": "pages/bind/index",
+					"scene": null
+				}
+			]
 		}
 	}
 }

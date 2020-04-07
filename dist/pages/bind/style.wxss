@@ -64,3 +64,14 @@ Page {
   background-color: #EDEDED !important;
   color: #ffb400 !important;
 }
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.auth-btn {
+  width: 90%;
+}

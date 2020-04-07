@@ -8,8 +8,8 @@
 }
 
 .beautician {
-  width: 175rpx;
-  height: 175rpx;
+  width: 155rpx;
+  height: 155rpx;
   padding: 15rpx 0;
   margin-top: 30rpx;
   display: inline-block;

@@ -5,3 +5,7 @@
   flex-direction: column;
   min-height: 300rpx;
 }
+
+image {
+  width: 100%;
+}

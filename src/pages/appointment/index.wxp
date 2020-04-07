@@ -278,6 +278,8 @@
         })
 
         self.getAppointmentTimes(currentBeautician.beautician_id, currentAppointmentDay.day)
+      }).catch(e => {
+        console.log(e)
       })
 
     },
@@ -339,7 +341,7 @@
 
             if (currentShop)
               self.getBeauticianAndProject(currentShop.shop_id)
-          })
+          }).catch(e => console.log(e))
         },
         fail: function () {
           wx.openSetting({

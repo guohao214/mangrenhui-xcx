@@ -1,24 +1,31 @@
 <template>
-  <view class="header">
-    <wxc-avatar class="logo" mold="circle"
-                src="https://www.mlxiaowu.com/static/frontend/images/WechatIMG177.jpeg">
-    </wxc-avatar>
-    <view>请用手机号登录</view>
+  <view wx:if="{{authed}}">
+    <view class="header">
+      <wxc-avatar class="logo" mold="circle"
+                  src="https://www.mlxiaowu.com/static/frontend/images/WechatIMG177.jpeg">
+      </wxc-avatar>
+      <view>请用手机号登录</view>
+    </view>
+
+    <view class="cell">
+      <label class="label">手机号:</label>
+      <input type="number" class="input" placeholder="请输入手机号" bindinput="handlerPhone" maxlength="11"/>
+    </view>
+
+    <view class="cell">
+      <label class="label">验证码:</label>
+      <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"/>
+      <button size="mini" class="sms-btn primary-btn {{ start ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
+    </view>
+
+    <view class="footer">
+      <button type="primary" class="primary-btn" bindtap="login">登录</button>
+    </view>
   </view>
 
-  <view class="cell">
-    <label class="label">手机号:</label>
-    <input type="number" class="input" placeholder="请输入手机号" bindinput="handlerPhone" maxlength="11"/>
-  </view>
 
-  <view class="cell">
-    <label class="label">验证码:</label>
-    <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"/>
-    <button size="mini" class="sms-btn primary-btn {{ start ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
-  </view>
-
-  <view class="footer">
-    <button type="primary" class="primary-btn" bindtap="login">登录</button>
+  <view class="center" wx:if="{{!authed}}">
+    <button class="auth-btn" type="primary" open-type="getUserInfo" class="primary-btn" bindgetuserinfo="getUserInfo">获取用户信息</button>
   </view>
 </template>
 
@@ -36,30 +43,23 @@
       start: false,
       startText: '获取验证码',
       userInfo: '',
+      authed: false,
     },
-    onLoad: function () {
-      let self = this
-      wx.getUserInfo({
-        success: function (res) {
-          let user = res.userInfo
-          self.setData({
-            userInfo: user
-          })
-        },
-        fail: function () {
-          wx.openSetting({
-            success: function (res) {
-              let authSetting = res.authSetting
-              if (authSetting && authSetting['scope.userInfo'] && authSetting['scope.userInfo'] === true) {
-                wx.reLaunch({
-                  url: '/pages/bind/index'
-                })
-              }
-            }
-          })
-        }
-      })
+    onShow: function () {
     },
+
+    getUserInfo(res) {
+      if (!res.detail.userInfo) {
+        return wx.showToast({
+          title: '请您先授权',
+          icon: 'none'
+        })
+      }
+          this.setData({
+            authed: true,
+            userInfo: res.detail.userInfo
+          })
+        },  
     handlerPhone: function (event) {
       let value = event.detail.value
       this.setData({

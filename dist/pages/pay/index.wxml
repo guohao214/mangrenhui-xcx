@@ -20,7 +20,7 @@
 
 
     <view wx:if="{{ orderList.length === 0}}">
-        <wxc-abnor type="ORDER" _pid="{{_pid}}"></wxc-abnor>
+        <wxc-abnor type="ORDER" title="您没有需买单的订单哦" _pid="{{_pid}}"></wxc-abnor>
     </view>
 
     <view class="order-list" wx:for="{{orderList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="order">
