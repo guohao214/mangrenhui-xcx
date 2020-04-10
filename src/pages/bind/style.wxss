@@ -1,77 +1,78 @@
-Page {
-  background-color: white;
-  font-size: 26rpx;
+.page {
+  height: 100Vh;
+  width: 100vw;
 }
 
-.header {
+.ucenter-bg {
+  background-size: cover;
+  height: 35vh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  font-weight: 300;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.ucenter-bg text {
+  opacity: 0.8;
+}
+
+.ucenter-bg image {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.ucenter-bg .gif-wave{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  mix-blend-mode: screen;  
+  height: 100rpx;   
+}
+
+.body {
+	position: absolute;
+	bottom: 20vh;
+	width: 80vw;
+	left: 10vw;
+}
+.text-gray {
+  font-size: 28rpx;
+  color: black;
+  display: block;
+  text-align: center;
+  padding: 5rpx;
+}
+
+/* .line-orange {
+  background-color: #FFDCE4;
+  color: black;
+} */
+
+.center {
   display: flex;
   flex-direction: column;
-  height: 350 rpx;
-  width: 100%;
   justify-content: center;
   align-items: center;
-  margin-bottom: 100rpx;
-  margin-top: 20rpx;
+  height: 60vh;
 }
 
 .logo {
-  width: 150rpx;
-  height: 150rpx;
-  display: block;
-  padding: 10rpx;
-}
-
-.footer {
-  padding: 30rpx;
-}
-
-.active {
-  color: #ffb400;
-  /*border: 1px solid red;*/
-}
-
-.primary-color {
-  color: #ffb400;
+  height: 200rpx;
+  width: 200rpx;
+  margin-bottom: 10vh;
 }
 
 .primary-btn {
   background-color: #ffb400 !important;
   font-size: 35rpx;
-}
-
-
-.cell {
-  border-bottom: 1rpx solid rgb(228,228,228);
-  padding: 30rpx;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 20rpx;
-}
-.cell .label {
-}
-.cell .input {
-  padding-left: 20rpx;
-  flex-flow: 1;
-}
-
-.cell .sms-btn {
-  flex-basis: 250rpx;
   color: white;
 }
 
-.disabled {
-  background-color: #EDEDED !important;
-  color: #ffb400 !important;
-}
-
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 70vh;
-}
-
-.auth-btn {
-  width: 90%;
-}
+/* #ffb400 */

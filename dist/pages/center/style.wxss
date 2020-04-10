@@ -28,6 +28,10 @@
   flex-grow: 1;
 }
 
+.call-phone {
+  text-decoration: underline;
+}
+
 .cell .go {
   /*width: 50rpx;*/
 }

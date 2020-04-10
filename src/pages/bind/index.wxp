@@ -1,65 +1,128 @@
 <template>
-  <view wx:if="{{authed}}">
-    <view class="header">
-      <wxc-avatar class="logo" mold="circle"
-                  src="https://www.mlxiaowu.com/static/frontend/images/WechatIMG177.jpeg">
-      </wxc-avatar>
-      <view>请用手机号登录</view>
+  <view class="center">
+    <wxc-avatar class="logo" mold="circle"
+                  src="https://api.mangrenhui.cn/static/logo.jpeg">
+    </wxc-avatar>
+
+    <view class="flex-sub text-center">
+      <text class="text-gray" wx:if="{{!authed}}">为了更好的为您提供服务</text>
+      <text class="text-gray" wx:if="{{!authed}}">猫的世界需要授权</text>
+      <text class="text-gray" wx:if="{{authed && noPhone}}">猫的世界需要获取您的手机号</text>
     </view>
 
-    <view class="cell">
-      <label class="label">手机号:</label>
-      <input type="number" class="input" placeholder="请输入手机号" bindinput="handlerPhone" maxlength="11"/>
+    <view class="body">
+      <view class="action">
+        <button wx:if="{{!authed}}" loading="{{loading}}" disabled="{{loading}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo" class="primary-btn block line-orange lg">微信一键登录</button>
+
+        <button wx:if="{{authed && noPhone}}" loading="{{loading}}" disabled="{{loading}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="primary-btn block line-orange lg">允许获取手机号</button>
+      </view>
     </view>
 
-    <view class="cell">
-      <label class="label">验证码:</label>
-      <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"/>
-      <button size="mini" class="sms-btn primary-btn {{ start ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
-    </view>
-
-    <view class="footer">
-      <button type="primary" class="primary-btn" bindtap="login">登录</button>
-    </view>
-  </view>
-
-
-  <view class="center" wx:if="{{!authed}}">
-    <button class="auth-btn" type="primary" open-type="getUserInfo" class="primary-btn" bindgetuserinfo="getUserInfo">获取用户信息</button>
   </view>
 </template>
 
 <script>
   export default {
     config: {
-      navigationBarTitleText: '绑定手机号',
+      navigationBarTitleText: '登录',
+      navigationBarBackgroundColor: '#FFDCE4',
       usingComponents: {
         'wxc-avatar': '@minui/wxc-avatar',
       }
     },
     data: {
-      phone: '',
-      smsCode: '',
-      start: false,
-      startText: '获取验证码',
-      userInfo: '',
+      userInfo: {},
       authed: false,
+      loading: false,
+      noPhone: false
     },
     onShow: function () {
+      this.setData({
+        userInfo: {},
+        authed: false,
+        loading: false,
+        noPhone: false
+      })
+    },
+
+    getPhoneNumber(res) {
+      let _this = this;
+      if (!res.detail.iv) {
+        wx.showToast({
+          title: '获取手机号失败，请重试',
+          icon: 'none'
+        })
+        return
+      }
+      
+      const app = getApp()
+
+      // res.detail
+      // encryptedData: "3aKTLbNlVjSNSQiMO7pKpmB6OkRD5u8h8jL+y2Ap2vBymLUsNV6qzKpOG+t0TeasWEKqki2U9+g477mFicGq0PIZ0DE8tBpSK7Bft+vgG2ZUwBE2F/Xz28baZcFVShIgxo1HbUDVBCI25M3LTXeMqnnFuA2EoGbMtvu4tTzD6cbqPZpESuLlQM6o1QkwYu73fzumV6Vna6iUlt5psUuioA=="
+      // errMsg: "getPhoneNumber:ok"
+      // iv: "mYO48TOme5wPMw1e7RS4Sg=="
+
+      app.post('bind/bindMe', {
+        enc_detail: JSON.stringify(res.detail),
+        user_info: JSON.stringify(this.data.userInfo)
+      }).then(data => {
+        app.globalData.noPhone = false
+        let userInfo = this.data.userInfo
+        userInfo.noPhone = false
+
+        // 隐藏
+        this.setData({
+          noPhone: false
+        })
+
+        app.setUserInfo(userInfo)
+
+        wx.navigateBack()
+      })
+
     },
 
     getUserInfo(res) {
-      if (!res.detail.userInfo) {
-        return wx.showToast({
-          title: '请您先授权',
+      const app = getApp()
+
+      app.login().then(data => { // data 为session_id
+        if (!res.detail.userInfo) {
+          return wx.showToast({
+            title: '请您先授权',
+            icon: 'none'
+          })
+        }
+
+        // 获取了用户信息
+        const userInfo = res.detail.userInfo
+        userInfo.noPhone = data.noPhone
+        
+        this.setData({
+          authed: true,
+          noPhone: data.noPhone,
+          userInfo
+        })
+
+         app.setUserInfo(userInfo)
+
+        // 有手机号，直接返回
+        if (!data.noPhone) {
+          app.globalData.noPhone = false
+          wx.navigateBack()
+        }
+
+      }).catch(e => {
+        wx.showToast({
+          title: '登录失败，请重试',
           icon: 'none'
         })
-      }
-          this.setData({
-            authed: true,
-            userInfo: res.detail.userInfo
-          })
-        },  
+      })
+
+
+      
+
+      
+    },  
     handlerPhone: function (event) {
       let value = event.detail.value
       this.setData({

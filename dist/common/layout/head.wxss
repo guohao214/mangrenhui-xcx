@@ -1,5 +1,5 @@
 .head {
-  height: 10rpx;
+  height: 0rpx;
   background-color:#ffb400;
   display: flex;
   align-items: center;

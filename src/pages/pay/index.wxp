@@ -101,6 +101,7 @@
   export default {
     config: {
       navigationBarTitleText: '买单',
+      navigationBarBackgroundColor: '#FFDCE4',
       usingComponents: {
         'wxc-dialog': '@minui/wxc-dialog',
         'wxc-abnor': '@minui/wxc-abnor'

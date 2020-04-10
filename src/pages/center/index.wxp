@@ -1,9 +1,13 @@
 <template>
-  <view class="header-cell">
+  <view wx:if="{{nickName.length > 0}}" class="header-cell">
     <wxc-avatar class="avatar" mold="circle"
                 src="{{ avatarUrl }}">
     </wxc-avatar>
     <text>{{ nickName }}</text>
+  </view>
+
+  <view wx:if="{{nickName.length <= 0}}" class="header-cell">
+    <button size="mini" type="primary" bindtap="goLogin">登录</button>
   </view>
 
   <view>
@@ -19,7 +23,7 @@
 
   <view class="cell last-cell">
     <view class="phone">
-      <text class="call-phone" bindtap="callPhone">联系我们：{{phone}}</text>
+      联系我们：<text class="call-phone" bindtap="callPhone">{{phone}}</text>
     </view>
   </view>
 </template>
@@ -28,38 +32,22 @@
   export default {
     config: {
       navigationBarTitleText: '我的',
+      navigationBarBackgroundColor: '#FFDCE4',
       usingComponents: {
         'wxc-icon': '@minui/wxc-icon',
         'wxc-avatar': '@minui/wxc-avatar',
       }
     },
-    onLoad: function () {
+    onShow: function () {
       let self = this
-      wx.getUserInfo({
-        success: function (res) {
-          let user = res.userInfo
-          let {nickName, avatarUrl} = user
-          self.setData({
-            nickName: nickName,
-            avatarUrl: avatarUrl
-          })
-        },
-        fail: function () {
-          wx.openSetting({
-            success: function (res) {
-              let authSetting = res.authSetting
-              if (authSetting && authSetting['scope.userInfo'] && authSetting['scope.userInfo'] === true) {
-                wx.reLaunch({
-                  url: '/pages/center/index'
-                })
-              }
-            }
-          })
-        }
+      const app = getApp()
+      const userInfo = app.getUserInfo()
+      let {nickName, avatarUrl} = userInfo
+      self.setData({
+        nickName: nickName,
+        avatarUrl: avatarUrl
       })
-
-      let app = getApp()
-      app.get('center/getPhone').then(data => {
+      app.get('shop/getPhone', '', '', false).then(data => {
         let result = data.data
         this.setData({
           phone: result.content.phone
@@ -70,6 +58,11 @@
       nickName: '',
       avatarUrl: '',
       phone: ''
+    },
+
+    goLogin() {
+      getApp().toLogin()
+
     },
     callPhone: function () {
       let self = this

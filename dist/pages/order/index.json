@@ -4,5 +4,6 @@
     "wxc-dialog": "../../packages/@minui/wxc-dialog/dist/index",
     "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index"
   },
-  "navigationBarTitleText": "我的订单"
+  "navigationBarTitleText": "我的订单",
+  "navigationBarBackgroundColor": "#FFDCE4"
 }

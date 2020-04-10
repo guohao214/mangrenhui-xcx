@@ -10,6 +10,41 @@
 </template>
 
 <script>
+  wx.message = function (message) {
+    wx.showToast({
+      title: message || '发生错误了',
+      icon: 'none',
+      duration: 1500
+    })
+  }
+
+  wx.onNetworkStatusChange(function (res) {
+    const status = res.isConnected
+    if (!status) {
+      wx.message('网络连接失败，请检查网络...')
+    }
+  })
+
+  wx.callTel = function (telephone) {
+    wx.makePhoneCall({
+      phoneNumber: telephone,
+    })
+  }
+
+  wx.copyText = function (data) {
+    wx.setClipboardData({
+      data: data,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.message('复制成功')
+          }
+        })
+      }
+    })
+  }
+
+
 export default {
   config: {
     permission: {
@@ -27,14 +62,14 @@ export default {
     pages: [],
     window: {
       backgroundTextStyle: "dark",
-      backgroundColor: "#efefef",
+      backgroundColor: "#000000",
       navigationBarBackgroundColor: "#ffffff",
-      navigationBarTitleText: "盲人荟",
+      navigationBarTitleText: "猫的世界",
       navigationBarTextStyle: "black"
     },
     tabBar: {
       color: "#8a8a8a",
-      selectedColor: "#ffb400",
+      selectedColor: "#000000",
       borderStyle: "black",
       backgroundColor: "#ffffff",
       list: [
@@ -69,30 +104,111 @@ export default {
     }
   },
   globalData: {
-    baseUrl: "https://api.mangrenhui.cn/"
-    // baseUrl: "http://127.0.0.1:8080/"
+    baseUrl: "https://api.mangrenhui.cn/",
+    // baseUrl: "http://127.0.0.1:8080/",
+    userInfo: {},
+    noPhone: true,
   },
+
+  setSessionId(sid) {
+    return wx.setStorageSync("session_id", sid);
+  },
+
+  getSessionId() {
+    return wx.getStorageSync("session_id");
+  },
+
+  setUserInfo(user) {
+    this.globalData.userInfo = user
+    return wx.setStorageSync("user_info", user);
+  },
+
+  getUserInfo() {
+    const user = wx.getStorageSync("user_info");
+    this.globalData.userInfo = user
+
+    return user
+  },
+
+  toLogin() {
+    wx.navigateTo({
+      url: '/pages/bind/index',
+    })
+
+  },
+
+  goLogin() {
+    const self = this
+    if (self.goLogin.show)
+      return
+
+    const authorize = self.getSessionId()
+    const noPhone = this.globalData.userInfo.noPhone
+    if (authorize && !noPhone)
+      return true
+
+    if (!authorize || noPhone) {
+      self.goLogin.show = true
+      // loginTool.setGoLogin()
+      let message = '您还未登录，是否登录？'
+
+      wx.showModal({
+        content: message,
+        success(e) {
+          if (e.confirm) {
+            self.toLogin()
+          } else {
+            const pages = getCurrentPages()
+            console.log(pages.length)
+            if (pages.length >= 2) {
+              wx.navigateBack({
+                delta: 2,
+                complete: (res) => {},
+              })
+            } else {
+              wx.switchTab({
+                url: '/pages/appointment/index',
+              })
+            }
+          }
+        },
+        complete(e) {
+          self.goLogin.show = false
+        }
+      })
+    }
+  },
+
   login: function() {
-    // return;
     let self = this;
-    wx.login({
-      success: function(data) {
-        self.get("xcxLogin/authorize", { code: data.code }).then(data => {
-          wx.setStorageSync("session_id", data.data);
-        });
-      }
-    });
+    return new Promise((res, rej) => {
+      wx.login({
+        success: function(data) {
+          self.get("xcxLogin/authorize", { code: data.code }).then(data => {
+            self.setSessionId(data.data.session_id)
+            res(data.data)
+          }).catch(e => rej(e))
+        },
+        fail: function(e) {
+          rej(e)
+        }
+      });
+    })
+   
   },
   onLaunch() {
-    this.login();
+    // this.login();
   },
   onShow() {},
   onHide() {},
-  request: function(method, url, data) {
+  request: function(method, url, data, showLoading = true) {
+    const self = this
     return new Promise((res, rej) => {
-      wx.showLoading({
-        title: "加载中..."
-      });
+      if (showLoading)
+        wx.showLoading({
+          title: "加载中..."
+        });
+      
       wx.request({
         method: method,
         header: {
@@ -108,9 +224,7 @@ export default {
           if (data.status == 1) res(result.data);
           else if (data.status == -999) {
             // 跳转到绑定页
-            wx.navigateTo({
-              url: "/pages/bind/index"
-            });
+            self.goLogin()
           } else {
             rej(data);
           }
@@ -122,19 +236,19 @@ export default {
       });
     });
   },
-  get: function(url, data = {}) {
-    return this.request("GET", url, data);
+  get: function(url, data = {}, showLoading = true) {
+    return this.request("GET", url, data, showLoading);
   },
-  post: function(url, data) {
-    return this.request("POST", url, data);
+  post: function(url, data = {}, showLoading = true) {
+    return this.request("POST", url, data, showLoading);
   }
 };
 </script>
 
 <style>
 page {
-  height: 100%;
-  background-color: rgb(241, 241, 241);
+  height: 100vh;
+  background-color: #f5f5f5;
   font-size: 27 rpx;
 }
 </style>

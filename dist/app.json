@@ -14,14 +14,14 @@
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "backgroundColor": "#efefef",
+    "backgroundColor": "#000000",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "盲人荟",
+    "navigationBarTitleText": "猫的世界",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#8a8a8a",
-    "selectedColor": "#ffb400",
+    "selectedColor": "#000000",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [

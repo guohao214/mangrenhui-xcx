@@ -2,5 +2,6 @@
   "usingComponents": {
     "layout-head": "../../common/layout/head"
   },
-  "navigationBarTitleText": "品牌介绍"
+  "navigationBarTitleText": "品牌介绍",
+  "navigationBarBackgroundColor": "#FFDCE4"
 }

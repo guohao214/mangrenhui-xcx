@@ -101,6 +101,7 @@
   export default {
     config: {
       navigationBarTitleText: '预约',
+      navigationBarBackgroundColor: '#FFDCE4',
       usingComponents: {
         'wxc-flex': '@minui/wxc-flex',
         'wxc-icon': '@minui/wxc-icon',
@@ -147,7 +148,7 @@
       let currentShop = this.data.shopList[index]
       this.setData({
         currentShop: currentShop,
-        showShopListPop: 'hide'
+        showShopListPop: 'hide',
       })
 
       this.getBeauticianAndProject(currentShop.shop_id)
@@ -249,6 +250,7 @@
       })
 
     },
+
     getBeauticianAndProject: function (shopId) {
       let app = getApp()
       let self = this
@@ -283,6 +285,7 @@
       })
 
     },
+
     getAppointmentTimes: function (beauticianId, day) {
       let app = getApp()
       let self = this
@@ -301,6 +304,8 @@
           })
         })
     },
+
+
     appointment: function (event) {
       let app = getApp()
       let formId = event.detail.formId
@@ -324,7 +329,8 @@
           this._toast(error.detail || '预约失败!')
         })
     },
-    onShow: function () {
+
+    init: function() {
       let app = getApp()
       let self = this
 
@@ -336,9 +342,20 @@
             self.setData({
               shopList: result.content,
               cpShopList: result.content,
-              currentShop: result.content[0] || []
             })
 
+            // 判断shop_id是否存在
+            if(self.data.currentShop.shop_id) {
+              currentShop = this.data.currentShop
+              self.setData({
+                currentShop
+              })
+            } else {
+              self.setData({
+                currentShop
+              })
+            }
+            
             if (currentShop)
               self.getBeauticianAndProject(currentShop.shop_id)
           }).catch(e => console.log(e))
@@ -352,7 +369,15 @@
           })
         }
       })
-    }
+    },
+
+  onLoad: function () {
+    this.init()
+  },
+
+  onTabItemTap: function() {
+    this.init()
+  }
   }
 </script>
 

@@ -2,32 +2,24 @@
     <layout-head _pid="{{_pid}}"></layout-head>
 
     <!-- page页面占位符 -->
-    <view wx:if="{{authed}}">
-        <view class="header">
-            <wxc-avatar class="logo" mold="circle" src="https://www.mlxiaowu.com/static/frontend/images/WechatIMG177.jpeg" _pid="{{_pid}}">
-            </wxc-avatar>
-            <view>请用手机号登录</view>
+    <view class="center">
+        <wxc-avatar class="logo" mold="circle" src="https://api.mangrenhui.cn/static/logo.jpeg" _pid="{{_pid}}">
+        </wxc-avatar>
+
+        <view class="flex-sub text-center">
+            <text class="text-gray" wx:if="{{!authed}}">为了更好的为您提供服务</text>
+            <text class="text-gray" wx:if="{{!authed}}">猫的世界需要授权</text>
+            <text class="text-gray" wx:if="{{authed && noPhone}}">猫的世界需要获取您的手机号</text>
         </view>
 
-        <view class="cell">
-            <label class="label">手机号:</label>
-            <input type="number" class="input" placeholder="请输入手机号" bindinput="handlerPhone" maxlength="11"></input>
+        <view class="body">
+            <view class="action">
+                <button wx:if="{{!authed}}" loading="{{loading}}" disabled="{{loading}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo" class="primary-btn block line-orange lg">微信一键登录</button>
+
+                <button wx:if="{{authed && noPhone}}" loading="{{loading}}" disabled="{{loading}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="primary-btn block line-orange lg">允许获取手机号</button>
+            </view>
         </view>
 
-        <view class="cell">
-            <label class="label">验证码:</label>
-            <input type="number" class="input" placeholder="请输入验证码" bindinput="handlerSmsCode" maxlength="6"></input>
-            <button size="mini" class="sms-btn primary-btn {{ start ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{ start }}">{{ startText }}</button>
-        </view>
-
-        <view class="footer">
-            <button type="primary" class="primary-btn" bindtap="login">登录</button>
-        </view>
-    </view>
-
-
-    <view class="center" wx:if="{{!authed}}">
-        <button class="auth-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取用户信息</button>
     </view>
 
     <!--<layout-foot></layout-foot>-->
