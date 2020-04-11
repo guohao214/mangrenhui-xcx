@@ -44,7 +44,7 @@
       <view class="project {{ item.project_id === currentProject.project_id ? 'active' : ''}}"
             data-index="{{idx}}" wx:for="{{projectList}}"
             wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
-        <wxc-avatar class="avatar" mold="circle"
+        <wxc-avatar class="avatar" mold="square"
                     src="{{item.project_cover}}">
         </wxc-avatar>
         <wxc-elip line="2" class="projectName">{{item.project_name}}</wxc-elip>
@@ -61,7 +61,7 @@
         class="beautician {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}"
         wx:for="{{beauticianList}}" data-index="{{idx}}"
         wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
-        <wxc-avatar class="avatar" mold="circle"
+        <wxc-avatar class="avatar" mold="square"
                     src="{{item.avatar}}">
         </wxc-avatar>
         <wxc-elip line="2" class="beauticianName">{{item.name}}</wxc-elip>
