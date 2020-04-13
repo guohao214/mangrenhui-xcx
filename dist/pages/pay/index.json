@@ -2,7 +2,8 @@
   "usingComponents": {
     "layout-head": "../../common/layout/head",
     "wxc-dialog": "../../packages/@minui/wxc-dialog/dist/index",
-    "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index"
+    "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index",
+    "wxc-elip": "../../packages/@minui/wxc-elip/dist/index"
   },
   "navigationBarTitleText": "买单",
   "navigationBarBackgroundColor": "#FFDCE4"

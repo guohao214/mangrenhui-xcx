@@ -105,7 +105,7 @@ export default {
   },
   globalData: {
     baseUrl: "https://api.mangrenhui.cn/",
-    baseUrl: "http://127.0.0.1:8080/",
+    // baseUrl: "http://127.0.0.1:8080/",
     userInfo: {},
     noPhone: true,
   },
@@ -201,6 +201,57 @@ export default {
   },
   onShow() {},
   onHide() {},
+
+  askNotice() {
+    wx.getSetting({
+      withSubscriptions: true,
+      success (res) {
+        // console.log(res.authSetting)
+        // console.log(res.subscriptionsSetting)
+        const setting = res.subscriptionsSetting
+        const allowSuccessNotice = 'jGKjvM16MxrmUH24w4XZq7B30cH8wIyqWxFQPf1ypcc'
+        const allowCancelNotice = 'Jev9yHgi1xl08Wd80PpDfsifQeT8-e__bssbFF00j9A'
+        let tmplIds = []
+        // if (setting.mainSwitch == true) {
+        const itemSettings = setting.itemSettings || {}
+        console.log(setting)
+        console.log(itemSettings)
+        if (typeof itemSettings[allowSuccessNotice] === 'undefined' || itemSettings[allowSuccessNotice] !== 'accept'){
+          tmplIds.push(allowSuccessNotice)
+        }
+
+
+        if (typeof itemSettings[allowCancelNotice] === 'undefined' || itemSettings[allowCancelNotice] !== 'accept'){
+          tmplIds.push(allowCancelNotice)
+        }
+
+        console.log(tmplIds)
+
+        if (tmplIds.length) {
+          wx.requestSubscribeMessage({
+            tmplIds,
+            success: function(res) {
+              console.log(res)
+            },
+            fail(e) {
+              console.log(e)
+              setTimeout(() => {
+                wx.showToast({
+                  title: '请在小程序设置里打开订阅消息总开关', 
+                  icon: 'none'
+                })
+              }, 3000)
+            }
+          })
+        }
+        // }
+      },
+      fail(e) {
+        console.log(e)
+      }
+    })
+  },
+
   request: function(method, url, data, showLoading = true) {
     const self = this
     return new Promise((res, rej) => {
@@ -223,6 +274,9 @@ export default {
           let data = result.data;
           if (data.status == 1) res(result.data);
           else if (data.status == -999) {
+            self.setSessionId('')
+            self.setUserInfo({})
+
             // 跳转到绑定页
             self.goLogin()
           } else {

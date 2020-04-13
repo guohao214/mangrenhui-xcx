@@ -74,3 +74,9 @@ button[size=mini] {
   font-size:27rpx;
 
 }
+
+.project_name {
+  width: 500rpx;
+  text-align: right;
+
+}

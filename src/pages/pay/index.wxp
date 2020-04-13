@@ -63,7 +63,7 @@
       </view>
       <view class="cell">
         <view class="label">项目</view>
-        <view>{{ order.project_name}}</view>
+        <wxc-elip line="2" class="project_name">{{order.project_names}}</wxc-elip>
       </view>
       <view class="cell">
         <view class="label">技师</view>
@@ -106,7 +106,8 @@
       navigationBarBackgroundColor: '#FFDCE4',
       usingComponents: {
         'wxc-dialog': '@minui/wxc-dialog',
-        'wxc-abnor': '@minui/wxc-abnor'
+        'wxc-abnor': '@minui/wxc-abnor',
+        'wxc-elip': '@minui/wxc-elip',
       }
     },
     data: {

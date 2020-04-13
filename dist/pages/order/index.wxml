@@ -38,7 +38,7 @@
             </view>
             <view class="cell">
                 <view class="label">项目</view>
-                <view>{{ order.project_name}}</view>
+                <wxc-elip line="2" class="project_name" _pid="{{_pid}}">{{order.project_names}}</wxc-elip>
             </view>
             <view class="cell">
                 <view class="label">技师</view>

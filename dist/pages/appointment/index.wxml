@@ -79,9 +79,7 @@
     </view>
 
     <view class="footer">
-        <form bindsubmit="appointment" report-submit="{{ true }}">
-            <button type="primary" class="primary-btn" formType="submit">发送预约</button>
-        </form>
+        <button type="primary" bindtap="appointment" class="primary-btn" formType="submit">发送预约</button>
     </view>
 
     <!--<layout-foot></layout-foot>-->

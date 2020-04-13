@@ -89,11 +89,10 @@
   </view>
 
   <view class="footer">
-    <form bindsubmit="appointment" report-submit="{{ true }}">
-      <button type="primary"
-              class="primary-btn"
-              formType="submit">发送预约</button>
-    </form>
+    <button type="primary"
+      bindtap="appointment"
+      class="primary-btn"
+      formType="submit">发送预约</button>
   </view>
 </template>
 
@@ -337,7 +336,7 @@
         currentAppointmentTimes: []
       })
 
-      app.get('appointment/getAppointmentTime/' + beauticianId + '/' + day)
+      return app.get('appointment/getAppointmentTime/' + beauticianId + '/' + day)
         .then((data) => {
           let content = (data.data && data.data.content) || []
           // for (var i in [0, 0, 0, 0])
@@ -374,7 +373,18 @@
       app.post('cart/appointment', data)
         .then(() =>   {
           this._toast('预约成功!')
-          setTimeout(x => this.getAppointmentTimes(data.beautician_id, data.appointment_day), 1000)
+          
+          setTimeout(x =>  {
+            wx.switchTab({
+                url: '/pages/pay/index'
+              })
+            
+            // this.getAppointmentTimes(data.beautician_id, data.appointment_day)
+            
+            }, 1000)
+
+          // 通知
+          // app.askNotice()
         })
         .catch(error => {
           this._toast(error.detail || '预约失败!')
