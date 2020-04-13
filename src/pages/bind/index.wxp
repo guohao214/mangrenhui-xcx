@@ -1,6 +1,6 @@
 <template>
   <view class="center">
-    <wxc-avatar class="logo" mold="circle"
+    <wxc-avatar class="logo" mold="square"
                   src="https://api.mangrenhui.cn/static/logo.jpeg">
     </wxc-avatar>
 

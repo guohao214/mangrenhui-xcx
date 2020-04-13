@@ -7,7 +7,7 @@
   </view>
 
   <view wx:if="{{nickName.length <= 0}}" class="header-cell">
-    <button size="mini" type="primary" bindtap="goLogin">登录</button>
+    <button type="primary" bindtap="goLogin">登录</button>
   </view>
 
   <view>

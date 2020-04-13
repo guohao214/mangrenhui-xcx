@@ -37,6 +37,9 @@
   font-size: 26rpx;
   text-align: center;
 }
+.time-list .time.active {
+  font-size: 28rpx;
+}
 
 .time-list .time.invalid {
   color: gray;

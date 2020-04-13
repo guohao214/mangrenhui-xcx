@@ -42,7 +42,7 @@
             <view class="iconfont icon-discover"></view>选择项目
         </view>
         <scroll-view class="project-list" scroll-x>
-            <view class="project {{ item.project_id === currentProject.project_id ? 'active' : ''}}" data-index="{{idx}}" wx:for="{{projectList}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
+            <view class="project {{ item.active === true ? 'active' : ''}}" data-index="{{idx}}" wx:for="{{projectList}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
                 <wxc-avatar class="avatar" mold="square" src="{{item.project_cover}}" _pid="{{_pid}}">
                 </wxc-avatar>
                 <wxc-elip line="2" class="projectName" _pid="{{_pid}}">{{item.project_name}}</wxc-elip>

@@ -1,6 +1,6 @@
 .head {
   height: 0rpx;
-  background-color:#ffb400;
+  background-color:#E04156;
   display: flex;
   align-items: center;
   justify-content: center;

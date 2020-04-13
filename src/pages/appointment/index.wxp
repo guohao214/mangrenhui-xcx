@@ -41,7 +41,7 @@
       <view class="iconfont icon-discover"></view>选择项目
     </view>
     <scroll-view class="project-list" scroll-x>
-      <view class="project {{ item.project_id === currentProject.project_id ? 'active' : ''}}"
+      <view class="project {{ item.active === true ? 'active' : ''}}"
             data-index="{{idx}}" wx:for="{{projectList}}"
             wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
         <wxc-avatar class="avatar" mold="square"
@@ -122,6 +122,7 @@
       currentBeautician: {},
       projectList: [],
       currentProject: {},
+      chooseProjects: [], // 已经选择的项目
       appointmentDayList: [],
       currentAppointmentDay: '',
       appointmentTimeList: [],
@@ -138,11 +139,13 @@
         cpShopList: cpShopList
       })
     },
+
     showShopList: function () {
       this.setData({
         showShopListPop: 'show'
       })
     },
+
     chooseShop: function (event) {
       let index = event.currentTarget.dataset.index
       let currentShop = this.data.shopList[index]
@@ -153,13 +156,37 @@
 
       this.getBeauticianAndProject(currentShop.shop_id)
     },
+
+    // 选择项目
     chooseProject: function (event) {
       let index = event.currentTarget.dataset.index
       let currentProject = this.data.projectList[index]
+
+      // 判断是否已经选择了项目
+      const chooseProjects = this.data.chooseProjects
+      const findIndex = chooseProjects.findIndex(item => item === currentProject)
+      
+      console.log(findIndex)
+
+      if (findIndex >= 0) {
+        currentProject.active = false
+        chooseProjects.splice(findIndex, 1)
+      } else {
+        currentProject.active = true
+        chooseProjects.push(currentProject)
+      }
+
+      // const projectList = this.data.projectList
+      // projectList[index] = currentProject
+
       this.setData({
         currentProject: currentProject,
-      })
+        [`projectList[${index}]`]: currentProject,
+        chooseProjects
+      }, () => console.log(this.data.chooseProjects))
 
+
+      // 预约时间
       let timeList = this.data.appointmentTimeList
       timeList.forEach(item => item.checked = false)
       this.setData({
@@ -167,6 +194,7 @@
         appointmentTimeList: timeList
       })
     },
+
     chooseBeautician: function (event) {
       let index = event.currentTarget.dataset.index
       let currentBeautician = this.data.beauticianList[index]
@@ -181,6 +209,8 @@
       let day = this.data.currentAppointmentDay.day
       this.getAppointmentTimes(beauticianId, day)
     },
+
+
     chooseDay: function (event) {
       let index = event.currentTarget.dataset.index
       let currentAppointmentDay = this.data.appointmentDayList[index]
@@ -196,6 +226,7 @@
       let day = currentAppointmentDay.day
       this.getAppointmentTimes(beauticianId, day)
     },
+
     _toast(text) {
       wx.showToast({
         title: text,
@@ -203,6 +234,7 @@
         icon: 'none'
       })
     },
+
     chooseTime: function (event) {
       let everyTime = 30
       let index = event.currentTarget.dataset.index
@@ -213,7 +245,12 @@
       let timeList = this.data.appointmentTimeList
       timeList.forEach(item => item.checked = false)
 
-      let projectUseTime = this.data.currentProject.use_time
+      const chooseProjects = this.data.chooseProjects
+      if (!chooseProjects.length)
+        return this._toast('请选择预约项目')
+
+      const projectUseTime = chooseProjects.reduce((init, item) => item.use_time / 1 + init, 0)
+
       let useTimeNum = Math.ceil(projectUseTime / everyTime)
       let timeListLength = this.data.appointmentTimeList.length
       if (index + useTimeNum > timeListLength) {
@@ -222,7 +259,7 @@
           appointmentTimeList: timeList,
         })
 
-        this._toast('预约时间不足')
+        this._toast('预约时间不足,请重新选择.')
 
         return
       }
@@ -266,7 +303,13 @@
           }
         })
 
+        content.projects = content.projects || []
+        content.projects.forEach(item => item.active = false)
+
+        // 默认选择的项目
         let currentProject = content.projects[0] || {}
+        currentProject.active = true
+
         let currentBeautician = content.beauticians[0] || {}
         let currentAppointmentDay = content.days[0] || {}
 
@@ -275,6 +318,7 @@
           projectList: content.projects,
           appointmentDayList: content.days,
           currentProject,
+          chooseProjects: [currentProject],
           currentBeautician,
           currentAppointmentDay,
         })
@@ -305,16 +349,23 @@
         })
     },
 
-
+    // 发送预约
     appointment: function (event) {
       let app = getApp()
       let formId = event.detail.formId
+      const chooseProjects = this.data.chooseProjects
+      if (!chooseProjects.length)
+        return this._toast('请选择预约项目')
+      
+      // 预约项目
+      let projectIds = chooseProjects.map(item => item.project_id)
+      projectIds = projectIds.join(',')
 
       // 预约
       let data = {
         shop_id: this.data.currentShop.shop_id,
         beautician_id: this.data.currentBeautician.beautician_id,
-        project_id: this.data.currentProject.project_id,
+        project_id: projectIds,
         appointment_day: this.data.currentAppointmentDay.day,
         appointment_time: this.data.currentAppointmentTimes.join(','),
         from: 'xcx',
@@ -346,7 +397,7 @@
 
             // 判断shop_id是否存在
             if(self.data.currentShop.shop_id) {
-              currentShop = this.data.currentShop
+              currentShop = self.data.currentShop
               self.setData({
                 currentShop
               })

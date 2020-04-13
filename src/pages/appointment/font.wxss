@@ -12,7 +12,7 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   margin-right: 10rpx;
-  color: #ffb400;
+  color: #E04156;
   /*-webkit-text-stroke-width: ;*/
 }
 
