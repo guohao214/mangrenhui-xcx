@@ -32,7 +32,8 @@
   export default {
     config: {
       navigationBarTitleText: '我的',
-      navigationBarBackgroundColor: '#FFDCE4',
+      navigationBarBackgroundColor: '#ffffff',
+      navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-icon': '@minui/wxc-icon',
         'wxc-avatar': '@minui/wxc-avatar',

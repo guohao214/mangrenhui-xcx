@@ -4,5 +4,6 @@
     "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index"
   },
   "navigationBarTitleText": "登录",
-  "navigationBarBackgroundColor": "#FFDCE4"
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black"
 }

@@ -101,7 +101,8 @@
   export default {
     config: {
       navigationBarTitleText: '我的订单',
-      navigationBarBackgroundColor: '#FFDCE4',
+      navigationBarBackgroundColor: '#ffffff',
+      navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-dialog': '@minui/wxc-dialog',
         'wxc-abnor': '@minui/wxc-abnor',

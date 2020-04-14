@@ -17,7 +17,7 @@
     </view>
   </wxc-popup>
 
-  <view class="cell">
+  <view class="cell cell-top15">
     <view class="header flex">
       <view class="iconfont icon-location"></view>选择店铺
     </view>
@@ -100,7 +100,8 @@
   export default {
     config: {
       navigationBarTitleText: '预约',
-      navigationBarBackgroundColor: '#FFDCE4',
+      navigationBarBackgroundColor: '#ffffff',
+      navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-flex': '@minui/wxc-flex',
         'wxc-icon': '@minui/wxc-icon',

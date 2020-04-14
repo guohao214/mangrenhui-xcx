@@ -21,26 +21,26 @@
   },
   "tabBar": {
     "color": "#8a8a8a",
-    "selectedColor": "#000000",
+    "selectedColor": "#E04156",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/article/index",
-        "iconPath": "common/assets/tab/02.png",
-        "selectedIconPath": "common/assets/tab/021.png",
+        "iconPath": "common/assets/tab/01.png",
+        "selectedIconPath": "common/assets/tab/011.png",
         "text": "品牌"
       },
       {
         "pagePath": "pages/appointment/index",
-        "iconPath": "common/assets/tab/03.png",
-        "selectedIconPath": "common/assets/tab/031.png",
+        "iconPath": "common/assets/tab/02.png",
+        "selectedIconPath": "common/assets/tab/021.png",
         "text": "预约"
       },
       {
         "pagePath": "pages/pay/index",
-        "iconPath": "common/assets/tab/01.png",
-        "selectedIconPath": "common/assets/tab/011.png",
+        "iconPath": "common/assets/tab/03.png",
+        "selectedIconPath": "common/assets/tab/031.png",
         "text": "买单"
       },
       {

@@ -27,6 +27,11 @@ Page {
   margin-bottom: 15rpx;
   background-color: white;
 }
+
+.cell-top15 {
+  margin-top: 15rpx;
+}
+
 .footer {
   padding: 30rpx;
 }

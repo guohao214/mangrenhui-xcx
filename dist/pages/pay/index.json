@@ -6,5 +6,6 @@
     "wxc-elip": "../../packages/@minui/wxc-elip/dist/index"
   },
   "navigationBarTitleText": "买单",
-  "navigationBarBackgroundColor": "#FFDCE4"
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black"
 }
