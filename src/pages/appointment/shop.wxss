@@ -3,9 +3,9 @@
   height: 200rpx;
 }
 .shop-pic {
-  width: 180rpx;
+  width: 190rpx;
   flex-grow: 0;
-  height: 100%;
+  height: 190rpx;
 }
 .shop-pic .avatar {
   display: block;

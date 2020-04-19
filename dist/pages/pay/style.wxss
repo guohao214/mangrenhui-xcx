@@ -40,7 +40,7 @@
   font-size: 28rpx;
   font-weight: bold;
   text-align: center;
-  color: #E04156;
+  color: #E03B58;
 }
 
 .control .handled {

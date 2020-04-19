@@ -258,6 +258,28 @@
       if (this.data.isEdit)
         url = 'pet/updatePet?pet_id=' + this.data.pet_id
 
+      const pet = this.data.pet
+      if (!pet.pet_name.trim()) {
+        return app.showToast('请输入宠物昵称')
+      }
+
+      if (!pet.pet_class_id) {
+        return app.showToast('请选择宠物种类')
+      }
+
+      if (!pet.pet_sex_id) {
+        return app.showToast('请选择性别')
+      }
+
+      if (!pet.pet_will_have_baby_id) {
+        return app.showToast('请选择宠物是否绝育')
+      }
+
+
+      if (!pet.birthday) {
+        return app.showToast('请选择宠物生日')
+      }
+
       app.post(url, this.data.pet).then(data => {
         wx.navigateBack()
       })

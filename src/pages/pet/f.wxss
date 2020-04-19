@@ -23,7 +23,7 @@
 }
 
 .primary-btn {
-  background-color: #E04156 !important;
+  background-color: #E03B58 !important;
   font-size: 35rpx;
   margin: 35px;
 }

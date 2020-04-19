@@ -8,7 +8,7 @@ Page {
   align-items: center;
 }
 .flex .label-title {
-  border-left: 5rpx solid #E04156;
+  border-left: 5rpx solid #E03B58;
   padding-left: 10rpx;
   height: 25rpx;
   line-height: 25rpx;
@@ -43,21 +43,21 @@ Page {
 }
 
 .active {
-  color: #E04156;
+  color: #E03B58;
   font-weight: bold;
   /*border: 1px solid red;*/
 }
 
 .active .avatar {
-  /* border: 1rpx solid #E04156; */
+  /* border: 1rpx solid #E03B58; */
 }
 
 .primary-color {
-  color: #E04156;
+  color: #E03B58;
 }
 
 .primary-btn {
-  background-color: #E04156 !important;
+  background-color: #E03B58 !important;
   font-size: 35rpx;
 }
 
@@ -69,7 +69,7 @@ Page {
 }
 
 .add-pet {
-  color: #E04156;
+  color: #E03B58;
   font-size: 33rpx;
   text-decoration: underline;
 }
