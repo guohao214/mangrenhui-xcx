@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "layout-head": "../../common/layout/head",
+    "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index"
+  },
+  "navigationBarTitleText": "我的次卡",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black"
+}

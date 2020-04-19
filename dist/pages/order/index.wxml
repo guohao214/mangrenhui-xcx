@@ -6,8 +6,8 @@
     </wxc-dialog>
 
 
-    <wxc-dialog class="wxc-dialog wxc-cash" title="店内现金" content="输入技师工号" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}">
-        <input class="input" placeholder="技师工号" bindinput="handlerBeautician"></input>
+    <wxc-dialog class="wxc-dialog wxc-cash" title="店内现金" content="输入管家工号" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}">
+        <input class="input" placeholder="管家工号" bindinput="handlerBeautician"></input>
     </wxc-dialog>
 
     <wxc-dialog class="wxc-dialog wxc-scan" title="店里扫码" content="请确认您已经店里扫码完成买单" cancel-text="取消" bindconfirm="payOffline" bindcancel="cancel" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
@@ -36,12 +36,18 @@
                 <view class="label">门店</view>
                 <view>{{ order.shop_name}}</view>
             </view>
+
+            <view class="cell">
+                <view class="label">宠物</view>
+                <wxc-elip line="1" _pid="{{_pid}}">{{order.pet_name}}</wxc-elip>
+            </view>
+
             <view class="cell">
                 <view class="label">项目</view>
                 <wxc-elip line="2" class="project_name" _pid="{{_pid}}">{{order.project_names}}</wxc-elip>
             </view>
             <view class="cell">
-                <view class="label">技师</view>
+                <view class="label">管家</view>
                 <view>{{ order.beautician_name}}</view>
             </view>
             <view class="cell">

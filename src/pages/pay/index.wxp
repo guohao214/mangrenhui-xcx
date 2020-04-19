@@ -10,12 +10,12 @@
 
   <wxc-dialog class="wxc-dialog wxc-cash"
               title="店内现金"
-              content="请输入代收技师工号"
+              content="请输入代收管家工号"
               cancel-text="取消"
               bindconfirm="payOffline"
               bindcancel="cancel"
               confirm-text="确定">
-    <input class="input" placeholder="技师工号" bindinput="handlerBeautician" value="{{ beauticianCode }}"/>
+    <input class="input" placeholder="管家工号" bindinput="handlerBeautician" value="{{ beauticianCode }}"/>
   </wxc-dialog>
 
   <wxc-dialog class="wxc-dialog wxc-scan" title="店内扫码"
@@ -66,7 +66,7 @@
         <wxc-elip line="2" class="project_name">{{order.project_names}}</wxc-elip>
       </view>
       <view class="cell">
-        <view class="label">技师</view>
+        <view class="label">管家</view>
         <view>{{ order.beautician_name}}</view>
       </view>
       <view class="cell">
@@ -144,7 +144,7 @@
       if (this.data.payType === 'cash') {
         if (this.data.beauticianCode.trim().length === 0) {
           wx.showToast({
-            title: '技师工号不能为空',
+            title: '管家工号不能为空',
             icon: 'none'
           })
 

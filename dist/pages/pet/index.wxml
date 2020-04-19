@@ -1,0 +1,28 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <view class="cell cell-top15" wx:for="{{pets}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" data-id="{{item.pet_id}}" bindtap="goForm">
+        <wxc-flex class="pet-list" _pid="{{_pid}}">
+            <view class="pet-pic flex">
+                <wxc-avatar class="avatar" mold="circle" src="{{item.pet_pic}}" _pid="{{_pid}}">
+                </wxc-avatar>
+            </view>
+            <view class="pet flex flex-column align-start">
+                <text class="pet-name">{{item.pet_name}}</text>
+                <text class="pet-attr">{{item.pet_class_name}}/{{item.pet_sex}}</text>
+            </view>
+            <view class="pet-choose flex">
+                <wxc-icon size="30" type="arrow-right" _pid="{{_pid}}"></wxc-icon>
+            </view>
+        </wxc-flex>
+    </view>
+
+    <view wx:if="{{ pets.length === 0}}">
+        <wxc-abnor type="DATA" _pid="{{_pid}}"></wxc-abnor>
+    </view>
+
+    <button type="primary" bindtap="addPet" class="primary-btn">添加宠物</button>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

@@ -85,12 +85,12 @@ export default {
           selectedIconPath: "common/assets/tab/021.png",
           text: "预约"
         },
-        {
-          pagePath: "pages/pay/index",
-          iconPath: "common/assets/tab/03.png",
-          selectedIconPath: "common/assets/tab/031.png",
-          text: "买单"
-        },
+        // {
+        //   pagePath: "pages/pay/index",
+        //   iconPath: "common/assets/tab/03.png",
+        //   selectedIconPath: "common/assets/tab/031.png",
+        //   text: "买单"
+        // },
         {
           pagePath: "pages/center/index",
           iconPath: "common/assets/tab/04.png",
@@ -107,24 +107,40 @@ export default {
     baseUrl: "https://api.mangrenhui.cn/",
     // baseUrl: "http://127.0.0.1:8080/",
     userInfo: {},
+    session_id: '',
     noPhone: true,
   },
 
+  showToast(text) {
+      wx.showToast({
+        title: text,
+        duration: 2000,
+        icon: 'none'
+    })
+  },
+
   setSessionId(sid) {
-    return wx.setStorageSync("session_id", sid);
+    try {
+      this.globalData.session_id = sid
+      return wx.setStorageSync("session_id", sid);
+    } catch (e) {
+      return
+    }
   },
 
   getSessionId() {
-    return wx.getStorageSync("session_id");
+    return wx.getStorageSync("session_id") ? wx.getStorageSync("session_id") : this.globalData.session_id;
   },
 
   setUserInfo(user) {
-    this.globalData.userInfo = user
-    return wx.setStorageSync("user_info", user);
+    try {
+      this.globalData.userInfo = user
+      return wx.setStorageSync("user_info", user);
+    } catch (e) {}
   },
 
   getUserInfo() {
-    const user = wx.getStorageSync("user_info");
+    const user = wx.getStorageSync("user_info") ? wx.getStorageSync("user_info") : this.globalData.userInfo;
     this.globalData.userInfo = user
 
     return user
@@ -266,9 +282,9 @@ export default {
           "x-requested-with": "xmlhttprequest",
           "Content-Type": "application/x-www-form-urlencoded",
           "x-xcx": "xcx",
-          token: wx.getStorageSync("session_id")
+          token: self.getSessionId()
         },
-        url: this.globalData.baseUrl + url,
+        url: self.globalData.baseUrl + url,
         data,
         success: result => {
           let data = result.data;

@@ -7,6 +7,12 @@ Page {
   justify-content: center;
   align-items: center;
 }
+.flex .label-title {
+  border-left: 5rpx solid #E04156;
+  padding-left: 10px;
+  height: 25rpx;
+  line-height: 25rpx;
+}
 .flex-column {
   flex-direction: column;
 }
@@ -38,7 +44,12 @@ Page {
 
 .active {
   color: #E04156;
+  font-weight: bold;
   /*border: 1px solid red;*/
+}
+
+.active .avatar {
+  /* border: 1rpx solid #E04156; */
 }
 
 .primary-color {
@@ -48,4 +59,17 @@ Page {
 .primary-btn {
   background-color: #E04156 !important;
   font-size: 35rpx;
+}
+
+.add-pet-view {
+  display: flex;
+  justify-content: center;
+  margin-top: 90rpx;
+  
+}
+
+.add-pet {
+  color: #E04156;
+  font-size: 33rpx;
+  text-decoration: underline;
 }

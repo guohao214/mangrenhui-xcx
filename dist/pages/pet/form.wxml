@@ -1,0 +1,83 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <wxc-dialog class="wxc-dialog wxc-cancel-pet" title="删除宠物档案" cancel-text="取消" bindconfirm="confirmDeletePet" bindcancel="cancelDeletePet" confirm-text="确定" _pid="{{_pid}}">
+    </wxc-dialog>
+
+
+    <view class="pet">
+        <view class="cell amount">
+            <view class="label">宠物头像：</view>
+            <view class="choose-image" bindtap="chooseImage">
+                <wxc-avatar class="avatar" wx:if="{{!pet.pet_pic_url}}" mold="circle" src="https://api.mangrenhui.cn/static/logo.jpeg" _pid="{{_pid}}">
+                </wxc-avatar>
+                <wxc-avatar class="avatar" wx:if="{{pet.pet_pic_url}}" mold="circle" src="{{pet.pet_pic_url}}" _pid="{{_pid}}">
+                </wxc-avatar>
+            </view>
+        </view>
+    </view>
+
+    <view class="cell amount">
+        <view class="label">宠物昵称：</view>
+        <view class="flex-auto">
+            <input placeholder="请输入" focus="{{true}}" value="{{pet.pet_name}}" bindinput="bindChangeName"></input>
+        </view>
+    </view>
+
+    <view class="cell amount">
+        <view class="label">宠物品种：</view>
+        <view>
+            <picker value="{{pet_class_id_index}}" range-key="name" bindchange="bindChangeClass" range="{{classs}}">
+                <view class="picker">
+                    {{pet.pet_class_name ? pet.pet_class_name: '请选择'}}
+                    <wxc-icon size="20" type="arrow-right" _pid="{{_pid}}"></wxc-icon>
+                </view>
+            </picker>
+        </view>
+    </view>
+
+    <view class="cell">
+        <view class="label">宠物性别：</view>
+        <view>
+            <picker value="{{pet.pet_sex}}" bindchange="bindChangeSex" range="{{sexs}}">
+                <view class="picker">
+                    {{pet.pet_sex ? pet.pet_sex: '请选择'}}
+                    <wxc-icon size="20" type="arrow-right" _pid="{{_pid}}"></wxc-icon>
+                </view>
+            </picker>
+        </view>
+    </view>
+
+    <view class="cell">
+        <view class="label">是否绝育：</view>
+        <view>
+            <picker value="{{pet.pet_will_have_baby}}" bindchange="bindChangeBaby" range="{{babys}}">
+                <view class="picker">
+                    {{pet.pet_will_have_baby ? pet.pet_will_have_baby: '请选择'}}
+                    <wxc-icon size="20" type="arrow-right" _pid="{{_pid}}"></wxc-icon>
+                </view>
+            </picker>
+        </view>
+    </view>
+
+    <view class="cell">
+        <view class="label">宠物生日：</view>
+        <view>
+            <picker mode="date" value="{{pet.birthday}}" start="1990-01-01" bindchange="bindChangeDate">
+                <view class="picker">
+                    {{pet.birthday ? pet.birthday: '请选择'}}
+                    <wxc-icon size="20" type="arrow-right" _pid="{{_pid}}"></wxc-icon>
+                </view>
+            </picker>
+        </view>
+    </view>
+
+
+
+    <button type="primary" bindtap="addPet" class="primary-btn">确定</button>
+
+    <button type="danger" wx:if="{{isEdit}}" bindtap="deletePet" class="danger-btn">删除宠物档案</button>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

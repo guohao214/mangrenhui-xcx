@@ -1,0 +1,48 @@
+.pet {
+  margin: 20rpx 0;
+  font-size: 26rpx;
+}
+
+.cell {
+  display: flex;
+  height: 80rpx;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 40rpx;
+  margin: 3rpx 0;
+  background-color: white;
+}
+
+.label {
+  width: 150rpx;
+}
+
+.flex-auto {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.primary-btn {
+  background-color: #E04156 !important;
+  font-size: 35rpx;
+  margin: 35rpx;
+}
+
+.danger-btn {
+  background-color: #ff0000 !important;
+  font-size: 35rpx;
+  color: white;
+  margin: 35rpx;
+}
+
+.choose-image {
+  width: 80rpx;
+  height: 80rpx;
+  /* background-color: rebeccapurple; */
+}
+
+.cuIcon-cameraadd {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}

@@ -1,0 +1,55 @@
+.pet-list {
+  display: block;
+  height: 200rpx;
+}
+.pet-pic {
+  width: 230rpx;
+  flex-grow: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.pet-pic .avatar {
+  display: block;
+  width: 70%;
+  height: 70%;
+}
+.pet {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.pet-choose {
+  width: 80rpx;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cell {
+  margin: 35rpx;
+  border-radius: 10rpx;
+  background-color: white;
+}
+
+.pet-name {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.pet-attr {
+  padding: 10rpx 0;
+  /* color: #a9a9a9; */
+}
+
+.primary-btn {
+  background-color: #E04156 !important;
+  font-size: 35rpx;
+  margin: 35rpx;
+}

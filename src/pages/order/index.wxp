@@ -10,12 +10,12 @@
 
   <wxc-dialog class="wxc-dialog wxc-cash"
               title="店内现金"
-              content="输入技师工号"
+              content="输入管家工号"
               cancel-text="取消"
               bindconfirm="payOffline"
               bindcancel="cancel"
               confirm-text="确定">
-    <input class="input" placeholder="技师工号" bindinput="handlerBeautician"/>
+    <input class="input" placeholder="管家工号" bindinput="handlerBeautician"/>
   </wxc-dialog>
 
   <wxc-dialog class="wxc-dialog wxc-scan" title="店里扫码"
@@ -60,12 +60,18 @@
         <view class="label">门店</view>
         <view>{{ order.shop_name}}</view>
       </view>
+      
+      <view class="cell">
+        <view class="label">宠物</view>
+       <wxc-elip line="1">{{order.pet_name}}</wxc-elip>
+      </view>
+
       <view class="cell">
         <view class="label">项目</view>
        <wxc-elip line="2" class="project_name">{{order.project_names}}</wxc-elip>
       </view>
       <view class="cell">
-        <view class="label">技师</view>
+        <view class="label">管家</view>
         <view>{{ order.beautician_name}}</view>
       </view>
       <view class="cell">
@@ -116,7 +122,7 @@
       lastComponent: '',
       orderList: [],
       payType: '',
-      beauticianCode: '',  // 技师工号
+      beauticianCode: '',  // 管家工号
       couponCode: ''       // 优惠券
     },
     onLoad: function (options) {
@@ -140,7 +146,7 @@
       if (this.data.payType === 'cash') {
         if (this.data.beauticianCode.trim().length === 0) {
           wx.showToast({
-            title: '技师工号不能为空',
+            title: '管家工号不能为空',
             icon: 'none'
           })
 
@@ -172,7 +178,7 @@
           orderNo: '',
           lastComponent: '',
           payType: '',
-          beauticianCode: '',  // 技师工号
+          beauticianCode: '',  // 管家工号
           couponCode: ''       // 优惠券
         })
       })
@@ -291,7 +297,7 @@
             orderNo: '',
             lastComponent: '',
             payType: '',
-            beauticianCode: '',  // 技师工号
+            beauticianCode: '',  // 管家工号
             couponCode: '' ,      // 优惠券,
             formId: ''
           })

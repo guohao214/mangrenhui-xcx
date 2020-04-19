@@ -1,0 +1,41 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <view wx:if="{{ cardList.length === 0}}">
+        <wxc-abnor type="DATA" _pid="{{_pid}}"></wxc-abnor>
+    </view>
+
+    <view class="card-list" wx:for="{{cardList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="card">
+        <view class="project">
+            <view class="cell">
+                <view class="label">总次数：</view>
+                <view>{{ card.total_count}} 次</view>
+            </view>
+
+            <view class="cell">
+                <view class="label">已使用次数：</view>
+                <view>{{ card.used_count}} 次</view>
+            </view>
+
+            <view class="cell">
+                <view class="label">剩余次数：</view>
+                <view>{{ card.total_count - card.used_count }} 次</view>
+            </view>
+
+            <view class="cell">
+                <view class="label">次卡金额：</view>
+                <view>{{ card.card_amount }} 元</view>
+            </view>
+
+            <view class="cell">
+                <view class="label">过期日期：</view>
+                <view>{{card.expired_date}}
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

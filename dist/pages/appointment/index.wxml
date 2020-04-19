@@ -21,11 +21,12 @@
 
     <view class="cell cell-top15">
         <view class="header flex">
-            <view class="iconfont icon-location"></view>选择店铺
+            <!--<view class="iconfont icon-location"></view>-->
+            <text class="label-title">选择店铺</text>
         </view>
         <wxc-flex class="shop-list" _pid="{{_pid}}">
             <view class="shop-pic flex">
-                <wxc-avatar class="avatar" mold="square" src="{{currentShop.shop_logo}}" _pid="{{_pid}}">
+                <wxc-avatar class="avatar" mold="circle" src="{{currentShop.shop_logo}}" _pid="{{_pid}}">
                 </wxc-avatar>
             </view>
             <view class="shop flex flex-column align-start">
@@ -37,9 +38,30 @@
             </view>
         </wxc-flex>
     </view>
+
     <view class="cell">
         <view class="header flex">
-            <view class="iconfont icon-discover"></view>选择项目
+            <!--<view class="iconfont icon-footmark"></view>-->
+            <text class="label-title">选择宠物</text>
+        </view>
+        <scroll-view class="beautician-list" scroll-x>
+            <view wx:if="{{pets.length > 0}}" class="beautician {{ item.pet_id === currentPet.pet_id ? 'active' : ''}}" wx:for="{{pets}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="choosePet">
+                <wxc-avatar class="avatar" mold="circle" src="{{item.pet_pic}}" _pid="{{_pid}}">
+                </wxc-avatar>
+                <wxc-elip line="2" class="beauticianName" _pid="{{_pid}}">{{item.pet_name}}</wxc-elip>
+            </view>
+
+            <view bindtap="addPet" wx:if="{{pets.length == 0}}" class="add-pet-view">
+                <text class="add-pet">添加宠物</text>
+            </view>
+        </scroll-view>
+    </view>
+
+
+    <view class="cell">
+        <view class="header flex">
+            <!--<view class="iconfont icon-discover"></view>-->
+            <text class="label-title">{{project_more}}</text>
         </view>
         <scroll-view class="project-list" scroll-x>
             <view class="project {{ item.active === true ? 'active' : ''}}" data-index="{{idx}}" wx:for="{{projectList}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
@@ -50,21 +72,27 @@
             </view>
         </scroll-view>
     </view>
+
+
     <view class="cell">
         <view class="header flex">
-            <view class="iconfont icon-footmark"></view>选择技师
+            <!--<view class="iconfont icon-footmark"></view>-->
+            <text class="label-title">选择管家</text>
         </view>
         <scroll-view class="beautician-list" scroll-x>
             <view class="beautician {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
-                <wxc-avatar class="avatar" mold="square" src="{{item.avatar}}" _pid="{{_pid}}">
+                <wxc-avatar class="avatar" mold="circle" src="{{item.avatar}}" _pid="{{_pid}}">
                 </wxc-avatar>
                 <wxc-elip line="2" class="beauticianName" _pid="{{_pid}}">{{item.name}}</wxc-elip>
             </view>
         </scroll-view>
     </view>
+
+
     <view class="cell">
         <view class="header flex">
-            <view class="iconfont icon-clock"></view>预约时间
+            <!--<view class="iconfont icon-clock"></view>-->
+            <text class="label-title">预约时间</text>
         </view>
         <scroll-view class="day-list" scroll-x>
             <view class="day {{ item.date === currentAppointmentDay.date ? 'active' : ''}}" wx:for="{{appointmentDayList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseDay">

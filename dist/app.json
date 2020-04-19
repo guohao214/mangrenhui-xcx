@@ -8,9 +8,12 @@
     "pages/article/index",
     "pages/appointment/index",
     "pages/bind/index",
+    "pages/card/index",
     "pages/center/index",
     "pages/order/index",
-    "pages/pay/index"
+    "pages/pay/index",
+    "pages/pet/form",
+    "pages/pet/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,12 +39,6 @@
         "iconPath": "common/assets/tab/02.png",
         "selectedIconPath": "common/assets/tab/021.png",
         "text": "预约"
-      },
-      {
-        "pagePath": "pages/pay/index",
-        "iconPath": "common/assets/tab/03.png",
-        "selectedIconPath": "common/assets/tab/031.png",
-        "text": "买单"
       },
       {
         "pagePath": "pages/center/index",

@@ -19,11 +19,11 @@
 
   <view class="cell cell-top15">
     <view class="header flex">
-      <view class="iconfont icon-location"></view>选择店铺
+      <!--<view class="iconfont icon-location"></view>--><text class="label-title">选择店铺</text>
     </view>
     <wxc-flex class="shop-list">
       <view class="shop-pic flex">
-        <wxc-avatar class="avatar" mold="square"
+        <wxc-avatar class="avatar" mold="circle"
                     src="{{currentShop.shop_logo}}">
         </wxc-avatar>
       </view>
@@ -36,9 +36,34 @@
       </view>
     </wxc-flex>
   </view>
+
   <view class="cell">
     <view class="header flex">
-      <view class="iconfont icon-discover"></view>选择项目
+      <!--<view class="iconfont icon-footmark"></view>--><text class="label-title">选择宠物</text>
+    </view>
+    <scroll-view class="beautician-list" scroll-x>
+      <view
+        wx:if="{{pets.length > 0}}"
+        class="beautician {{ item.pet_id === currentPet.pet_id ? 'active' : ''}}"
+        wx:for="{{pets}}" data-index="{{idx}}"
+        wx:for-index="idx" wx:for-item="item" bindtap="choosePet">
+        <wxc-avatar class="avatar" mold="circle"
+                    src="{{item.pet_pic}}">
+        </wxc-avatar>
+        <wxc-elip line="2" class="beauticianName">{{item.pet_name}}</wxc-elip>
+      </view>
+
+      <view bindtap="addPet" wx:if="{{pets.length == 0}}" class="add-pet-view">
+        <text class="add-pet">添加宠物</text>
+      </view>
+    </scroll-view>
+  </view>
+
+
+  <view class="cell">
+    <view class="header flex">
+      <!--<view class="iconfont icon-discover"></view>-->
+      <text class="label-title">{{project_more}}</text>
     </view>
     <scroll-view class="project-list" scroll-x>
       <view class="project {{ item.active === true ? 'active' : ''}}"
@@ -52,25 +77,29 @@
       </view>
     </scroll-view>
   </view>
+
+
   <view class="cell">
     <view class="header flex">
-      <view class="iconfont icon-footmark"></view>选择技师
+      <!--<view class="iconfont icon-footmark"></view>--><text class="label-title">选择管家</text>
     </view>
     <scroll-view class="beautician-list" scroll-x>
       <view
         class="beautician {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}"
         wx:for="{{beauticianList}}" data-index="{{idx}}"
         wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
-        <wxc-avatar class="avatar" mold="square"
+        <wxc-avatar class="avatar" mold="circle"
                     src="{{item.avatar}}">
         </wxc-avatar>
         <wxc-elip line="2" class="beauticianName">{{item.name}}</wxc-elip>
       </view>
     </scroll-view>
   </view>
+
+
   <view class="cell">
     <view class="header flex">
-      <view class="iconfont icon-clock"></view>预约时间
+      <!--<view class="iconfont icon-clock"></view>--><text class="label-title">预约时间</text>
     </view>
     <scroll-view class="day-list" scroll-x>
       <view class="day {{ item.date === currentAppointmentDay.date ? 'active' : ''}}"
@@ -97,6 +126,7 @@
 </template>
 
 <script>
+  const $projectMore = '选择项目'
   export default {
     config: {
       navigationBarTitleText: '预约',
@@ -112,6 +142,9 @@
       }
     },
     data: {
+      currentPet:{},
+      pets: [],
+      project_more: $projectMore,
       toastText: '',
       showToast: false,
       shopList: [],
@@ -192,6 +225,17 @@
       this.setData({
         currentAppointmentTimes: [],
         appointmentTimeList: timeList
+      })
+    },
+
+    choosePet: function (event) {
+      let index = event.currentTarget.dataset.index
+      let currentPet = this.data.pets[index]
+      if (currentPet.pet_id === this.data.currentPet.pet_id)
+        return
+
+      this.setData({
+        currentPet,
       })
     },
 
@@ -316,6 +360,7 @@
         self.setData({
           beauticianList: content.beauticians,
           projectList: content.projects,
+          project_more: $projectMore + (content.projects.length > 3 ?  '(右滑查看更多)' : ''),
           appointmentDayList: content.days,
           currentProject,
           chooseProjects: [currentProject],
@@ -326,6 +371,23 @@
         self.getAppointmentTimes(currentBeautician.beautician_id, currentAppointmentDay.day)
       }).catch(e => {
         console.log(e)
+      })
+
+    },
+
+    getPets() {
+      let app = getApp()
+      let self = this
+
+      app.get('pet/findMyPets').then(data => {
+        let currentPet = data.data.content[0]
+        if (!currentPet)
+          currentPet = {}
+
+        self.setData({
+          pets: data.data.content,
+          currentPet,
+        })
       })
 
     },
@@ -364,6 +426,7 @@
       // 预约
       let data = {
         shop_id: this.data.currentShop.shop_id,
+        pet_id: this.data.currentPet.pet_id,
         beautician_id: this.data.currentBeautician.beautician_id,
         project_id: projectIds,
         appointment_day: this.data.currentAppointmentDay.day,
@@ -374,13 +437,13 @@
       app.post('cart/appointment', data)
         .then(() =>   {
           this._toast('预约成功!')
+
+          this.getAppointmentTimes(data.beautician_id, data.appointment_day)
           
           setTimeout(x =>  {
-            wx.switchTab({
-                url: '/pages/pay/index'
+            wx.navigateTo({
+                url: '/pages/order/index'
               })
-            
-            // this.getAppointmentTimes(data.beautician_id, data.appointment_day)
             
             }, 1000)
 
@@ -392,9 +455,17 @@
         })
     },
 
+    addPet() {
+      wx.navigateTo({
+        url: '/pages/pet/index'
+      })
+    },
+
     init: function() {
       let app = getApp()
       let self = this
+
+      self.getPets()
 
       wx.getLocation({
         success: function (data) {
@@ -433,9 +504,9 @@
       })
     },
 
-  onLoad: function () {
-    this.init()
-  },
+  // onLoad: function () {
+  //   this.init()
+  // },
 
   onTabItemTap: function() {
     this.init()

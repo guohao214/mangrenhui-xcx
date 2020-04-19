@@ -1,0 +1,76 @@
+<template>
+
+  <view wx:if="{{ cardList.length === 0}}">
+    <wxc-abnor type="DATA"></wxc-abnor>
+  </view>
+
+  <view class="card-list" wx:for="{{cardList}}" data-index="{{idx}}"
+        wx:for-index="idx" wx:for-item="card">
+    <view class="project">
+      <view class="cell">
+        <view class="label">总次数：</view>
+        <view>{{ card.total_count}} 次</view>
+      </view>
+      
+      <view class="cell">
+        <view class="label">已使用次数：</view>
+        <view>{{ card.used_count}} 次</view>
+      </view>
+
+      <view class="cell">
+        <view class="label">剩余次数：</view>
+        <view>{{ card.total_count - card.used_count }} 次</view>
+      </view>
+
+      <view class="cell">
+        <view class="label">次卡金额：</view>
+        <view>{{ card.card_amount }} 元</view>
+      </view>
+     
+      <view class="cell">
+        <view class="label">过期日期：</view>
+        <view>{{card.expired_date}}
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '我的次卡',
+      navigationBarBackgroundColor: '#ffffff',
+      navigationBarTextStyle: 'black',
+      usingComponents: {
+         'wxc-abnor': '@minui/wxc-abnor',
+      }
+    },
+    data: {
+      cardList: [],
+    },
+
+    onLoad: function (options) {
+    },
+
+    onShow: function () {
+      this.getCardList()
+    },
+
+    getCardList: function () {
+      let app = getApp()
+      app.get('pet/findMycards').then(data => {
+        let result = data.data
+        this.setData({
+          cardList: result.content
+        })
+      })
+    },
+  }
+</script>
+
+<style>
+  @import "style.wxss";
+</style>

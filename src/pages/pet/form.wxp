@@ -1,0 +1,280 @@
+<template>
+  <wxc-dialog class="wxc-dialog wxc-cancel-pet"
+              title="删除宠物档案"
+              cancel-text="取消"
+              bindconfirm="confirmDeletePet"
+              bindcancel="cancelDeletePet"
+              confirm-text="确定">
+  </wxc-dialog>
+
+
+  <view class="pet">
+    <view class="cell amount">
+      <view class="label">宠物头像：</view>
+      <view class="choose-image" bindtap="chooseImage">
+         <wxc-avatar class="avatar" wx:if="{{!pet.pet_pic_url}}" mold="circle"
+                    src="https://api.mangrenhui.cn/static/logo.jpeg">
+        </wxc-avatar>
+         <wxc-avatar class="avatar" wx:if="{{pet.pet_pic_url}}" mold="circle"
+                    src="{{pet.pet_pic_url}}">
+        </wxc-avatar>
+      </view>
+      </view>
+    </view>
+
+    <view class="cell amount">
+      <view class="label">宠物昵称：</view>
+      <view class="flex-auto"><input placeholder="请输入" focus="{{true}}" value="{{pet.pet_name}}" bindinput="bindChangeName"></input></view>
+    </view>
+
+    <view class="cell amount">
+      <view class="label">宠物品种：</view>
+      <view>
+        <picker value="{{pet_class_id_index}}" range-key="name" bindchange="bindChangeClass" range="{{classs}}">
+          <view class="picker">
+            {{pet.pet_class_name ? pet.pet_class_name: '请选择'}} <wxc-icon size="20" type="arrow-right"></wxc-icon>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="cell">
+      <view class="label">宠物性别：</view>
+      <view>
+        <picker value="{{pet.pet_sex}}" bindchange="bindChangeSex" range="{{sexs}}">
+          <view class="picker">
+             {{pet.pet_sex ? pet.pet_sex: '请选择'}} <wxc-icon size="20" type="arrow-right"></wxc-icon>
+          </view>
+        </picker>
+      </view>
+    </view>
+        
+    <view class="cell">
+      <view class="label">是否绝育：</view>
+      <view>
+        <picker value="{{pet.pet_will_have_baby}}" bindchange="bindChangeBaby" range="{{babys}}">
+          <view class="picker">
+            {{pet.pet_will_have_baby ? pet.pet_will_have_baby: '请选择'}} <wxc-icon size="20" type="arrow-right"></wxc-icon>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="cell">
+      <view class="label">宠物生日：</view>
+      <view>
+        <picker mode="date" value="{{pet.birthday}}" start="1990-01-01" bindchange="bindChangeDate">
+          <view class="picker">
+            {{pet.birthday ? pet.birthday: '请选择'}} <wxc-icon size="20" type="arrow-right"></wxc-icon>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+  </view>
+
+  <button type="primary"
+  bindtap="addPet"
+  class="primary-btn">确定</button>
+
+  <button type="danger"
+  wx:if="{{isEdit}}"
+  bindtap="deletePet"
+  class="danger-btn">删除宠物档案</button>
+</template>
+
+<script>
+  const upload = require('../../common/upload')
+
+  export default {
+    config: {
+      navigationBarTitleText: '宠物管理',
+      navigationBarBackgroundColor: '#ffffff',
+      navigationBarTextStyle: 'black',
+      usingComponents: {
+        'wxc-dialog': '@minui/wxc-dialog',
+        'wxc-abnor': '@minui/wxc-abnor',
+        'wxc-elip': '@minui/wxc-elip',
+        'wxc-flex': '@minui/wxc-flex',
+        'wxc-icon': '@minui/wxc-icon',
+        'wxc-avatar': '@minui/wxc-avatar',
+      }
+    },
+    data: {
+      pet_class_id_index: '',
+      sexs: ['公', '母'],
+      babys: ['是', '否'],
+      classs: [{
+        key: 1,
+        name: '加菲'
+      },{
+        key: 2,
+        name: '波斯'
+      }],
+      pet: {
+        pet_pic_url: '',
+        pet_pic: '',
+        pet_name: '',
+        pet_class_id: '',
+        pet_class_name: '',
+        pet_sex: '',
+        pet_sex_id: '',
+        pet_will_have_baby: '',
+        pet_will_have_baby_id: '',
+        birthday: ''
+      },
+      pet_id: 0,
+      isEdit: false,
+      pets: [],
+    },
+    onLoad: function (options) {
+      const pet_id = (options.id || 0) / 1 || 0
+      this.setData({
+        pet_id,
+        isEdit: !!pet_id
+      }, () => this.getClasss())
+    },
+
+	chooseImage() {
+		upload(getApp()).then(data => {
+			// data = json.jsonDecode(data)
+			if (data.status == 0)
+				return getApp().showToast('上传失败,请重试')
+
+      const pic = data.data.content
+      debugger
+			this.setData({
+				'pet.pet_pic_url': pic.url,
+				'pet.pet_pic': pic.pic,
+			})
+		})
+	},
+
+    getClasss() {
+      getApp().get('pet/getPetClass').then(data => {
+        const classs = data.data.content.map(item => {
+          return {
+            key: item.pet_class_id / 1,
+            name: item.pet_class_name
+          }
+        })
+
+        this.setData({
+          classs
+        })
+      }).then(() => this.getDetail())
+    },
+
+    getDetail() {
+      const self = this
+
+      if (this.data.isEdit) {
+        getApp().get('pet/one?pet_id=' + this.data.pet_id).then(data => {
+          const pet = data.data.content
+
+          pet.pet_id = pet.pet_id / 1
+          pet.pet_will_have_baby_id = pet.pet_will_have_baby_id / 1
+          pet.pet_class_id = pet.pet_class_id / 1
+          pet.pet_sex_id = pet.pet_sex_id / 1
+
+          const pet_class_id_index = this.data.classs.findIndex(item => item.key == pet.pet_class_id)
+
+          self.setData({
+            pet_class_id_index,
+            pet
+          })
+        })
+      }
+    },
+
+    onShow: function () {
+      // this.getPets()
+    },
+
+    bindChangeName(e) {
+      const k = e.detail.value
+      this.setData({
+        'pet.pet_name': k
+      })
+    },
+
+    deletePet() {
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-cancel-pet')
+      dialogComponent && dialogComponent.show();
+    },
+
+    cancelDeletePet() {
+      let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-cancel-pet')
+      dialogComponent && dialogComponent.hide();
+    },
+
+    confirmDeletePet() {
+      getApp().post('pet/removePet', {
+        pet_id: this.data.pet_id
+      }).then(data => {
+        wx.navigateBack()
+      })
+    },
+
+    bindChangeClass(e) {
+      const k = e.detail.value
+      const v = this.data.classs[k]
+      this.setData({
+        'pet_class_id_index': k,
+        'pet.pet_class_id': v['key'],
+        'pet.pet_class_name': v['name'],
+      })
+    },
+
+    bindChangeSex(e) {
+      const k = e.detail.value
+      const v = this.data.sexs[k]
+      this.setData({
+        'pet.pet_sex': v,
+        'pet.pet_sex_id': k,
+      })
+    },
+
+
+    bindChangeBaby(e) {
+      const k = e.detail.value
+      const v = this.data.babys[k]
+      this.setData({
+        'pet.pet_will_have_baby': v,
+        'pet.pet_will_have_baby_id': k,
+      })
+    },
+
+    bindChangeDate(e) {
+      const k = e.detail.value
+      this.setData({
+        'pet.birthday': k
+      })
+    },
+
+    addPet() {
+      let app = getApp()
+      let url = 'pet/createPet'
+      if (this.data.isEdit)
+        url = 'pet/updatePet?pet_id=' + this.data.pet_id
+
+      app.post(url, this.data.pet).then(data => {
+        wx.navigateBack()
+      })
+    },
+
+    getPets: function () {
+      let app = getApp()
+      app.get('pet/findMyPets').then(data => {
+        let result = data.data
+        this.setData({
+          pets: result.content
+        })
+      })
+    },
+  }
+</script>
+
+<style>
+  @import "f.wxss";
+</style>
