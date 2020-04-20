@@ -41,7 +41,7 @@
     <view class="cell">
       <view class="label">宠物性别：</view>
       <view>
-        <picker value="{{pet.pet_sex}}" bindchange="bindChangeSex" range="{{sexs}}">
+        <picker value="{{pet.pet_sex_id}}" bindchange="bindChangeSex" range="{{sexs}}">
           <view class="picker">
              {{pet.pet_sex ? pet.pet_sex: '请选择'}} <wxc-icon size="20" type="arrow-right"></wxc-icon>
           </view>
@@ -52,7 +52,7 @@
     <view class="cell">
       <view class="label">是否绝育：</view>
       <view>
-        <picker value="{{pet.pet_will_have_baby}}" bindchange="bindChangeBaby" range="{{babys}}">
+        <picker value="{{pet.pet_will_have_baby_id}}" bindchange="bindChangeBaby" range="{{babys}}">
           <view class="picker">
             {{pet.pet_will_have_baby ? pet.pet_will_have_baby: '请选择'}} <wxc-icon size="20" type="arrow-right"></wxc-icon>
           </view>
@@ -104,13 +104,7 @@
       pet_class_id_index: '',
       sexs: ['公', '母'],
       babys: ['是', '否'],
-      classs: [{
-        key: 1,
-        name: '加菲'
-      },{
-        key: 2,
-        name: '波斯'
-      }],
+      classs: [],
       pet: {
         pet_pic_url: '',
         pet_pic: '',
@@ -267,11 +261,11 @@
         return app.showToast('请选择宠物种类')
       }
 
-      if (!pet.pet_sex_id) {
+      if (!String(pet.pet_sex_id).length) {
         return app.showToast('请选择性别')
       }
 
-      if (!pet.pet_will_have_baby_id) {
+      if (!String(pet.pet_will_have_baby_id).length) {
         return app.showToast('请选择宠物是否绝育')
       }
 
@@ -288,9 +282,12 @@
     getPets: function () {
       let app = getApp()
       app.get('pet/findMyPets').then(data => {
-        let result = data.data
+        let result = data.data.content
+        result.pet_will_have_baby_id /= 1
+        result.pet_sex_id /= 1
+
         this.setData({
-          pets: result.content
+          pets: result
         })
       })
     },

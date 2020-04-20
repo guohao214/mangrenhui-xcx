@@ -504,9 +504,10 @@
       })
     },
 
-  // onLoad: function () {
-  //   this.init()
-  // },
+  onShow: function () {
+    if (!this.data.pets.length)
+      this.getPets()
+  },
 
   onTabItemTap: function() {
     this.init()
