@@ -507,6 +507,13 @@
   onShow: function () {
     if (!this.data.pets.length)
       this.getPets()
+
+    const data = this.data
+    // 加载
+    if (data.currentBeautician.beautician_id && data.currentAppointmentDay.day) {
+      this.getAppointmentTimes(data.currentBeautician.beautician_id, data.currentAppointmentDay.day)
+    }
+    
   },
 
   onTabItemTap: function() {
