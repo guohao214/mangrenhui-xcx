@@ -10,7 +10,7 @@
     "@minui/wxc-dialog": "^1.0.8",
     "@minui/wxc-elip": "^1.0.5",
     "@minui/wxc-flex": "^1.0.5",
-    "@minui/wxc-icon": "^1.0.8",
+    "@minui/wxc-icon": "^1.0.9",
     "@minui/wxc-mask": "^1.0.8",
     "@minui/wxc-popup": "^1.0.8",
     "@minui/wxc-toast": "^1.0.8"

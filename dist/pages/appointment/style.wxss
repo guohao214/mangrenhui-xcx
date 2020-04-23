@@ -78,11 +78,33 @@ Page {
   text-decoration: underline;
 }
 
+.active {
+  /* border-radius: 50%; */
+  position: relative;
+}
+
 .active .avatar {
-  border: 2rpx solid #E03B58;
+  border: 5rpx solid #E03B58;
   border-radius: 50%;
 }
 
-.active .avatar.circle {
-  /* border-radius: 50%; */
+
+
+.icon {
+  display: none;
+}
+
+.active .icon {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 20rpx;
+  background-color: #E03B58;
+  border-radius: 50%;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.project.active .icon  {
+  right: 50rpx;
 }

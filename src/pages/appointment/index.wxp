@@ -50,6 +50,7 @@
         <wxc-avatar class="avatar" mold="circle"
                     src="{{item.pet_pic}}">
         </wxc-avatar>
+        <wxc-icon size="24" type="right" class="icon" color="#fff"></wxc-icon>
         <wxc-elip line="1" class="beauticianName">{{item.pet_name}}</wxc-elip>
       </view>
 
@@ -72,6 +73,7 @@
         <wxc-avatar class="avatar" mold="circle"
                     src="{{item.project_cover}}">
         </wxc-avatar>
+         <wxc-icon size="24" type="right" class="icon" color="#fff"></wxc-icon>
         <wxc-elip line="1" class="projectName">{{item.project_name}}</wxc-elip>
 
       </view>
@@ -91,6 +93,7 @@
         <wxc-avatar class="avatar" mold="circle"
                     src="{{item.avatar}}">
         </wxc-avatar>
+        <wxc-icon size="24" type="right" class="icon" color="#fff"></wxc-icon>
         <wxc-elip line="1" class="beauticianName">{{item.name}}</wxc-elip>
       </view>
     </scroll-view>
