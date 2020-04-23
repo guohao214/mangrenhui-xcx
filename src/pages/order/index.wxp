@@ -62,7 +62,7 @@
       </view>
       
       <view class="cell">
-        <view class="label">宠物</view>
+        <view class="label">猫咪</view>
        <wxc-elip line="1">{{order.pet_name}}</wxc-elip>
       </view>
 
@@ -95,7 +95,7 @@
           </view>
         </form>
       </view>
-      <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
+      <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已完成</view>
       <view class="handled" wx:else>订单已取消</view>
     </view>
 

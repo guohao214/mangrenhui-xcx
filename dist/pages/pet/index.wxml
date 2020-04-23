@@ -22,7 +22,7 @@
         <wxc-abnor type="DATA" _pid="{{_pid}}"></wxc-abnor>
     </view>
 
-    <button type="primary" bindtap="addPet" class="primary-btn">添加宠物</button>
+    <button type="primary" bindtap="addPet" class="primary-btn">添加猫咪</button>
 
     <!--<layout-foot></layout-foot>-->
 </view>

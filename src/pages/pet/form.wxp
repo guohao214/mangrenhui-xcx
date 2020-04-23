@@ -1,6 +1,6 @@
 <template>
   <wxc-dialog class="wxc-dialog wxc-cancel-pet"
-              title="删除宠物档案"
+              title="删除猫咪档案"
               cancel-text="取消"
               bindconfirm="confirmDeletePet"
               bindcancel="cancelDeletePet"
@@ -10,7 +10,7 @@
 
   <view class="pet">
     <view class="cell amount">
-      <view class="label">宠物头像：</view>
+      <view class="label">猫咪头像：</view>
       <view class="choose-image" bindtap="chooseImage">
          <wxc-avatar class="avatar" wx:if="{{!pet.pet_pic_url}}" mold="circle"
                     src="https://api.mangrenhui.cn/static/logo.jpeg">
@@ -23,12 +23,12 @@
     </view>
 
     <view class="cell amount">
-      <view class="label">宠物昵称：</view>
+      <view class="label">猫咪昵称：</view>
       <view class="flex-auto"><input placeholder="请输入" focus="{{true}}" value="{{pet.pet_name}}" bindinput="bindChangeName"></input></view>
     </view>
 
     <view class="cell amount">
-      <view class="label">宠物品种：</view>
+      <view class="label">猫咪品种：</view>
       <view>
         <picker value="{{pet_class_id_index}}" range-key="name" bindchange="bindChangeClass" range="{{classs}}">
           <view class="picker">
@@ -39,7 +39,7 @@
     </view>
 
     <view class="cell">
-      <view class="label">宠物性别：</view>
+      <view class="label">猫咪性别：</view>
       <view>
         <picker value="{{pet.pet_sex_id}}" bindchange="bindChangeSex" range="{{sexs}}">
           <view class="picker">
@@ -61,7 +61,7 @@
     </view>
 
     <view class="cell">
-      <view class="label">宠物生日：</view>
+      <view class="label">猫咪生日：</view>
       <view>
         <picker mode="date" value="{{pet.birthday}}" start="1990-01-01" bindchange="bindChangeDate">
           <view class="picker">
@@ -80,7 +80,7 @@
   <button type="danger"
   wx:if="{{isEdit}}"
   bindtap="deletePet"
-  class="danger-btn">删除宠物档案</button>
+  class="danger-btn">删除猫咪档案</button>
 </template>
 
 <script>
@@ -88,7 +88,7 @@
 
   export default {
     config: {
-      navigationBarTitleText: '宠物管理',
+      navigationBarTitleText: '猫咪管理',
       navigationBarBackgroundColor: '#ffffff',
       navigationBarTextStyle: 'black',
       usingComponents: {
@@ -254,11 +254,11 @@
 
       const pet = this.data.pet
       if (!pet.pet_name.trim()) {
-        return app.showToast('请输入宠物昵称')
+        return app.showToast('请输入猫咪昵称')
       }
 
       if (!pet.pet_class_id) {
-        return app.showToast('请选择宠物种类')
+        return app.showToast('请选择猫咪种类')
       }
 
       if (!String(pet.pet_sex_id).length) {
@@ -266,12 +266,12 @@
       }
 
       if (!String(pet.pet_will_have_baby_id).length) {
-        return app.showToast('请选择宠物是否绝育')
+        return app.showToast('请选择猫咪是否绝育')
       }
 
 
       if (!pet.birthday) {
-        return app.showToast('请选择宠物生日')
+        return app.showToast('请选择猫咪生日')
       }
 
       app.post(url, this.data.pet).then(data => {

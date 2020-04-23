@@ -89,7 +89,7 @@
           </button>
         </view>
       </view>
-      <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已支付({{ order.pay_time }})</view>
+      <view class="handled" wx:elif="{{ order.order_status == 100 }}">订单已完成</view>
       <view class="handled" wx:else>订单已取消</view>
     </view>
 

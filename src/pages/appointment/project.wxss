@@ -1,5 +1,5 @@
 .project-list {
-  height: 310rpx;
+  height: 270rpx;
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
@@ -8,10 +8,10 @@
 }
 
 .project {
-  width: 230rpx;
-  height: 230rpx;
+  width: 205rpx;
+  height: 205rpx;
   padding: 15rpx 0;
-  margin-top: 30rpx;
+  margin-top: 40rpx;
   display: inline-block;
   text-align: center;
 }

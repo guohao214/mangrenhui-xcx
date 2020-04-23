@@ -42,7 +42,7 @@
     <view class="cell">
         <view class="header flex">
             <!--<view class="iconfont icon-footmark"></view>-->
-            <text class="label-title">选择宠物</text>
+            <text class="label-title">选择猫咪</text>
         </view>
         <scroll-view class="beautician-list" scroll-x>
             <view wx:if="{{pets.length > 0}}" class="beautician {{ item.pet_id === currentPet.pet_id ? 'active' : ''}}" wx:for="{{pets}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="choosePet">
@@ -52,7 +52,7 @@
             </view>
 
             <view bindtap="addPet" wx:if="{{pets.length == 0}}" class="add-pet-view">
-                <text class="add-pet">添加宠物</text>
+                <text class="add-pet">添加猫咪</text>
             </view>
         </scroll-view>
     </view>
