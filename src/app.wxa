@@ -104,8 +104,8 @@ export default {
     }
   },
   globalData: {
-    // baseUrl: "https://api.mangrenhui.cn/",
-    baseUrl: "http://127.0.0.1:8080/",
+    baseUrl: "https://api.mangrenhui.cn/",
+    // baseUrl: "http://127.0.0.1:8080/",
     userInfo: {},
     session_id: '',
     noPhone: true,

@@ -1,5 +1,5 @@
 .project-list {
-  height: 270rpx;
+  height: 290rpx;
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
@@ -18,7 +18,13 @@
 
 .project .avatar {
   display: block;
-  width: 65%;
-  height: 65%;
+  width: 60%;
+  height: 60%;
   margin-left: 17.5%;
+  margin-bottom: 20rpx;
+}
+
+
+.project .projectName {
+  /* margin-top: 10rpx; */
 }

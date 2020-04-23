@@ -50,7 +50,7 @@
         <wxc-avatar class="avatar" mold="circle"
                     src="{{item.pet_pic}}">
         </wxc-avatar>
-        <wxc-elip line="2" class="beauticianName">{{item.pet_name}}</wxc-elip>
+        <wxc-elip line="1" class="beauticianName">{{item.pet_name}}</wxc-elip>
       </view>
 
       <view bindtap="addPet" wx:if="{{pets.length == 0}}" class="add-pet-view">
@@ -67,12 +67,12 @@
     </view>
     <scroll-view class="project-list" scroll-x>
       <view class="project {{ item.active === true ? 'active' : ''}}"
-            data-index="{{idx}}" wx:for="{{projectList}}"
+            data-index="{{idx}}" wx:for="{{projectListFilter}}"
             wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
-        <wxc-avatar class="avatar" mold="square"
+        <wxc-avatar class="avatar" mold="circle"
                     src="{{item.project_cover}}">
         </wxc-avatar>
-        <wxc-elip line="2" class="projectName">{{item.project_name}}</wxc-elip>
+        <wxc-elip line="1" class="projectName">{{item.project_name}}</wxc-elip>
 
       </view>
     </scroll-view>
@@ -91,7 +91,7 @@
         <wxc-avatar class="avatar" mold="circle"
                     src="{{item.avatar}}">
         </wxc-avatar>
-        <wxc-elip line="2" class="beauticianName">{{item.name}}</wxc-elip>
+        <wxc-elip line="1" class="beauticianName">{{item.name}}</wxc-elip>
       </view>
     </scroll-view>
   </view>
@@ -154,6 +154,7 @@
       beauticianList: [],
       currentBeautician: {},
       projectList: [],
+      projectListFilter: [],
       currentProject: {},
       chooseProjects: [], // 已经选择的项目
       appointmentDayList: [],
@@ -193,7 +194,7 @@
     // 选择项目
     chooseProject: function (event) {
       let index = event.currentTarget.dataset.index
-      let currentProject = this.data.projectList[index]
+      let currentProject = this.data.projectListFilter[index]
 
       // 判断是否已经选择了项目
       const chooseProjects = this.data.chooseProjects
@@ -214,17 +215,47 @@
 
       this.setData({
         currentProject: currentProject,
-        [`projectList[${index}]`]: currentProject,
+        [`projectListFilter[${index}]`]: currentProject,
         chooseProjects
       }, () => console.log(this.data.chooseProjects))
 
 
       // 预约时间
+      this.clearAppointmentTime()
+    },
+    
+    clearAppointmentTime() {
       let timeList = this.data.appointmentTimeList
       timeList.forEach(item => item.checked = false)
       this.setData({
         currentAppointmentTimes: [],
         appointmentTimeList: timeList
+      })
+    },
+
+    filterProject() {
+      const currentPet = this.data.currentPet
+      const hair = currentPet.hair
+
+      this.data.projectList.forEach(item => item.active = false)
+
+      const project = this.data.projectList.filter(item => item.project_property === hair)
+
+      if (project.length) {
+        let currentProject = project[0]
+        currentProject.active = true
+         this.setData({
+            currentProject,
+            chooseProjects: [currentProject],
+         })
+      } else {
+        this.setData({
+          chooseProjects: []
+        })
+      }
+
+      this.setData({
+        projectListFilter: project
       })
     },
 
@@ -234,9 +265,13 @@
       if (currentPet.pet_id === this.data.currentPet.pet_id)
         return
 
+      // 筛选项目 projectListFilter
       this.setData({
         currentPet,
-      })
+        chooseProjects: [],
+      }, () => this.filterProject())
+
+      this.clearAppointmentTime()
     },
 
     chooseBeautician: function (event) {
@@ -368,6 +403,8 @@
           currentAppointmentDay,
         })
 
+        self.getPets()
+
         self.getAppointmentTimes(currentBeautician.beautician_id, currentAppointmentDay.day)
       }).catch(e => {
         console.log(e)
@@ -387,7 +424,7 @@
         self.setData({
           pets: data.data.content,
           currentPet,
-        })
+        }, () => this.filterProject())
       })
 
     },
@@ -418,6 +455,9 @@
       const chooseProjects = this.data.chooseProjects
       if (!chooseProjects.length)
         return this._toast('请选择预约项目')
+
+      if (!this.data.currentAppointmentTimes.length)
+        return this._toast('请选择预约时间')
       
       // 预约项目
       let projectIds = chooseProjects.map(item => item.project_id)
@@ -465,8 +505,7 @@
       let app = getApp()
       let self = this
 
-      self.getPets()
-
+    
       wx.getLocation({
         success: function (data) {
           app.get('shop/getList', {latitude: data.latitude, longitude: data.longitude}).then(data => {
@@ -488,6 +527,8 @@
                 currentShop
               })
             }
+
+            // self.getPets()
             
             if (currentShop)
               self.getBeauticianAndProject(currentShop.shop_id)

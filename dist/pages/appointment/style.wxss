@@ -42,6 +42,10 @@ Page {
   padding: 30rpx;
 }
 
+.avatar {
+  padding: 5rpx;
+}
+
 .active {
   color: #E03B58;
   font-weight: bold;
@@ -72,4 +76,13 @@ Page {
   color: #E03B58;
   font-size: 33rpx;
   text-decoration: underline;
+}
+
+.active .avatar {
+  border: 2rpx solid #E03B58;
+  border-radius: 50%;
+}
+
+.active .avatar.circle {
+  /* border-radius: 50%; */
 }

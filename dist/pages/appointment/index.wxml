@@ -48,7 +48,7 @@
             <view wx:if="{{pets.length > 0}}" class="beautician {{ item.pet_id === currentPet.pet_id ? 'active' : ''}}" wx:for="{{pets}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="choosePet">
                 <wxc-avatar class="avatar" mold="circle" src="{{item.pet_pic}}" _pid="{{_pid}}">
                 </wxc-avatar>
-                <wxc-elip line="2" class="beauticianName" _pid="{{_pid}}">{{item.pet_name}}</wxc-elip>
+                <wxc-elip line="1" class="beauticianName" _pid="{{_pid}}">{{item.pet_name}}</wxc-elip>
             </view>
 
             <view bindtap="addPet" wx:if="{{pets.length == 0}}" class="add-pet-view">
@@ -64,10 +64,10 @@
             <text class="label-title">{{project_more}}</text>
         </view>
         <scroll-view class="project-list" scroll-x>
-            <view class="project {{ item.active === true ? 'active' : ''}}" data-index="{{idx}}" wx:for="{{projectList}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
-                <wxc-avatar class="avatar" mold="square" src="{{item.project_cover}}" _pid="{{_pid}}">
+            <view class="project {{ item.active === true ? 'active' : ''}}" data-index="{{idx}}" wx:for="{{projectListFilter}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseProject">
+                <wxc-avatar class="avatar" mold="circle" src="{{item.project_cover}}" _pid="{{_pid}}">
                 </wxc-avatar>
-                <wxc-elip line="2" class="projectName" _pid="{{_pid}}">{{item.project_name}}</wxc-elip>
+                <wxc-elip line="1" class="projectName" _pid="{{_pid}}">{{item.project_name}}</wxc-elip>
 
             </view>
         </scroll-view>
@@ -83,7 +83,7 @@
             <view class="beautician {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
                 <wxc-avatar class="avatar" mold="circle" src="{{item.avatar}}" _pid="{{_pid}}">
                 </wxc-avatar>
-                <wxc-elip line="2" class="beauticianName" _pid="{{_pid}}">{{item.name}}</wxc-elip>
+                <wxc-elip line="1" class="beauticianName" _pid="{{_pid}}">{{item.name}}</wxc-elip>
             </view>
         </scroll-view>
     </view>
