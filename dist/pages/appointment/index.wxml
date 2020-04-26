@@ -82,7 +82,7 @@
             <text class="label-title">选择管家</text>
         </view>
         <scroll-view class="beautician-list" scroll-x>
-            <view class="beautician {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
+            <view class="beautician guanjia {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
                 <wxc-avatar class="avatar" mold="circle" src="{{item.avatar}}" _pid="{{_pid}}">
                 </wxc-avatar>
                 <wxc-icon size="24" type="right" class="icon" color="#fff" _pid="{{_pid}}"></wxc-icon>

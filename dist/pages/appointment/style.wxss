@@ -84,7 +84,7 @@ Page {
 }
 
 .active .avatar {
-  border: 5rpx solid #E03B58;
+  /* border: 5rpx solid #E03B58; */
   border-radius: 50%;
 }
 
@@ -107,4 +107,12 @@ Page {
 
 .project.active .icon  {
   right: 50rpx;
+}
+
+.beautician.active .avatar {
+  border: 5rpx solid #E03B58;
+}
+
+.beautician.guanjia.active .avatar {
+  border: none;
 }
