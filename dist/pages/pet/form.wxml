@@ -10,7 +10,7 @@
         <view class="cell amount">
             <view class="label">猫咪头像：</view>
             <view class="choose-image" bindtap="chooseImage">
-                <wxc-avatar class="avatar" wx:if="{{!pet.pet_pic_url}}" mold="circle" src="https://api.mangrenhui.cn/static/logo.jpeg" _pid="{{_pid}}">
+                <wxc-avatar class="avatar" wx:if="{{!pet.pet_pic_url}}" mold="circle" src="https://api.mangrenhui.cn/static/cat.jpeg" _pid="{{_pid}}">
                 </wxc-avatar>
                 <wxc-avatar class="avatar" wx:if="{{pet.pet_pic_url}}" mold="circle" src="{{pet.pet_pic_url}}" _pid="{{_pid}}">
                 </wxc-avatar>
