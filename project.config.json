@@ -3,8 +3,8 @@
 	"description": "项目配置文件。",
 	"compileType": "miniprogram",
 	"libVersion": "1.9.1",
-	"appid": "wx29cb21f55ab15eef",
-	"projectname": "盲人荟",
+	"appid": "wx3be3537ac1d7baf6",
+	"projectname": "猫的世界",
   "setting": {
 		"urlCheck": true,
 		"es6": false,

@@ -72,6 +72,10 @@
                 <wxc-elip line="1" class="projectName" _pid="{{_pid}}">{{item.project_name}}</wxc-elip>
 
             </view>
+
+            <view wx:if="{{projectListFilter.length == 0}}" class="add-pet-view">
+                <text class="add-pet">请先选择猫咪</text>
+            </view>
         </scroll-view>
     </view>
 

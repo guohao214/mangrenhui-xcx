@@ -77,6 +77,10 @@
         <wxc-elip line="1" class="projectName">{{item.project_name}}</wxc-elip>
 
       </view>
+
+      <view  wx:if="{{projectListFilter.length == 0}}" class="add-pet-view">
+        <text class="add-pet">请先选择猫咪</text>
+      </view>
     </scroll-view>
   </view>
 
@@ -419,7 +423,7 @@
       let app = getApp()
       let self = this
 
-      app.get('pet/findMyPets').then(data => {
+      app.get('myPet/findMyPets').then(data => {
         let currentPet = data.data.content[0]
         if (!currentPet)
           currentPet = {}

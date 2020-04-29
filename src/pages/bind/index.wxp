@@ -1,7 +1,7 @@
 <template>
   <view class="center">
-    <wxc-avatar class="logo" mold="square"
-                  src="https://api.mangrenhui.cn/static/logo.jpeg">
+    <wxc-avatar class="logo" mold="circle"
+                  src="https://api.mdshijie.com/static/logo.jpeg">
     </wxc-avatar>
 
     <view class="flex-sub text-center">

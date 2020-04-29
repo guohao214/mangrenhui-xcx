@@ -1,9 +1,9 @@
 <template>
   <view class="cell">
-    <image mode="widthFix" class="" src="https://api.mangrenhui.cn/article/1.png"></image>
-    <image mode="widthFix" class="" src="https://api.mangrenhui.cn/article/2.png"></image>
-    <image mode="widthFix" class="" src="https://api.mangrenhui.cn/article/3.png"></image>
-    <image mode="widthFix" class="" src="https://api.mangrenhui.cn/article/4.png"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/1.png"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/2.png"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/3.png"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/4.png"></image>
   </view>
 </template>
 
