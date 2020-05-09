@@ -1,0 +1,8 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <web-view src="{{url}}"></web-view>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

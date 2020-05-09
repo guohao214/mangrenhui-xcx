@@ -5,6 +5,6 @@
     "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index"
   },
   "navigationBarTitleText": "我的",
-  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

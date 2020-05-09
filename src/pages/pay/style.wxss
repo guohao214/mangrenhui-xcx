@@ -25,18 +25,25 @@
 }
 
 .control {
-  height: 160rpx;
+  height: 130rpx;
   border-top: 1rpx solid rgb(228,228,228);
 }
 .control .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 80rpx;
+  margin-top: 25rpx;
+}
+
+.control .buttons button {
+  width: 200rpx;
+  margin: 0 20rpx;
+  
 }
 
 .control .pay-type {
-  padding: 15rpx 0 0 20rpx;
+  padding: 0rpx 0 0 20rpx;
   font-size: 28rpx;
   font-weight: bold;
   text-align: center;

@@ -1,0 +1,35 @@
+<template>
+  <web-view src="{{url}}"></web-view>
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '充值服务协议',
+      navigationBarBackgroundColor: '#E8E8E8',
+      navigationBarTextStyle: 'black',
+    },
+
+    data: {
+      url: '',
+      oriUrl: '',
+    },
+    
+    onLoad(options) {
+      let url = options.url
+      if (!url)
+        return
+
+      this.setData({
+        oriUrl: url
+      })
+
+      url = decodeURIComponent(url)
+      console.log('url...', url)
+      this.setData({
+        url
+      })
+    }
+  }
+
+</script>

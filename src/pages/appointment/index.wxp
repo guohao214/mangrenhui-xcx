@@ -9,7 +9,7 @@
         <view class="shop" wx:for="{{cpShopList}}"
               data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseShop">
           <view class="shop-name">{{ item.shop_name}}</view>
-          <view class="address">{{ item.address}}({{item.distance}})</view>
+          <view class="address">{{ item.address}}{{item._distance > 0 ? '(' + item.distance + ')' : ''}}</view>
         </view>
 
       </scroll-view>
@@ -137,7 +137,7 @@
   export default {
     config: {
       navigationBarTitleText: '预约',
-      navigationBarBackgroundColor: '#ffffff',
+      navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-flex': '@minui/wxc-flex',
@@ -168,6 +168,14 @@
       currentAppointmentDay: '',
       appointmentTimeList: [],
       currentAppointmentTimes: [], // 预约的时间
+    },
+
+    onShareAppMessage() {
+      return {
+        title: 'CAT猫的世界',
+        path: '/pages/article/index',
+        imageUrl: 'https://api.mdshijie.com/static/share.png'
+      }
     },
     handlerSearch: function (event) {
       let value = event.detail.value
@@ -488,8 +496,8 @@
           this.getAppointmentTimes(data.beautician_id, data.appointment_day)
           
           setTimeout(x =>  {
-            wx.navigateTo({
-                url: '/pages/order/index'
+            wx.switchTab({
+                url: '/pages/pay/index'
               })
             
             }, 1000)
@@ -514,8 +522,11 @@
 
     
       wx.getLocation({
-        success: function (data) {
-          app.get('shop/getList', {latitude: data.latitude, longitude: data.longitude}).then(data => {
+        complete: function (data) {
+          if (Object.prototype.toString.call(data) !== '[object Object]')
+            data = {}
+
+          app.get('shop/getList', {latitude: data.latitude || '', longitude: data.longitude || ''}).then(data => {
             let result = data.data
             let currentShop = result.content[0] || {}
             self.setData({
@@ -550,12 +561,15 @@
           })
         }
       })
-    },
+  },
+  onLoad() {
+    this.init()
+  },
 
   onShow: function () {
     if (!this.data.pets.length)
       this.getPets()
-
+      
     const data = this.data
     // 加载
     if (data.currentBeautician.beautician_id && data.currentAppointmentDay.day) {

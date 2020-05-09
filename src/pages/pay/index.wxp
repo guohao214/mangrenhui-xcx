@@ -41,7 +41,14 @@
               bindconfirm="payOnline"
               confirm-text="确定"></wxc-dialog>
 
+  <wxc-dialog class="wxc-dialog wxc-recharge" title="余额支付"
+              content="支付金额:¥ {{ amount }}，可用金额:￥ {{accountAmount}}"
+              cancel-text="取消"
+              bindcancel="cancel"
+              bindconfirm="payRecharge"
+              confirm-text="确定"></wxc-dialog>
 
+              
   <view wx:if="{{ orderList.length === 0}}">
     <wxc-abnor type="ORDER" title="您没有需买单的订单哦"></wxc-abnor>
   </view>
@@ -78,11 +85,14 @@
     </view>
     <view class="control">
       <view wx:if="{{order.order_status  == 1}}">
-        <view class="pay-type">支付方式</view>
+        <!--<view class="pay-type">支付方式</view> -->
         <view class="buttons">
-          <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
+          <!-- <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
           <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
-          <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
+          <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button> -->
+          <view class="pay-type">支付方式：</view>
+          <button size="mini" type="default"  data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}"
+              bindtap="rechargePayment">余额支付</button>
           <button size="mini" type="primary" bindtap="online"
                   data-id="{{order.order_no}}"
                   data-amount="{{ order.total_fee}}">线上支付
@@ -103,7 +113,7 @@
   export default {
     config: {
       navigationBarTitleText: '买单',
-      navigationBarBackgroundColor: '#ffffff',
+      navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-dialog': '@minui/wxc-dialog',
@@ -112,6 +122,7 @@
       }
     },
     data: {
+      accountAmount: 0, // 账户余额
       amount: 0,
       orderType: '',
       orderId: '',
@@ -180,6 +191,7 @@
           })
         })
     },
+
     payOnline: function () {
       let app = getApp()
       app.get(`order/pay/${this.data.orderNo}`)
@@ -220,6 +232,34 @@
           })
         })
     },
+
+    // 余额支付
+    payRecharge() {
+      let app = getApp()
+      const self = this
+
+      app.get(`RechargeCard/rechargePayment/${this.data.orderNo}`)
+        .then(data => {
+          wx.showToast({
+                title: '支付成功,等待数据确认，请稍等...',
+                duration: 3000,
+                icon: 'none'
+              })
+
+              self.cancel()
+
+              setTimeout(x => self.getOrderList(), 2000)
+        })
+        .catch(error => {
+          wx.showToast({
+            title: error.detail || '支付失败，请重试',
+            duration: 2000,
+            icon: 'none'
+          })
+        })
+    },
+
+
     cash: function (event) {
       let id = event.currentTarget.dataset.id
       this.setData({
@@ -241,6 +281,7 @@
         couponCode: value
       })
     },
+
     scan: function (event) {
       let id = event.currentTarget.dataset.id
       this.setData({
@@ -259,9 +300,11 @@
       let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-group')
       dialogComponent && dialogComponent.show();
     },
+
+    // 在线支付
     online: function (event) {
       let orderNo = event.currentTarget.dataset.id
-      let amount = event.currentTarget.dataset.amount
+      let amount = event.currentTarget.dataset.amount / 1
       this.setData({
         payType: 'online',
         orderNo: orderNo,
@@ -270,6 +313,42 @@
       let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-online')
       dialogComponent && dialogComponent.show();
     },
+
+    // 余额支付弹窗
+    rechargePayment: function (event) {
+      // 查询账户余额
+      let app = getApp()
+      let orderNo = event.currentTarget.dataset.id
+      let amount = event.currentTarget.dataset.amount / 1
+
+      app.get(`rechargeCard/getMyRechargeCardTotalAmount/${orderNo}`).then(data => {
+        const accountAmount = data.data.content.amount
+        const realPaymentAmount = data.data.content.real_pay_amount
+        if (accountAmount <= 0) {
+          return wx.message('账户余额为0，不能支付')
+        }
+
+        if (amount > accountAmount) {
+          return wx.message(`账户余额为:￥${accountAmount}，余额不足，不能支付`)
+        }
+
+        this.setData({
+          accountAmount
+        }, () => {
+          this.setData({
+            payType: 'recharge',
+            orderNo: orderNo,
+            amount: realPaymentAmount,
+          })
+
+          let dialogComponent = this.data.lastComponent = this.selectComponent('.wxc-recharge')
+          dialogComponent && dialogComponent.show();
+        })
+      })
+      
+    },
+
+
     cancel: function () {
       this.data.lastComponent.hide();
 

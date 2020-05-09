@@ -1,0 +1,131 @@
+<template>
+  <!-- 账户余额 开始-->
+  <view class="my-amount">
+    <view class="txt">
+      账户余额
+    </view>
+    <view class="amount">
+      500<text>元</text>
+    </view>
+      
+  </view>
+  <!-- 账户余额 结束-->
+
+  <text class="title">充值金额</text>
+  <!-- 充值卡列表 开始-->
+  <view class="cards">
+    <view class="cell card {{currentCard.recharge_card_id == item.recharge_card_id ? 'active' : ''}}"  wx:for="{{cards}}" data-index="{{index}}" bindtap="chooseCard">
+      <view class="amount">
+        ￥<text>{{item.card_amount}}<text>
+      </view>
+
+      <view class="give" wx:if="{{item.give_present > 0}}">
+        冲{{item.card_amount}}送{{item.give_present}}
+      </view>
+    </view>
+  </view>
+  <!-- 充值卡列表 结束-->
+    
+  <!-- 立即充值 开始-->
+  <view class="footer">
+    <button type="primary"
+      bindtap="recharge"
+      class="primary-btn">立即充值</button>
+      <view class="agreement">点击立即充值，即表示同意<text bindtap="goAgreement">《充值服务协议》<text></view>
+  </view>
+  <!-- 立即充值 结束-->
+  
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '充值卡',
+      navigationBarBackgroundColor: '#E8E8E8',
+      navigationBarTextStyle: 'black',
+      usingComponents: {
+        'wxc-dialog': '@minui/wxc-dialog',
+        'wxc-abnor': '@minui/wxc-abnor',
+        'wxc-elip': '@minui/wxc-elip',
+        'wxc-flex': '@minui/wxc-flex',
+        'wxc-icon': '@minui/wxc-icon',
+        'wxc-avatar': '@minui/wxc-avatar',
+      }
+    },
+    data: {
+      cards: [],
+      currentCard: {
+        recharge_card_id: ''
+      },
+    },
+    onLoad: function (options) {
+      // console.log(options)
+    },
+
+    recharge() {
+      let app = getApp()
+      const id = this.data.currentCard.recharge_card_id
+      if (!id)
+        return wx.message('请选择充值卡')
+
+      app.get(`rechargeCard/buyRechargeCard/${id}`).then(data => {
+        let result = data.data.content
+        wx.requestPayment(Object.assign({}, result, {
+          success(res) {
+            console.log(res)
+          },
+          fail(res) {
+            console.log(res)
+          }
+        }))
+      })
+    },
+
+    onShow: function () {
+      this.getCards()
+    },
+
+    //  查看充值协议
+    goAgreement() {
+      wx.navigateTo({
+        url: '/pages/h5/index?url=https%3A%2F%2Fapi.mdshijie.com%2Fagreement.html'
+      })
+    },
+
+    chooseCard(e) {
+      const card = this.data.cards[e.currentTarget.dataset.index]
+      this.setData({
+        currentCard: card
+      })
+    },
+
+    goForm(e) {
+      const id = e.currentTarget.dataset.id
+      wx.navigateTo({
+        url: '/pages/pet/form?id=' + id
+      })
+    },
+
+    addPet() {
+      wx.navigateTo({
+        url: '/pages/pet/form'
+      })
+    },
+
+    getCards: function () {
+      let app = getApp()
+      app.get('rechargeCard/list').then(data => {
+        let result = data.data
+        this.setData({
+          currentCard: result.content[0],
+          cards: result.content
+        })
+      })
+    },
+  }
+</script>
+
+
+<style>
+  @import "style.wxss";
+</style>

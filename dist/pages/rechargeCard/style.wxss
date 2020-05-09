@@ -1,0 +1,93 @@
+page {
+  background-color: white;
+}
+
+.my-amount {
+  width: 95%;
+  margin: 30rpx 2.5%;
+  height: 200rpx;
+  background-color: rebeccapurple;
+  border-radius: 5rpx;
+  color: white;
+}
+
+.my-amount .txt {
+  font-size: 35rpx;
+  font-weight: bold;
+  padding: 20rpx;
+  
+}
+
+.my-amount .amount {
+  text-align: center;
+  font-size: 50rpx;
+
+}
+
+.my-amount .amount text {
+  font-size: 40rpx;
+}
+
+.title {
+  padding: 30rpx;
+  font-weight: bold;
+  font-size: 35rpx;
+  color: teal;
+}
+
+.card {
+  margin: 15rpx 33rpx;
+  border-radius: 10rpx;
+  background-color: white;
+  flex-basis: 305rpx;
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 30rpx;
+  border: 2rpx solid #ececee;
+}
+
+
+.card .amount text {
+  font-size: 50rpx;
+  font-weight: bold;
+}
+
+.card.active {
+  border-color: #E03B58;
+}
+.card .give {
+  color: #aaa;
+  padding: 5rpx 0;
+}
+.cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+}
+
+.footer {
+  padding: 30rpx;
+}
+
+.primary-btn {
+  background-color: #E03B58 !important;
+  font-size: 35rpx;
+}
+
+.agreement {
+  color: #aaa;
+  font-size: 30rpx;
+  text-align: center;
+  padding: 10rpx 0;
+  
+}
+
+.agreement text {
+  color: #E03B58;
+  text-decoration: underline;
+}

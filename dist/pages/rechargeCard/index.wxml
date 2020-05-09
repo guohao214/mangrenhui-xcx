@@ -1,0 +1,49 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <!-- 账户余额 开始-->
+    <view class="my-amount">
+        <view class="txt">
+            账户余额
+        </view>
+        <view class="amount">
+            500
+            <text>元</text>
+        </view>
+
+    </view>
+    <!-- 账户余额 结束-->
+
+    <text class="title">充值金额</text>
+    <!-- 充值卡列表 开始-->
+    <view class="cards">
+        <view class="cell card {{currentCard.recharge_card_id == item.recharge_card_id ? 'active' : ''}}" wx:for="{{cards}}" data-index="{{index}}" bindtap="chooseCard">
+            <view class="amount">
+                ￥
+                <text>{{item.card_amount}}
+                    <text>
+                    </text>
+                </text>
+            </view>
+
+            <view class="give" wx:if="{{item.give_present > 0}}">
+                冲{{item.card_amount}}送{{item.give_present}}
+            </view>
+        </view>
+    </view>
+    <!-- 充值卡列表 结束-->
+
+    <!-- 立即充值 开始-->
+    <view class="footer">
+        <button type="primary" bindtap="recharge" class="primary-btn">立即充值</button>
+        <view class="agreement">点击立即充值，即表示同意
+            <text bindtap="goAgreement">《充值服务协议》
+                <text></text>
+            </text>
+        </view>
+    </view>
+    <!-- 立即充值 结束-->
+
+    <!--<layout-foot></layout-foot>-->
+</view>

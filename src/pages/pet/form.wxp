@@ -89,7 +89,7 @@
   export default {
     config: {
       navigationBarTitleText: '猫咪管理',
-      navigationBarBackgroundColor: '#ffffff',
+      navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-dialog': '@minui/wxc-dialog',

@@ -4,6 +4,6 @@
     "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index"
   },
   "navigationBarTitleText": "我的次卡",
-  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

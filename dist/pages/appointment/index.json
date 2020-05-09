@@ -9,6 +9,6 @@
     "wxc-elip": "../../packages/@minui/wxc-elip/dist/index"
   },
   "navigationBarTitleText": "预约",
-  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

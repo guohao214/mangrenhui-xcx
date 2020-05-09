@@ -25,7 +25,7 @@
   export default {
     config: {
       navigationBarTitleText: '登录',
-      navigationBarBackgroundColor: '#ffffff',
+      navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-avatar': '@minui/wxc-avatar',

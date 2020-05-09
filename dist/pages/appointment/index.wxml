@@ -11,7 +11,7 @@
             <scroll-view scroll-y class="search-shop-list" catchtap="return false">
                 <view class="shop" wx:for="{{cpShopList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseShop">
                     <view class="shop-name">{{ item.shop_name}}</view>
-                    <view class="address">{{ item.address}}({{item.distance}})</view>
+                    <view class="address">{{ item.address}}{{item._distance > 0 ? '(' + item.distance + ')' : ''}}</view>
                 </view>
 
             </scroll-view>

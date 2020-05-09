@@ -2,7 +2,7 @@
   "usingComponents": {
     "layout-head": "../../common/layout/head"
   },
-  "navigationBarTitleText": "品牌介绍",
+  "navigationBarTitleText": "充值服务协议",
   "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

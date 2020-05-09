@@ -73,29 +73,30 @@ export default {
       borderStyle: "black",
       backgroundColor: "#ffffff",
       list: [
-        {
-          pagePath: "pages/article/index",
-          iconPath: "common/assets/tab/01.png",
-          selectedIconPath: "common/assets/tab/011.png",
-          text: "品牌"
-        },
+     
         {
           pagePath: "pages/appointment/index",
           iconPath: "common/assets/tab/02.png",
           selectedIconPath: "common/assets/tab/021.png",
           text: "预约"
         },
-        // {
-        //   pagePath: "pages/pay/index",
-        //   iconPath: "common/assets/tab/03.png",
-        //   selectedIconPath: "common/assets/tab/031.png",
-        //   text: "买单"
-        // },
+        {
+          pagePath: "pages/pay/index",
+          iconPath: "common/assets/tab/03.png",
+          selectedIconPath: "common/assets/tab/031.png",
+          text: "买单"
+        },
         {
           pagePath: "pages/center/index",
           iconPath: "common/assets/tab/04.png",
           selectedIconPath: "common/assets/tab/041.png",
           text: "我的"
+        },
+        {
+          pagePath: "pages/article/index",
+          iconPath: "common/assets/tab/01.png",
+          selectedIconPath: "common/assets/tab/011.png",
+          text: "品牌"
         }
       ]
     },
@@ -104,8 +105,8 @@ export default {
     }
   },
   globalData: {
-    baseUrl: "https://api.mdshijie.com/",
-    // baseUrl: "http://127.0.0.1:8080/",
+    // baseUrl: "https://api.mdshijie.com/",
+    baseUrl: "http://127.0.0.1:8080/",
     userInfo: {},
     session_id: '',
     noPhone: true,

@@ -1,9 +1,9 @@
 <template>
   <view class="cell">
-    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/1.png"></image>
-    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/2.png"></image>
-    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/3.png"></image>
-    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/4.png"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/1.jpeg"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/2.jpeg"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/3.jpeg"></image>
+    <image mode="widthFix" class="" src="https://api.mdshijie.com/article/4.jpeg"></image>
   </view>
 </template>
 
@@ -11,17 +11,34 @@
 export default {
   config: {
     navigationBarTitleText: '品牌介绍',
-    navigationBarBackgroundColor: '#ffffff',
+    navigationBarBackgroundColor: '#E8E8E8',
     navigationBarTextStyle: 'black',
     usingComponents: {}
   },
+
+  onShareAppMessage() {
+    return {
+      title: 'CAT猫的世界',
+      path: '/pages/article/index',
+      imageUrl: 'https://api.mdshijie.com/static/share.png'
+    }
+  },
+
   data: {}
 }
 </script>
 
 <style>
+.cell {
+  display:flex;
+  flex-direction: column;
+}
+image {
+  width:100%;
+  height:850rpx;
+}
   Page {
     background-color: white;
   }
-  @import "style.wxss";
+ 
 </style>

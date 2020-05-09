@@ -1,4 +1,11 @@
-Page {
+.cell {
+  display:flex;
+  flex-direction: column;
+}
+image {
+  width:100%;
+  height:850rpx;
+}
+  Page {
     background-color: white;
   }
-  @import './style.wxss';

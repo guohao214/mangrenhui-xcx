@@ -8,7 +8,7 @@
     "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
     "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index"
   },
-  "navigationBarTitleText": "猫咪管理",
+  "navigationBarTitleText": "充值卡",
   "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

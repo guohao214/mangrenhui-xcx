@@ -18,6 +18,8 @@
 
     <wxc-dialog class="wxc-dialog wxc-online" title="线上支付" content="支付金额 ¥ {{ amount }}" cancel-text="取消" bindcancel="cancel" bindconfirm="payOnline" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
 
+    <wxc-dialog class="wxc-dialog wxc-recharge" title="余额支付" content="支付金额:¥ {{ amount }}，可用金额:￥ {{accountAmount}}" cancel-text="取消" bindcancel="cancel" bindconfirm="payRecharge" confirm-text="确定" _pid="{{_pid}}"></wxc-dialog>
+
 
     <view wx:if="{{ orderList.length === 0}}">
         <wxc-abnor type="ORDER" title="您没有需买单的订单哦" _pid="{{_pid}}"></wxc-abnor>
@@ -53,11 +55,13 @@
         </view>
         <view class="control">
             <view wx:if="{{order.order_status  == 1}}">
-                <view class="pay-type">支付方式</view>
+                <!--<view class="pay-type">支付方式</view> -->
                 <view class="buttons">
-                    <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
-                    <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
-                    <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button>
+                    <!-- <button size="mini" type="default" bindtap="cash" data-id="{{order.order_id}}">店内现金</button>
+          <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
+          <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button> -->
+                    <view class="pay-type">支付方式：</view>
+                    <button size="mini" type="default" data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}" bindtap="rechargePayment">余额支付</button>
                     <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}">线上支付
                     </button>
                 </view>

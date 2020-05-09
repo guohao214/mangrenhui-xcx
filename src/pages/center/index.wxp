@@ -51,7 +51,7 @@
   export default {
     config: {
       navigationBarTitleText: '我的',
-      navigationBarBackgroundColor: '#ffffff',
+      navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {
         'wxc-icon': '@minui/wxc-icon',

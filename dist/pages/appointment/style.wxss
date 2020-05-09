@@ -114,5 +114,5 @@ Page {
 }
 
 .beautician.guanjia.active .avatar {
-  border: none;
+  border: 5rpx solid transparent;
 }
