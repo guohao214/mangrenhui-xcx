@@ -73,7 +73,9 @@
         let result = data.data.content
         wx.requestPayment(Object.assign({}, result, {
           success(res) {
-            console.log(res)
+            wx.navigateTo({
+              url: '/pages/rechargeCard/myCard'
+            })
           },
           fail(res) {
             console.log(res)
@@ -98,19 +100,6 @@
       const card = this.data.cards[e.currentTarget.dataset.index]
       this.setData({
         currentCard: card
-      })
-    },
-
-    goForm(e) {
-      const id = e.currentTarget.dataset.id
-      wx.navigateTo({
-        url: '/pages/pet/form?id=' + id
-      })
-    },
-
-    addPet() {
-      wx.navigateTo({
-        url: '/pages/pet/form'
       })
     },
 

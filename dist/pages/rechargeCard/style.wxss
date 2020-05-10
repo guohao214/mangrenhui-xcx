@@ -63,10 +63,27 @@ page {
   color: #aaa;
   padding: 5rpx 0;
 }
-.cards {
+
+.cards, .my-cards {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
+}
+
+
+.my-card {
+  flex-basis: 100%;
+  height: 250rpx;
+  padding: 0 30rpx;
+  box-sizing: content-box;
+  align-items: flex-start;
+}
+
+.my-card .card-name {
+  font-size: 40rpx;
+  text-align: left;
+  width: 100%;
 
 }
 

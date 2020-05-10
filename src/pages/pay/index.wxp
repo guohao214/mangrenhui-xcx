@@ -212,11 +212,11 @@
               setTimeout(x => self.getOrderList(), 2000)
             },
             'fail': function (res) {
-              wx.showToast({
-                title: '支付失败, 请重试...',
-                duration: 2000,
-                icon: 'none'
-              })
+              // wx.showToast({
+              //   title: '支付失败, 请重试...',
+              //   duration: 2000,
+              //   icon: 'none'
+              // })
             }
           }
 

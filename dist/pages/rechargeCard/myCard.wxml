@@ -1,0 +1,43 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <!-- 账户余额 开始-->
+    <view class="my-amount">
+        <view class="txt">
+            账户余额
+        </view>
+        <view class="amount">
+            {{totalAmount}}
+            <text>元</text>
+        </view>
+
+    </view>
+    <!-- 账户余额 结束-->
+
+    <text class="title">我的充值卡</text>
+    <!-- 充值卡列表 开始-->
+    <view class="my-cards">
+        <view class="cell card  my-card {{currentCard.recharge_card_id == item.recharge_card_id ? 'active' : ''}}" wx:for="{{cards}}">
+
+            <view class="card-name">
+                {{item.card_name}}
+            </view>
+
+            <view class="amount">
+                余额：￥
+                <text>{{item.last_amount}}
+                    <text>
+                    </text>
+                </text>
+            </view>
+
+            <view class="give" wx:if="{{item.discount > 0}}">
+                享受会员折扣 {{item.discount}} 折
+            </view>
+        </view>
+    </view>
+    <!-- 充值卡列表 结束-->
+
+    <!--<layout-foot></layout-foot>-->
+</view>

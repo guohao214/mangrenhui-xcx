@@ -1,0 +1,87 @@
+<template>
+  <!-- 账户余额 开始-->
+  <view class="my-amount">
+    <view class="txt">
+      账户余额
+    </view>
+    <view class="amount">
+      {{totalAmount}}<text>元</text>
+    </view>
+      
+  </view>
+  <!-- 账户余额 结束-->
+
+  <text class="title">我的充值卡</text>
+  <!-- 充值卡列表 开始-->
+  <view class="my-cards">
+    <view class="cell card  my-card {{currentCard.recharge_card_id == item.recharge_card_id ? 'active' : ''}}"  wx:for="{{cards}}">
+
+      <view class="card-name">
+        {{item.card_name}}
+      </view>
+        
+      <view class="amount">
+        余额：￥<text>{{item.last_amount}}<text>
+      </view>
+
+      <view class="give" wx:if="{{item.discount > 0}}">
+         享受会员折扣 {{item.discount}} 折
+      </view>
+    </view>
+  </view>
+  <!-- 充值卡列表 结束-->
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '充值卡',
+      navigationBarBackgroundColor: '#E8E8E8',
+      navigationBarTextStyle: 'black',
+      usingComponents: {
+        'wxc-dialog': '@minui/wxc-dialog',
+        'wxc-abnor': '@minui/wxc-abnor',
+        'wxc-elip': '@minui/wxc-elip',
+        'wxc-flex': '@minui/wxc-flex',
+        'wxc-icon': '@minui/wxc-icon',
+        'wxc-avatar': '@minui/wxc-avatar',
+      }
+    },
+    data: {
+      cards: [],
+      totalAmount: 0,
+    },
+    onLoad: function (options) {
+      // console.log(options)
+    },
+
+    onShow: function () {
+      this.getCards()
+      this.getTotalAmount()
+    },
+
+    getTotalAmount() {
+      let app = getApp()
+      app.get('rechargeCard/getMyRechargeCardTotalAmountSummery').then(data => {
+        this.setData({
+          totalAmount: data.data.content
+        })
+      })
+    },
+
+    getCards: function () {
+      let app = getApp()
+      app.get('rechargeCard/getMyRechargeCard').then(data => {
+        let result = data.data
+        this.setData({
+          cards: result.content
+        })
+      })
+    },
+  }
+</script>
+
+
+<style>
+  @import "style.wxss";
+</style>

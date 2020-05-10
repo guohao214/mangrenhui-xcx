@@ -1,0 +1,14 @@
+{
+  "usingComponents": {
+    "layout-head": "../../common/layout/head",
+    "wxc-dialog": "../../packages/@minui/wxc-dialog/dist/index",
+    "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index",
+    "wxc-elip": "../../packages/@minui/wxc-elip/dist/index",
+    "wxc-flex": "../../packages/@minui/wxc-flex/dist/index",
+    "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
+    "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index"
+  },
+  "navigationBarTitleText": "充值卡",
+  "navigationBarBackgroundColor": "#E8E8E8",
+  "navigationBarTextStyle": "black"
+}
