@@ -13,7 +13,7 @@
     "@minui/wxc-icon": "^1.0.9",
     "@minui/wxc-mask": "^1.0.8",
     "@minui/wxc-popup": "^1.0.8",
-    "@minui/wxc-toast": "^1.0.8"
+    "@minui/wxc-toast": "^1.0.9"
   },
   "devDependencies": {
     "babel-plugin-syntax-export-extensions": "^6.13.0",

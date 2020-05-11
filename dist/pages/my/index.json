@@ -6,10 +6,9 @@
     "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index",
     "wxc-mask": "../../packages/@minui/wxc-mask/dist/index",
     "wxc-popup": "../../packages/@minui/wxc-popup/dist/index",
-    "wxc-elip": "../../packages/@minui/wxc-elip/dist/index",
-    "wxc-toast": "../../packages/@minui/wxc-toast/dist/index"
+    "wxc-elip": "../../packages/@minui/wxc-elip/dist/index"
   },
-  "navigationBarTitleText": "预约",
+  "navigationBarTitleText": "我的管家",
   "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

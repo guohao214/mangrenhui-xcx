@@ -1,0 +1,58 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- page页面占位符 -->
+    <wxc-popup class="J_Popup" animation-mode="left" align="right" status="{{showShopListPop}}" _pid="{{_pid}}">
+        <view class="content popup__content" catchtap="return false">
+            <view class="search-cell">
+                <input placeholder="搜索店铺" class="search" bindinput="handlerSearch"></input>
+            </view>
+
+            <scroll-view scroll-y class="search-shop-list" catchtap="return false">
+                <view class="shop" wx:for="{{cpShopList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseShop">
+                    <view class="shop-name">{{ item.shop_name}}</view>
+                    <view class="address">{{ item.address}}{{item._distance > 0 ? '(' + item.distance + ')' : ''}}</view>
+                </view>
+
+            </scroll-view>
+
+        </view>
+    </wxc-popup>
+
+    <view class="cell cell-top15">
+        <view class="header flex">
+            <!--<view class="iconfont icon-location"></view>-->
+            <text class="label-title">选择店铺</text>
+        </view>
+        <wxc-flex class="shop-list" _pid="{{_pid}}">
+            <view class="shop-pic flex">
+                <wxc-avatar class="avatar" mold="circle" src="{{currentShop.shop_logo}}" _pid="{{_pid}}">
+                </wxc-avatar>
+            </view>
+            <view class="shop flex flex-column align-start">
+                <text class="shop-name">{{currentShop.shop_name}}</text>
+                <text class="shop-address">{{currentShop.address}}</text>
+            </view>
+            <view class="shop-choose flex">
+                <wxc-icon size="30" type="arrow-right" bindtap="showShopList" _pid="{{_pid}}"></wxc-icon>
+            </view>
+        </wxc-flex>
+    </view>
+
+    <view class="cell">
+        <view class="header flex">
+            <!--<view class="iconfont icon-footmark"></view>-->
+            <text class="label-title">设置管家</text>
+        </view>
+        <scroll-view class="beautician-list" scroll-x>
+            <view class="beautician guanjia {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
+                <wxc-avatar class="avatar" mold="circle" src="{{item.avatar}}" _pid="{{_pid}}">
+                </wxc-avatar>
+                <wxc-icon size="24" type="right" class="icon" color="#fff" _pid="{{_pid}}"></wxc-icon>
+                <wxc-elip line="1" class="beauticianName" _pid="{{_pid}}">{{item.name}}</wxc-elip>
+            </view>
+        </scroll-view>
+    </view>
+
+    <!--<layout-foot></layout-foot>-->
+</view>

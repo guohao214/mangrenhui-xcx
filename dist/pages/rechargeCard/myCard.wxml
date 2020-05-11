@@ -8,7 +8,7 @@
             账户余额
         </view>
         <view class="amount">
-            {{totalAmount}}
+            {{totalAmount || 0}}
             <text>元</text>
         </view>
 
@@ -38,6 +38,10 @@
         </view>
     </view>
     <!-- 充值卡列表 结束-->
+
+    <view wx:if="{{ cards.length === 0}}">
+        <wxc-abnor type="DATA" _pid="{{_pid}}"></wxc-abnor>
+    </view>
 
     <!--<layout-foot></layout-foot>-->
 </view>

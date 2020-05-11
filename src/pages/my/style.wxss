@@ -1,0 +1,118 @@
+Page {
+  /*width: 100%;*/
+  overflow-x: hidden;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex .label-title {
+  border-left: 5rpx solid #E03B58;
+  padding-left: 10px;
+  height: 25rpx;
+  line-height: 25rpx;
+}
+.flex-column {
+  flex-direction: column;
+}
+.align-start {
+  align-items: flex-start;
+}
+
+.header {
+  height: 80rpx;
+  border-bottom: 1rpx solid rgb(228,228,228);
+  padding: 0 15rpx;
+  justify-content: flex-start;
+}
+.cell {
+  display: block;
+  width: 100%;
+  font-size: 27rpx;
+  margin-bottom: 15rpx;
+  background-color: white;
+}
+
+.cell-top15 {
+  margin-top: 15rpx;
+}
+
+.footer {
+  padding: 30rpx;
+}
+
+.avatar {
+  padding: 5rpx;
+}
+
+.active {
+  color: #E03B58;
+  font-weight: bold;
+  /*border: 1px solid red;*/
+}
+
+.active .avatar {
+  /* border: 1rpx solid #E03B58; */
+}
+
+.primary-color {
+  color: #E03B58;
+}
+
+.primary-btn {
+  background-color: #E03B58 !important;
+  font-size: 35rpx;
+}
+
+.add-pet-view {
+  display: flex;
+  justify-content: center;
+  margin-top: 90rpx;
+  
+}
+
+.add-pet {
+  color: #E03B58;
+  font-size: 33rpx;
+  text-decoration: underline;
+}
+
+.active {
+  /* border-radius: 50%; */
+  position: relative;
+}
+
+.active .avatar {
+  /* border: 5rpx solid #E03B58; */
+  border-radius: 50%;
+}
+
+
+
+.icon {
+  display: none;
+}
+
+.active .icon {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 20rpx;
+  background-color: #E03B58;
+  border-radius: 50%;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.project.active .icon  {
+  right: 50rpx;
+}
+
+.beautician.active .avatar {
+  border: 5rpx solid #E03B58;
+}
+
+.beautician.guanjia.active .avatar {
+  border: 5rpx solid transparent;
+}

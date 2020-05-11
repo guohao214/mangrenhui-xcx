@@ -1,0 +1,47 @@
+.J_Popup {
+
+}
+
+.J_Popup .content {
+  width:650rpx;
+  /*height:1200rpx;*/
+  height: 100%;
+  background-color:white;
+
+}
+
+.J_Popup .content .search-cell {
+  background-color: cornflowerblue;
+  display: flex;
+  padding: 20rpx;
+}
+
+.J_Popup .content .search {
+  background-color: white;
+  width: 100%;
+  border-radius: 5rpx;
+  padding: 8rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 27rpx;
+}
+
+.J_Popup .content .search-shop-list {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.J_Popup .content .search-shop-list .shop {
+  border-bottom: 1rpx solid #EDEDED;
+  padding: 30rpx 20rpx;
+}
+
+.J_Popup .content .search-shop-list .shop .shop-name {
+  font-size: 28rpx;
+}
+
+.J_Popup .content .search-shop-list .shop .address {
+  font-size: 25rpx;
+}

@@ -1,0 +1,235 @@
+<template>
+  <wxc-popup class="J_Popup" animation-mode="left" align="right" status="{{showShopListPop}}">
+    <view class="content popup__content" catchtap="return false">
+      <view class="search-cell">
+        <input placeholder="搜索店铺" class="search" bindinput="handlerSearch"/>
+      </view>
+
+      <scroll-view scroll-y class="search-shop-list" catchtap="return false">
+        <view class="shop" wx:for="{{cpShopList}}"
+              data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseShop">
+          <view class="shop-name">{{ item.shop_name}}</view>
+          <view class="address">{{ item.address}}{{item._distance > 0 ? '(' + item.distance + ')' : ''}}</view>
+        </view>
+
+      </scroll-view>
+
+    </view>
+  </wxc-popup>
+
+  <view class="cell cell-top15">
+    <view class="header flex">
+      <!--<view class="iconfont icon-location"></view>--><text class="label-title">选择店铺</text>
+    </view>
+    <wxc-flex class="shop-list">
+      <view class="shop-pic flex">
+        <wxc-avatar class="avatar" mold="circle"
+                    src="{{currentShop.shop_logo}}">
+        </wxc-avatar>
+      </view>
+      <view class="shop flex flex-column align-start">
+        <text class="shop-name">{{currentShop.shop_name}}</text>
+        <text class="shop-address">{{currentShop.address}}</text>
+      </view>
+      <view class="shop-choose flex">
+        <wxc-icon size="30" type="arrow-right" bindtap="showShopList"></wxc-icon>
+      </view>
+    </wxc-flex>
+  </view>
+
+  <view class="cell">
+    <view class="header flex">
+      <!--<view class="iconfont icon-footmark"></view>--><text class="label-title">设置管家</text>
+    </view>
+    <scroll-view class="beautician-list" scroll-x>
+      <view
+        class="beautician guanjia {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}"
+        wx:for="{{beauticianList}}" data-index="{{idx}}"
+        wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
+        <wxc-avatar class="avatar" mold="circle"
+                    src="{{item.avatar}}">
+        </wxc-avatar>
+        <wxc-icon size="24" type="right" class="icon" color="#fff"></wxc-icon>
+        <wxc-elip line="1" class="beauticianName">{{item.name}}</wxc-elip>
+      </view>
+    </scroll-view>
+  </view>
+
+</template>
+
+<script>
+  export default {
+    config: {
+      navigationBarTitleText: '我的管家',
+      navigationBarBackgroundColor: '#E8E8E8',
+      navigationBarTextStyle: 'black',
+      usingComponents: {
+        'wxc-flex': '@minui/wxc-flex',
+        'wxc-icon': '@minui/wxc-icon',
+        'wxc-avatar': '@minui/wxc-avatar',
+        'wxc-mask': '@minui/wxc-mask',
+        'wxc-popup': '@minui/wxc-popup',
+        'wxc-elip': '@minui/wxc-elip',
+      }
+    },
+    data: {
+      toastText: '',
+      showToast: false,
+      shopList: [],
+      cpShopList: [],
+      showShopListPop: 'hide',
+      currentShop: {},
+      beauticianList: [],
+      currentBeautician: {},
+    },
+
+    handlerSearch: function (event) {
+      let value = event.detail.value
+      let shopList = this.data.shopList
+      let cpShopList = shopList.filter(function (item) {
+        return item.shop_name.match(new RegExp(value))
+      })
+
+      this.setData({
+        cpShopList: cpShopList
+      })
+    },
+
+    showShopList: function () {
+      this.setData({
+        showShopListPop: 'show'
+      })
+    },
+
+    chooseShop: function (event) {
+      let index = event.currentTarget.dataset.index
+      let currentShop = this.data.shopList[index]
+      this.setData({
+        currentShop: currentShop,
+        showShopListPop: 'hide',
+      })
+
+      this.getBeauticianAndProject(currentShop.shop_id)
+    },
+
+    chooseBeautician: function (event) {
+      let app = getApp()
+      let _currentBeautician = this.data.currentBeautician
+
+      let index = event.currentTarget.dataset.index
+      let currentBeautician = this.data.beauticianList[index]
+      if (currentBeautician.beautician_id === this.data.currentBeautician.beautician_id)
+        return
+
+      this.setData({
+        currentBeautician: currentBeautician,
+      })
+
+      let beauticianId = currentBeautician.beautician_id
+
+      // 设置默认管家
+      app.post('center/setBeautician/' + beauticianId).then(data => {
+        console.log(data)
+      }).catch(e => {
+        this.setData({
+          currentBeautician: _currentBeautician
+        })
+
+        wx.message('设置默认管家出错，请重试.')
+      })
+    },
+
+    _toast(text) {
+      wx.showToast({
+        title: text,
+        duration: 2000,
+        icon: 'none'
+      })
+    },
+
+    getBeauticianAndProject: function (shopId) {
+      let app = getApp()
+      let self = this
+      app.get(`appointment/getBeauticianAndProject/${shopId}`).then(data => {
+        let content = (data.data && data.data.content) || {}
+        let currentBeautician = {}
+
+        let defaultBeautician = (content.defaultBeautician || 0) / 1
+        if (defaultBeautician > 0) {
+          currentBeautician = content.beauticians.filter(item => item.beautician_id == defaultBeautician).pop()
+        }
+
+        self.setData({
+          beauticianList: content.beauticians,
+          currentBeautician,
+        })
+
+
+      }).catch(e => {
+        console.log(e)
+      })
+
+    },
+
+
+  init: function() {
+      let app = getApp()
+      let self = this
+
+    
+      wx.getLocation({
+        complete: function (data) {
+          if (Object.prototype.toString.call(data) !== '[object Object]')
+            data = {}
+
+          app.get('shop/getList', {latitude: data.latitude || '', longitude: data.longitude || ''}).then(data => {
+            let result = data.data
+            let currentShop = result.content[0] || {}
+            self.setData({
+              shopList: result.content,
+              cpShopList: result.content,
+            })
+
+            // 判断shop_id是否存在
+            if(self.data.currentShop.shop_id) {
+              currentShop = self.data.currentShop
+              self.setData({
+                currentShop
+              })
+            } else {
+              self.setData({
+                currentShop
+              })
+            }
+
+            // self.getPets()
+            
+            if (currentShop)
+              self.getBeauticianAndProject(currentShop.shop_id)
+          }).catch(e => console.log(e))
+        },
+        fail: function () {
+          wx.openSetting({
+            success: function (res) {
+            },
+            fail: function () {
+            }
+          })
+        }
+      })
+  },
+  onShow() {
+    this.init()
+  },
+  }
+</script>
+
+<style>
+  @import "font.wxss";
+  @import "style.wxss";
+  @import "mask.wxss";
+  @import "shop.wxss";
+  @import "project.wxss";
+  @import "beautician.wxss";
+
+</style>

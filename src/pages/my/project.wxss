@@ -1,0 +1,30 @@
+.project-list {
+  height: 290rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+
+.project {
+  width: 205rpx;
+  height: 205rpx;
+  padding: 15rpx 0;
+  margin-top: 40rpx;
+  display: inline-block;
+  text-align: center;
+}
+
+.project .avatar {
+  display: block;
+  width: 60%;
+  height: 60%;
+  margin-left: 17.5%;
+  margin-bottom: 20rpx;
+}
+
+
+.project .projectName {
+  /* margin-top: 10rpx; */
+}

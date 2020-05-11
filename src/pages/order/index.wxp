@@ -304,7 +304,8 @@
         })
         .catch(error => {
           wx.showToast({
-            title: error.detail
+            title: error.detail || '订单取消失败',
+            icon: 'none'
           })
         })
     },

@@ -117,5 +117,8 @@
         <button type="primary" bindtap="appointment" class="primary-btn" formType="submit">发送预约</button>
     </view>
 
+
+    <wxc-toast is-show="{{toastShow}}" text="{{toastMsg}}" _pid="{{_pid}}"></wxc-toast>
+
     <!--<layout-foot></layout-foot>-->
 </view>

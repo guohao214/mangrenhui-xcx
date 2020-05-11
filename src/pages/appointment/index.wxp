@@ -130,6 +130,11 @@
       class="primary-btn"
       formType="submit">发送预约</button>
   </view>
+
+
+  <wxc-toast
+    is-show="{{toastShow}}"
+    text="{{toastMsg}}"></wxc-toast>
 </template>
 
 <script>
@@ -146,6 +151,7 @@
         'wxc-mask': '@minui/wxc-mask',
         'wxc-popup': '@minui/wxc-popup',
         'wxc-elip': '@minui/wxc-elip',
+        'wxc-toast': '@minui/wxc-toast',
       }
     },
     data: {
@@ -168,6 +174,9 @@
       currentAppointmentDay: '',
       appointmentTimeList: [],
       currentAppointmentTimes: [], // 预约的时间
+      defaultBeautician: 0, // 默认管家
+      toastMsg: '',
+      toastShow: false,
     },
 
     onShareAppMessage() {
@@ -289,6 +298,18 @@
       this.clearAppointmentTime()
     },
 
+    setToast(msg) {
+      this.setData({
+          toastMsg: msg,
+          toastShow: true,
+        }, () => setTimeout(() => {
+          this.setData({
+          toastMsg: '',
+          toastShow: false,
+          })
+        }, 2000))
+    },
+
     chooseBeautician: function (event) {
       let index = event.currentTarget.dataset.index
       let currentBeautician = this.data.beauticianList[index]
@@ -300,6 +321,10 @@
       })
 
       let beauticianId = currentBeautician.beautician_id
+      if (this.data.defaultBeautician > 0 && beauticianId != this.data.defaultBeautician) {
+        this.setToast('我可以提供服务，但我不是您的专属管家')
+      }
+
       let day = this.data.currentAppointmentDay.day
       this.getAppointmentTimes(beauticianId, day)
     },
@@ -405,6 +430,12 @@
         currentProject.active = true
 
         let currentBeautician = content.beauticians[0] || {}
+        
+        let defaultBeautician = (content.defaultBeautician || 0) / 1
+        if (defaultBeautician > 0) {
+          currentBeautician = content.beauticians.filter(item => item.beautician_id == defaultBeautician).pop()
+        }
+
         let currentAppointmentDay = content.days[0] || {}
 
         self.setData({
@@ -416,6 +447,7 @@
           chooseProjects: [currentProject],
           currentBeautician,
           currentAppointmentDay,
+          defaultBeautician,
         })
 
         self.getPets()

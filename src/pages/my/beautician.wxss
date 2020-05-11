@@ -1,0 +1,27 @@
+.beautician-list {
+  height: 270rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+.beautician {
+  width: 155rpx;
+  height: 155rpx;
+  padding: 15rpx 0;
+  margin-top: 30rpx;
+  display: inline-block;
+  text-align: center;
+  
+}
+
+.beautician .avatar {
+  display: block;
+  width: 75%;
+  height: 75%;
+  margin-left: 12.5%;
+  margin-bottom: 20rpx;
+  border: 5rpx solid transparent;
+}

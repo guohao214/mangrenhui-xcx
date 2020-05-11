@@ -1,0 +1,22 @@
+.shop-list {
+  display: block;
+  height: 200rpx;
+}
+.shop-pic {
+  width: 190rpx;
+  flex-grow: 0;
+  height: 190rpx;
+}
+.shop-pic .avatar {
+  display: block;
+  width: 70%;
+  height: 70%;
+}
+.shop {
+  flex-grow: 1;
+}
+
+.shop-choose {
+  width: 80rpx;
+  flex-grow: 0;
+}
