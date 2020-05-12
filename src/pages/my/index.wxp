@@ -175,7 +175,7 @@
 
         // 设置默认管家
         app.post('center/setBeautician/' + beauticianId).then(data => {
-          console.log(data)
+          wx.message('默认管家设置成功')
         }).catch(e => {
           wx.message('设置默认管家出错，请重试.')
         })
