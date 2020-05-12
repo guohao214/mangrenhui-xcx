@@ -133,7 +133,12 @@ Page {
   margin: 30rpx;
 }
 
+.shop .address {
+  margin: 0;
+}
+
 .add-address-view {
   margin-top: 40rpx;
+  padding-bottom: 40rpx;
 
 }

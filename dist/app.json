@@ -5,10 +5,10 @@
     }
   },
   "pages": [
+    "pages/appointment/index",
     "pages/article/index",
     "pages/address/form",
     "pages/address/index",
-    "pages/appointment/index",
     "pages/bind/index",
     "pages/card/index",
     "pages/center/index",

@@ -129,7 +129,7 @@
                         {{item.uname}} / {{item.phone}}
                     </view>
                     <view>
-                        {{item.address_prefix}} / {{item.address}}
+                        {{item.address_prefix}} {{item.address}}
                     </view>
 
                 </radio>
