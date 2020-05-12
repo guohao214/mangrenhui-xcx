@@ -95,7 +95,7 @@
               bindtap="rechargePayment">余额支付</button>
           <button size="mini" type="primary" bindtap="online"
                   data-id="{{order.order_no}}"
-                  data-amount="{{ order.total_fee}}">线上支付
+                  data-amount="{{ order.total_fee}}">微信支付
           </button>
         </view>
       </view>

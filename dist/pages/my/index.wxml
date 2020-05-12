@@ -29,7 +29,7 @@
                 <wxc-avatar class="avatar" mold="circle" src="{{currentShop.shop_logo}}" _pid="{{_pid}}">
                 </wxc-avatar>
             </view>
-            <view class="shop flex flex-column align-start">
+            <view class="shop flex flex-column align-start" bindtap="showShopList">
                 <text class="shop-name">{{currentShop.shop_name}}</text>
                 <text class="shop-address">{{currentShop.address}}</text>
             </view>
@@ -42,7 +42,7 @@
     <view class="cell">
         <view class="header flex">
             <!--<view class="iconfont icon-footmark"></view>-->
-            <text class="label-title">设置管家</text>
+            <text class="label-title">选择管家</text>
         </view>
         <scroll-view class="beautician-list" scroll-x>
             <view class="beautician guanjia {{ item.beautician_id === currentBeautician.beautician_id ? 'active' : ''}}" wx:for="{{beauticianList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="chooseBeautician">
@@ -52,6 +52,10 @@
                 <wxc-elip line="1" class="beauticianName" _pid="{{_pid}}">{{item.name}}</wxc-elip>
             </view>
         </scroll-view>
+    </view>
+
+    <view class="footer">
+        <button type="primary" bindtap="setBeauticion" class="primary-btn" formType="submit">设为专属管家</button>
     </view>
 
     <!--<layout-foot></layout-foot>-->

@@ -26,7 +26,7 @@
 
             <view class="amount">
                 余额：￥
-                <text>{{item.last_amount}}
+                <text>{{item.last_amount / 1}}
                     <text>
                     </text>
                 </text>

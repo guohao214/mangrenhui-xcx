@@ -27,7 +27,7 @@
                     src="{{currentShop.shop_logo}}">
         </wxc-avatar>
       </view>
-      <view class="shop flex flex-column align-start">
+      <view class="shop flex flex-column align-start" bindtap="showShopList">
         <text class="shop-name">{{currentShop.shop_name}}</text>
         <text class="shop-address">{{currentShop.address}}</text>
       </view>
@@ -320,13 +320,15 @@
         currentBeautician: currentBeautician,
       })
 
+      let showLoading = true
       let beauticianId = currentBeautician.beautician_id
       if (this.data.defaultBeautician > 0 && beauticianId != this.data.defaultBeautician) {
         this.setToast('我可以提供服务，但我不是您的专属管家')
+        showLoading = false
       }
 
       let day = this.data.currentAppointmentDay.day
-      this.getAppointmentTimes(beauticianId, day)
+      this.getAppointmentTimes(beauticianId, day, showLoading)
     },
 
 
@@ -476,14 +478,14 @@
 
     },
 
-    getAppointmentTimes: function (beauticianId, day) {
+    getAppointmentTimes: function (beauticianId, day, showLoading = true) {
       let app = getApp()
       let self = this
       this.setData({
         currentAppointmentTimes: []
       })
 
-      return app.get('appointment/getAppointmentTime/' + beauticianId + '/' + day)
+      return app.get('appointment/getAppointmentTime/' + beauticianId + '/' + day, '', showLoading)
         .then((data) => {
           let content = (data.data && data.data.content) || []
           // for (var i in [0, 0, 0, 0])

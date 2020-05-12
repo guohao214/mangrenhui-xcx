@@ -51,14 +51,14 @@
             </view>
         </navigator>
 
-        <navigator url="/pages/card/index" open-type="navigate" class="cell">
-            <view class="order">
-                我的次卡
-            </view>
-            <view class="go">
-                <wxc-icon size="30" type="arrow-right" _pid="{{_pid}}"></wxc-icon>
-            </view>
-        </navigator>
+        <!--   <navigator url="/pages/card/index" open-type="navigate" class="cell">
+      <view class="order">
+        我的次卡
+      </view>
+      <view class="go">
+        <wxc-icon size="30" type="arrow-right"></wxc-icon>
+      </view>
+    </navigator>-->
 
         <navigator url="/pages/pet/index" open-type="navigate" class="cell">
             <view class="order">

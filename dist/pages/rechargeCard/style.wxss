@@ -6,7 +6,7 @@ page {
   width: 95%;
   margin: 30rpx 2.5%;
   height: 200rpx;
-  background-color: rebeccapurple;
+  background-color: #E03B58;
   border-radius: 5rpx;
   color: white;
 }
@@ -32,7 +32,8 @@ page {
   padding: 30rpx;
   font-weight: bold;
   font-size: 35rpx;
-  color: teal;
+  color: #E03B58;
+  display: inline-block;
 }
 
 .card {
@@ -54,11 +55,21 @@ page {
 .card .amount text {
   font-size: 50rpx;
   font-weight: bold;
+  color: #000;
 }
 
 .card.active {
   border-color: #E03B58;
 }
+
+.card.active .amount text {
+  color: #E03B58;
+}
+
+.card.active .give {
+  color: #E03B58;
+}
+
 .card .give {
   color: #aaa;
   padding: 5rpx 0;
@@ -100,7 +111,7 @@ page {
   color: #aaa;
   font-size: 26rpx;
   text-align: center;
-  padding: 10rpx 0;
+  padding: 20rpx 0;
   
 }
 

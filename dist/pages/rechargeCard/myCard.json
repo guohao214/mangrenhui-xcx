@@ -8,7 +8,7 @@
     "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
     "wxc-avatar": "../../packages/@minui/wxc-avatar/dist/index"
   },
-  "navigationBarTitleText": "充值卡",
+  "navigationBarTitleText": "我的余额",
   "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

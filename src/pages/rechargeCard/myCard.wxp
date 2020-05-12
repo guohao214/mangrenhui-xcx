@@ -21,7 +21,7 @@
       </view>
         
       <view class="amount">
-        余额：￥<text>{{item.last_amount}}<text>
+        余额：￥<text>{{item.last_amount / 1}}<text>
       </view>
 
       <view class="give" wx:if="{{item.discount > 0}}">
@@ -39,7 +39,7 @@
 <script>
   export default {
     config: {
-      navigationBarTitleText: '充值卡',
+      navigationBarTitleText: '我的余额',
       navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {

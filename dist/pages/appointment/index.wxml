@@ -29,7 +29,7 @@
                 <wxc-avatar class="avatar" mold="circle" src="{{currentShop.shop_logo}}" _pid="{{_pid}}">
                 </wxc-avatar>
             </view>
-            <view class="shop flex flex-column align-start">
+            <view class="shop flex flex-column align-start" bindtap="showShopList">
                 <text class="shop-name">{{currentShop.shop_name}}</text>
                 <text class="shop-address">{{currentShop.address}}</text>
             </view>

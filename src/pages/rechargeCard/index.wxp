@@ -1,6 +1,6 @@
 <template>
   <!-- 账户余额 开始-->
-  <view class="my-amount">
+  <!--<view class="my-amount">
     <view class="txt">
       账户余额
     </view>
@@ -8,7 +8,7 @@
       {{totalAmount || 0}}<text>元</text>
     </view>
       
-  </view>
+  </view>-->
   <!-- 账户余额 结束-->
 
   <text class="title">充值金额</text>
@@ -16,11 +16,11 @@
   <view class="cards">
     <view class="cell card {{currentCard.recharge_card_id == item.recharge_card_id ? 'active' : ''}}"  wx:for="{{cards}}" data-index="{{index}}" bindtap="chooseCard">
       <view class="amount">
-        ￥<text>{{item.card_amount}}<text>
+        ￥<text>{{item.card_amount / 1}}<text>
       </view>
 
-      <view class="give" wx:if="{{item.give_present > 0}}">
-        冲{{item.card_amount}}送{{item.give_present}}
+      <view class="give">
+        {{item.card_name}}，{{item.discount}}折
       </view>
     </view>
   </view>
@@ -40,7 +40,7 @@
 <script>
   export default {
     config: {
-      navigationBarTitleText: '充值卡',
+      navigationBarTitleText: '我要充值',
       navigationBarBackgroundColor: '#E8E8E8',
       navigationBarTextStyle: 'black',
       usingComponents: {

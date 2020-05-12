@@ -39,12 +39,14 @@
 .control .buttons button {
   width: 200rpx;
   margin: 0 20rpx;
+  padding: 1rpx;
+  font-size: 28rpx;
   
 }
 
 .control .pay-type {
   padding: 0rpx 0 0 20rpx;
-  font-size: 28rpx;
+  font-size: 32rpx;
   font-weight: bold;
   text-align: center;
   color: #E03B58;

@@ -62,7 +62,7 @@
           <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button> -->
                     <view class="pay-type">支付方式：</view>
                     <button size="mini" type="default" data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}" bindtap="rechargePayment">余额支付</button>
-                    <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}">线上支付
+                    <button size="mini" type="primary" bindtap="online" data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}">微信支付
                     </button>
                 </view>
             </view>

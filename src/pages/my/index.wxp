@@ -27,7 +27,7 @@
                     src="{{currentShop.shop_logo}}">
         </wxc-avatar>
       </view>
-      <view class="shop flex flex-column align-start">
+      <view class="shop flex flex-column align-start" bindtap="showShopList">
         <text class="shop-name">{{currentShop.shop_name}}</text>
         <text class="shop-address">{{currentShop.address}}</text>
       </view>
@@ -39,7 +39,7 @@
 
   <view class="cell">
     <view class="header flex">
-      <!--<view class="iconfont icon-footmark"></view>--><text class="label-title">设置管家</text>
+      <!--<view class="iconfont icon-footmark"></view>--><text class="label-title">选择管家</text>
     </view>
     <scroll-view class="beautician-list" scroll-x>
       <view
@@ -53,6 +53,13 @@
         <wxc-elip line="1" class="beauticianName">{{item.name}}</wxc-elip>
       </view>
     </scroll-view>
+  </view>
+
+    <view class="footer">
+    <button type="primary"
+      bindtap="setBeauticion"
+      class="primary-btn"
+      formType="submit">设为专属管家</button>
   </view>
 
 </template>
@@ -125,18 +132,7 @@
         currentBeautician: currentBeautician,
       })
 
-      let beauticianId = currentBeautician.beautician_id
-
-      // 设置默认管家
-      app.post('center/setBeautician/' + beauticianId).then(data => {
-        console.log(data)
-      }).catch(e => {
-        this.setData({
-          currentBeautician: _currentBeautician
-        })
-
-        wx.message('设置默认管家出错，请重试.')
-      })
+     
     },
 
     _toast(text) {
@@ -169,6 +165,20 @@
         console.log(e)
       })
 
+    },
+
+
+    setBeauticion() {
+      let app = getApp()
+
+      let beauticianId = this.data.currentBeautician.beautician_id
+
+        // 设置默认管家
+        app.post('center/setBeautician/' + beauticianId).then(data => {
+          console.log(data)
+        }).catch(e => {
+          wx.message('设置默认管家出错，请重试.')
+        })
     },
 
 
