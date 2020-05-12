@@ -27,7 +27,7 @@
             </view>
 
             <view class="give">
-                {{item.card_name}}，{{item.discount}}折
+                {{item.card_name}}，{{item.discount / 1}}折
             </view>
         </view>
     </view>

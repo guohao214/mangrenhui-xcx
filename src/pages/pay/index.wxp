@@ -63,6 +63,16 @@
       <view class="label">付款金额</view>
       <view>¥{{ order.total_fee}}</view>
     </view>
+    
+    <view class="cell amount" wx:if="{{order.is_receive}}">
+      <view class="label">接送地址</view>
+      <view>{{ order.is_receive ? order.receive_address_user + '，' + order.receive_address_address : ''}}</view>
+    </view>
+
+    <view class="cell amount">
+      <view class="label">付款金额</view>
+      <view>¥{{ order.total_fee}}</view>
+    </view>
     <view class="project">
       <view class="cell">
         <view class="label">门店</view>

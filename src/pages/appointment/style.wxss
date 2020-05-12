@@ -116,3 +116,24 @@ Page {
 .beautician.guanjia.active .avatar {
   border: 5rpx solid transparent;
 }
+
+.address-list {
+  /* padding-bottom: 10rpx; */
+}
+
+.address-list radio {
+  margin-bottom: 30rpx;
+}
+
+.is-receive-sw {
+  margin: 30rpx;
+}
+
+.address {
+  margin: 30rpx;
+}
+
+.add-address-view {
+  margin-top: 40rpx;
+
+}

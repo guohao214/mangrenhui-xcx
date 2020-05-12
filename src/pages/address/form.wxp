@@ -16,7 +16,7 @@
 
     <view class="cell amount">
       <view class="label">手机号：</view>
-      <view class="flex-auto"><input placeholder="请输入" maxlength="11"  value="{{address.phone}}" bindinput="bindChangePhone"></input></view>
+      <view class="flex-auto"><input placeholder="请输入" type="number" maxlength="11"  value="{{address.phone}}" bindinput="bindChangePhone"></input></view>
     </view>
 
     <view class="cell amount">

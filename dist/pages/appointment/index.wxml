@@ -113,6 +113,37 @@
         </view>
     </view>
 
+    <view class="cell address-list">
+        <view class="header flex">
+            <text class="label-title">是否接送(来回接送费用为{{receiveFee}}元)</text>
+        </view>
+
+        <!--<view class="is-receive-sw">
+      <switch checked="{{isReceive}}" bindchange="getAddressList">是否接送</switch>
+    </view>-->
+
+        <view class="address">
+            <radio-group bindchange="setReceiveAddress">
+                <radio value="{{item.my_address_id}}" checked="{{item.checked}}" wx:for="{{addressList}}" data-index="{{idx}}" wx:for-index="idx" wx:for-item="item" bindtap="selectAddress">
+                    <view>
+                        {{item.uname}} / {{item.phone}}
+                    </view>
+                    <view>
+                        {{item.address_prefix}} / {{item.address}}
+                    </view>
+
+                </radio>
+
+            </radio-group>
+
+            <view bindtap="addAddress" wx:if="{{addressList.length == 0}}" class="add-pet-view add-address-view">
+                <text class="add-pet">添加地址</text>
+            </view>
+
+        </view>
+
+    </view>
+
     <view class="footer">
         <button type="primary" bindtap="appointment" class="primary-btn" formType="submit">发送预约</button>
     </view>

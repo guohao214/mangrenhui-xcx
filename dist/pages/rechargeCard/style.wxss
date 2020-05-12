@@ -48,14 +48,14 @@ page {
   align-items: center;
   color: black;
   font-size: 30rpx;
-  border: 2rpx solid #ececee;
+  border: 2rpx solid #ccc;
 }
 
 
 .card .amount text {
   font-size: 50rpx;
   font-weight: bold;
-  color: #000;
+  color: #E03B58;
 }
 
 .card.active {
@@ -89,12 +89,14 @@ page {
   padding: 0 30rpx;
   box-sizing: content-box;
   align-items: flex-start;
+  color: #E03B58;
 }
 
 .my-card .card-name {
   font-size: 40rpx;
   text-align: left;
   width: 100%;
+  color: #E03B58;
 
 }
 

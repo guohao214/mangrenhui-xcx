@@ -124,6 +124,38 @@
     </view>
   </view>
 
+  <view class="cell address-list">
+    <view class="header flex">
+      <text class="label-title">是否接送(来回接送费用为{{receiveFee}}元)</text>
+    </view>
+
+    <!--<view class="is-receive-sw">
+      <switch checked="{{isReceive}}" bindchange="getAddressList">是否接送</switch>
+    </view>-->
+
+    <view class="address">
+      <radio-group bindchange="setReceiveAddress">
+        <radio value="{{item.my_address_id}}" checked="{{item.checked}}"  wx:for="{{addressList}}" data-index="{{idx}}"
+            wx:for-index="idx" wx:for-item="item" bindtap="selectAddress">
+          <view>
+            {{item.uname}} / {{item.phone}}
+          </view>
+          <view>
+            {{item.address_prefix}} / {{item.address}}
+          </view>
+            
+        </radio>
+          
+      </radio-group>
+
+      <view bindtap="addAddress" wx:if="{{addressList.length == 0}}" class="add-pet-view add-address-view">
+        <text class="add-pet">添加地址</text>
+      </view>
+        
+    </view>
+        
+  </view>
+
   <view class="footer">
     <button type="primary"
       bindtap="appointment"
@@ -177,6 +209,60 @@
       defaultBeautician: 0, // 默认管家
       toastMsg: '',
       toastShow: false,
+      addressList: [],
+      isReceive: false,
+      receiveFee: 20,
+      lastAddressId: '',
+    },
+
+    setReceiveAddress(e) {
+      console.log(e)
+    },
+
+    selectAddress(e) {
+      const index = e.currentTarget.dataset.index / 1
+
+      const addressList =  this.data.addressList
+      const address = this.data.addressList[index]
+
+      if (address.checked)
+        address.checked = false
+      else
+        address.checked = true
+
+      if(this.data.lastAddressId !== '') {
+        const lastAddress = this.data.addressList[this.data.lastAddressId]
+        lastAddress.checked = false
+      }
+
+
+      this.setData({
+        lastAddressId: index,
+        addressList
+      }
+      )
+    },
+
+    getAddressList(e) {
+    //  const value = e.detail.value
+    //  if (value === false)
+    //   return
+
+    //   this.setData({
+    //     isReceive: value
+    //   })
+
+      let app = getApp()
+      if (!app.getSessionId())
+        return
+
+      app.get('center/addressList').then(data => {
+        const addressList = data.data.content || []
+        addressList.forEach(item => item.checked = false)
+        this.setData({
+          addressList
+        })
+      })
     },
 
     onShareAppMessage() {
@@ -186,6 +272,8 @@
         imageUrl: 'https://api.mdshijie.com/static/share.png'
       }
     },
+
+
     handlerSearch: function (event) {
       let value = event.detail.value
       let shopList = this.data.shopList
@@ -415,6 +503,8 @@
       app.get(`appointment/getBeauticianAndProject/${shopId}`).then(data => {
         let content = (data.data && data.data.content) || {}
 
+        const receiveFee = content.receiveFee
+
         content.days = content.days.map(item => {
           let day = item.split('#')
           return {
@@ -450,6 +540,7 @@
           currentBeautician,
           currentAppointmentDay,
           defaultBeautician,
+          receiveFee: receiveFee.fee / 1
         })
 
         self.getPets()
@@ -522,7 +613,9 @@
         appointment_time: this.data.currentAppointmentTimes.join(','),
         from: 'xcx',
         formId: formId,
+        address: ((this.data.addressList.filter(item => item.checked).pop() || {}).my_address_id || 0)
       }
+
       app.post('cart/appointment', data)
         .then(() =>   {
           this._toast('预约成功!')
@@ -548,6 +641,12 @@
       wx.navigateTo({
         url: '/pages/pet/index'
       })
+    },
+
+    addAddress() {
+      wx.navigateTo({
+        url: '/pages/address/index'
+      })   
     },
 
     init: function() {
@@ -603,6 +702,9 @@
   onShow: function () {
     if (!this.data.pets.length)
       this.getPets()
+
+    // if (!this.data.addressList.length)
+    this.getAddressList()
       
     const data = this.data
     // 加载

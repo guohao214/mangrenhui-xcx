@@ -22,6 +22,7 @@
 
 .cell.amount {
   border-bottom: 1rpx solid rgb(228,228,228);
+  padding: 10rpx 20rpx;
 }
 
 .control {
@@ -79,4 +80,8 @@ button[size=mini] {
   width: 500rpx;
   text-align: right;
 
+}
+
+.label {
+  width: 200rpx;
 }
