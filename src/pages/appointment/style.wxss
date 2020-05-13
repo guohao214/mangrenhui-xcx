@@ -123,6 +123,7 @@ Page {
 
 .address-list radio {
   margin-bottom: 30rpx;
+  font-size: 27rpx;
 }
 
 .is-receive-sw {

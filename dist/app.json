@@ -6,6 +6,7 @@
   },
   "pages": [
     "pages/appointment/index",
+
     "pages/article/index",
     "pages/address/form",
     "pages/address/index",

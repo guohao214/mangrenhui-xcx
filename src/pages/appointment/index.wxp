@@ -137,9 +137,9 @@
       <radio-group bindchange="setReceiveAddress">
         <radio value="{{item.my_address_id}}" checked="{{item.checked}}"  wx:for="{{addressList}}" data-index="{{idx}}"
             wx:for-index="idx" wx:for-item="item" bindtap="selectAddress">
-          <view>
+          <!--<view>
             {{item.uname}} / {{item.phone}}
-          </view>
+          </view>-->
           <view>
             {{item.address_prefix}}  {{item.address}}
           </view>
@@ -230,7 +230,7 @@
       else
         address.checked = true
 
-      if(this.data.lastAddressId !== '') {
+      if(this.data.lastAddressId !== '' && this.data.lastAddressId != index) {
         const lastAddress = this.data.addressList[this.data.lastAddressId]
         lastAddress.checked = false
       }
@@ -411,7 +411,9 @@
       let showLoading = true
       let beauticianId = currentBeautician.beautician_id
       if (this.data.defaultBeautician > 0 && beauticianId != this.data.defaultBeautician) {
-        this.setToast('我可以提供服务，但我不是您的专属管家')
+        const defaultBeautician = this.data.beauticianList.filter(item => item.beautician_id == this.data.defaultBeautician).pop()
+        const name = defaultBeautician.name
+        this.setToast('我可以提供服务，但您的专属管家是' + name + '哟')
         showLoading = false
       }
 

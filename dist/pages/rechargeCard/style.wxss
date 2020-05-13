@@ -51,6 +51,10 @@ page {
   border: 2rpx solid #ccc;
 }
 
+.card .amount  {
+  font-size: 50rpx;
+  color: #E03B58;
+}
 
 .card .amount text {
   font-size: 50rpx;
@@ -96,7 +100,7 @@ page {
   font-size: 40rpx;
   text-align: left;
   width: 100%;
-  color: #E03B58;
+  color: #000;
 
 }
 

@@ -1,6 +1,6 @@
 <template>
   <wxc-dialog class="wxc-dialog wxc-cancel-pet"
-              title="删除地址"
+              title="确定删除地址?"
               cancel-text="取消"
               bindconfirm="confirmDeletePet"
               bindcancel="cancelDeletePet"

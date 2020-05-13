@@ -2,7 +2,7 @@
     <layout-head _pid="{{_pid}}"></layout-head>
 
     <!-- page页面占位符 -->
-    <wxc-dialog class="wxc-dialog wxc-cancel-pet" title="删除地址" cancel-text="取消" bindconfirm="confirmDeletePet" bindcancel="cancelDeletePet" confirm-text="确定" _pid="{{_pid}}">
+    <wxc-dialog class="wxc-dialog wxc-cancel-pet" title="确定删除地址?" cancel-text="取消" bindconfirm="confirmDeletePet" bindcancel="cancelDeletePet" confirm-text="确定" _pid="{{_pid}}">
     </wxc-dialog>
 
 

@@ -34,16 +34,20 @@
     <input class="input" placeholder="请输入券号" bindinput="handlerCouponCode" value="{{ couponCode }}"/>
   </wxc-dialog>
 
-  <wxc-dialog class="wxc-dialog wxc-online" title="线上支付"
+  <wxc-dialog class="wxc-dialog wxc-online" title="微信支付"
               content="支付金额 ¥ {{ amount }}"
               cancel-text="取消"
               bindcancel="cancel"
               bindconfirm="payOnline"
+              contentColor="#E03B58"
+              confirmColor="#000"
               confirm-text="确定"></wxc-dialog>
 
   <wxc-dialog class="wxc-dialog wxc-recharge" title="余额支付"
               content="支付金额:¥ {{ amount }}，可用金额:￥ {{accountAmount}}"
               cancel-text="取消"
+              contentColor="#E03B58"
+              confirmColor="#000"
               bindcancel="cancel"
               bindconfirm="payRecharge"
               confirm-text="确定"></wxc-dialog>
@@ -58,10 +62,6 @@
     <view class="cell amount">
       <view class="label">订单号</view>
       <view>{{ order.order_no}}</view>
-    </view>
-    <view class="cell amount">
-      <view class="label">付款金额</view>
-      <view>¥{{ order.total_fee}}</view>
     </view>
     
     <view class="cell amount" wx:if="{{order.is_receive}}">
@@ -101,7 +101,7 @@
           <button size="mini" type="default" bindtap="scan" data-id="{{order.order_id}}">店内扫码</button>
           <button size="mini" type="default" bindtap="groupBy" data-id="{{order.order_id}}">团购</button> -->
           <view class="pay-type">支付方式：</view>
-          <button size="mini" type="default"  data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}"
+          <button size="mini" type="primary"  data-id="{{order.order_no}}" data-amount="{{ order.total_fee}}"
               bindtap="rechargePayment">余额支付</button>
           <button size="mini" type="primary" bindtap="online"
                   data-id="{{order.order_no}}"
@@ -147,9 +147,15 @@
     onLoad: function (options) {
       // console.log(options)
     },
+
     onShow: function () {
       this.getOrderList()
     },
+
+    onTabItemTap() {
+      this.getOrderList()
+    },
+
     getOrderList: function () {
       let app = getApp()
       app.get('center/order', {order_status: 1}).then(data => {
