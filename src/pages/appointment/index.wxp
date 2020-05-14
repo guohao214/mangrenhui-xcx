@@ -413,7 +413,7 @@
       if (this.data.defaultBeautician > 0 && beauticianId != this.data.defaultBeautician) {
         const defaultBeautician = this.data.beauticianList.filter(item => item.beautician_id == this.data.defaultBeautician).pop()
         const name = defaultBeautician.name
-        this.setToast('我可以提供服务，但您的专属管家是' + name + '哟')
+        this.setToast('我可以提供服务， 但您的专属管家是' + name + '哟')
         showLoading = false
       }
 

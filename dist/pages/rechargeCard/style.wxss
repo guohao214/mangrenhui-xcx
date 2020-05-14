@@ -52,7 +52,7 @@ page {
 }
 
 .card .amount  {
-  font-size: 50rpx;
+  font-size: 36rpx;
   color: #E03B58;
 }
 
@@ -100,7 +100,7 @@ page {
   font-size: 40rpx;
   text-align: left;
   width: 100%;
-  color: #000;
+  /* color: #000; */
 
 }
 
