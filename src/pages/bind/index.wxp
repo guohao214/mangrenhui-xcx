@@ -37,12 +37,19 @@
       loading: false,
       noPhone: false
     },
+
     onShow: function () {
       this.setData({
         userInfo: {},
         authed: false,
         loading: false,
         noPhone: false
+      }, () => {
+        const noPhone = !!getApp().globalData.userInfo.noPhone
+        this.setData({
+          authed: !!getApp().getSessionId(),
+          noPhone
+        })
       })
     },
 
@@ -63,9 +70,18 @@
       // errMsg: "getPhoneNumber:ok"
       // iv: "mYO48TOme5wPMw1e7RS4Sg=="
 
+      let userInfo = this.data.userInfo
+      if (Object.keys(this.data.userInfo).length <= 1) {
+        this.setData({
+          userInfo: getApp().getUserInfo()
+        })
+
+        userInfo = getApp().getUserInfo()
+      }
+
       app.post('bind/bindMe', {
         enc_detail: JSON.stringify(res.detail),
-        user_info: JSON.stringify(this.data.userInfo)
+        user_info: JSON.stringify(userInfo)
       }).then(data => {
         app.globalData.noPhone = false
         let userInfo = this.data.userInfo
@@ -84,12 +100,20 @@
     },
 
     getUserInfo(res) {
+      if (!res.detail.iv) {
+        wx.showToast({
+          title: '用户授权失败，请重试',
+          icon: 'none'
+        })
+        return
+      }
+
       const app = getApp()
 
-      app.login().then(data => { // data 为session_id
+      app.login(JSON.stringify(res.detail)).then(data => { // data 为session_id
         if (!res.detail.userInfo) {
           return wx.showToast({
-            title: '请您先授权',
+            title: '用户授权失败，请重试',
             icon: 'none'
           })
         }

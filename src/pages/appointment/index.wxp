@@ -135,7 +135,7 @@
 
     <view class="address">
       <radio-group bindchange="setReceiveAddress">
-        <radio value="{{item.my_address_id}}" checked="{{item.checked}}"  wx:for="{{addressList}}" data-index="{{idx}}"
+        <radio color="#E03B58" value="{{item.my_address_id}}" checked="{{item.checked}}"  wx:for="{{addressList}}" data-index="{{idx}}"
             wx:for-index="idx" wx:for-item="item" bindtap="selectAddress">
           <!--<view>
             {{item.uname}} / {{item.phone}}
