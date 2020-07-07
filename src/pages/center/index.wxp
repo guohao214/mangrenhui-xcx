@@ -84,9 +84,12 @@
       联系我们：<text class="call-phone" bindtap="callPhone">{{phone}}</text>
     </view>
   </view>
+
+  <view class="version">版本：{{version}}</view>
 </template>
 
 <script>
+
   export default {
     config: {
       navigationBarTitleText: '我的',
@@ -116,7 +119,8 @@
     data: {
       nickName: '',
       avatarUrl: '',
-      phone: ''
+      phone: '',
+      version: getApp().globalData.version || ''
     },
 
     goLogin() {
@@ -133,8 +137,15 @@
 </script>
 
 <style>
-  Page {
+  page {
     background-color: white;
+  }
+
+  .version {
+    text-align: center;
+    padding: 20rpx 10rpx 10rpx 10rpx;
+    color: #ccc;
+    font-size: 28rpx;
   }
 
   @import "style.wxss";

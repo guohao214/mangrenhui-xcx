@@ -88,5 +88,7 @@
         </view>
     </view>
 
+    <view class="version">版本：{{version}}</view>
+
     <!--<layout-foot></layout-foot>-->
 </view>

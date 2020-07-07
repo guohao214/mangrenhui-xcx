@@ -2,7 +2,7 @@
   "usingComponents": {
     "layout-head": "../../common/layout/head"
   },
-  "navigationBarTitleText": "品牌介绍",
+  "navigationBarTitleText": "商品订阅",
   "navigationBarBackgroundColor": "#E8E8E8",
   "navigationBarTextStyle": "black"
 }

@@ -1,5 +1,12 @@
-Page {
+page {
     background-color: white;
+  }
+
+  .version {
+    text-align: center;
+    padding: 20rpx 10rpx 10rpx 10rpx;
+    color: #ccc;
+    font-size: 28rpx;
   }
 
   @import './style.wxss';

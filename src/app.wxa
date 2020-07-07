@@ -68,6 +68,7 @@ export default {
       navigationBarTextStyle: "white"
     },
     tabBar: {
+      "custom": false,
       color: "#8a8a8a",
       selectedColor: "#E03B58",
       borderStyle: "black",
@@ -77,7 +78,7 @@ export default {
           pagePath: "pages/article/index",
           iconPath: "common/assets/tab/01.png",
           selectedIconPath: "common/assets/tab/011.png",
-          text: "品牌"
+          text: "商品订阅"
         },
           {
           pagePath: "pages/appointment/index",
@@ -104,12 +105,24 @@ export default {
       request: 10000
     }
   },
+
+  // 错误
+  onError() {
+    const  msg = JSON.stringify(arguments)
+    let logger = wx.getRealtimeLogManager()
+    logger.error(msg)
+
+    console.log(logger)
+  },
+
+
   globalData: {
     baseUrl: "https://api.mdshijie.com/",
     // baseUrl: "http://127.0.0.1/",
     userInfo: {},
     session_id: '',
     noPhone: true,
+    version: '2.3',
   },
 
   showToast(text) {

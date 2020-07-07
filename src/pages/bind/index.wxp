@@ -39,6 +39,7 @@
     },
 
     onShow: function () {
+      // throw new Error('发送错误了')
       this.setData({
         userInfo: {},
         authed: false,
